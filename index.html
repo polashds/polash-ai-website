@@ -1535,10 +1535,10 @@
                 <h4>⚡ Polash AI Automation</h4>
                 <p style="color: var(--gray); margin-top: 1rem;">Transforming businesses through intelligent n8n workflow automation and AI integration.</p>
                 <div class="social-links">
-                    <a href="#" onclick="trackEvent('Social', 'click', 'LinkedIn', 0)"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" onclick="trackEvent('Social', 'click', 'Twitter', 0)"><i class="fab fa-twitter"></i></a>
-                    <a href="#" onclick="trackEvent('Social', 'click', 'GitHub', 0)"><i class="fab fa-github"></i></a>
-                    <a href="#" onclick="trackEvent('Social', 'click', 'YouTube', 0)"><i class="fab fa-youtube"></i></a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" onclick="trackEvent('Social', 'click', 'LinkedIn', 0); return true;"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" onclick="trackEvent('Social', 'click', 'Twitter', 0); return true;"><i class="fab fa-twitter"></i></a>
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" onclick="trackEvent('Social', 'click', 'GitHub', 0); return true;"><i class="fab fa-github"></i></a>
+                    <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" onclick="trackEvent('Social', 'click', 'YouTube', 0); return true;"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
             <div class="footer-section">
@@ -2062,8 +2062,16 @@
         
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                
+                // Skip if href is just "#" or empty
+                if (!href || href === '#' || href.length <= 1) {
+                    e.preventDefault();
+                    return;
+                }
+                
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                const target = document.querySelector(href);
                 if (target) {
                     target.scrollIntoView({
                         behavior: 'smooth',
@@ -2138,4 +2146,20 @@
                         <span><i class="fas fa-calendar"></i> Oct 10, 2025</span>
                         <span><i class="fas fa-clock"></i> 7 min read</span>
                     </div>
-                    <h3 style="font-size: 1.5rem; margin-bottom:
+                    <h3 style="font-size: 1.5rem; margin-bottom:1rem; color: var(--light);">10 n8n Workflows Every Business Needs</h3>
+                    <p style="color: var(--gray);">Discover the essential automation workflows that can transform your business operations and boost productivity.</p>
+                </div>
+            </div>
+
+            <div style="background: rgba(99, 102, 241, 0.05); border-radius: 20px; overflow: hidden; border: 1px solid rgba(99, 102, 241, 0.1); cursor: pointer; transition: all 0.3s;" class="fade-in">
+                <div style="width: 100%; height: 200px; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white;">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div style="padding: 2rem;">
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; color: var(--gray);">
+                        <span><i class="fas fa-calendar"></i> Oct 10, 2025</span>
+                        <span><i class="fas fa-clock"></i> 7 min read</span>
+                    </div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--light);">Automation ROI Calculator</h3>
+                    <p style="color: var(--gray);">Calculate the potential return on investment for automating your business processes and workflows.</p> 1rem; color: var(--light);">AI Integration Guide for n8n</h3>
+                    <p style="color: var(--gray);">Learn how to integrate GPT-4, Claude, and other AI models into your n8n workflows for intelligent automation.</p>
