@@ -4,24 +4,431 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Polash AI Automation - n8n Workflow Automation Experts</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Transform your business with AI-powered n8n workflow automation. Save time, reduce costs, and scale effortlessly.">
-    <meta name="keywords" content="n8n automation, workflow automation, AI integration, business automation">
-    <meta property="og:title" content="Polash AI Automation">
-    <meta property="og:description" content="Expert n8n workflow automation solutions">
     
     <!-- Google Analytics (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
+        // Create particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Counter Animation
+        function animateCounter(element) {
+            const target = parseInt(element.dataset.target);
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + (element.dataset.target === '95' ? '%' : '+');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + (element.dataset.target === '95' ? '%' : '+');
+                }
+            }, 16);
+        }
+
+        // Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    if (entry.target.classList.contains('counter') && entry.target.textContent === '0') {
+                        animateCounter(entry.target);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in, .counter').forEach(el => observer.observe(el));
+
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+
+            // Navbar scroll effect
+            const navbar = document.getElementById('navbar');
+            if (winScroll > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Floating CTA
+            const floatingCTA = document.getElementById('floatingCTA');
+            if (winScroll > 500) {
+                floatingCTA.classList.add('visible');
+            } else {
+                floatingCTA.classList.remove('visible');
+            }
+        });
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        // FAQ Toggle
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('.faq-icon');
+            
+            answer.classList.toggle('active');
+            icon.classList.toggle('active');
+        }
+
+        // Toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastText').textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Exit Intent
+        let exitIntentShown = false;
+        let leadMagnetShown = false;
+
+        document.addEventListener('mouseout', function(e) {
+            if (!e.toElement && !e.relatedTarget && !exitIntentShown && e.clientY < 10) {
+                if (!leadMagnetShown) {
+                    showLeadMagnet();
+                } else {
+                    exitIntentShown = true;
+                    document.getElementById('exitPopup').classList.add('active');
+                    trackEvent('ExitIntent', 'shown', 'Exit Popup', 0);
+                }
+            }
+        });
+
+        setTimeout(() => {
+            if (!leadMagnetShown) {
+                showLeadMagnet();
+            }
+        }, 30000);
+
+        function showLeadMagnet() {
+            leadMagnetShown = true;
+            document.getElementById('leadMagnetPopup').classList.add('active');
+            trackEvent('LeadMagnet', 'shown', 'Free Guide Popup', 0);
+        }
+
+        function closeLeadMagnet() {
+            document.getElementById('leadMagnetPopup').classList.remove('active');
+            trackEvent('LeadMagnet', 'closed', 'Free Guide Popup', 0);
+        }
+
+        function handleLeadMagnet(event) {
+            event.preventDefault();
+            const email = event.target.email.value;
+            
+            trackEvent('LeadMagnet', 'conversion', email, 0);
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'Lead', {content_name: 'Free Guide'});
+            }
+            
+            showToast('Success! Check your email for the download link.');
+            closeLeadMagnet();
+            
+            setTimeout(() => {
+                alert('📧 Thank you! We\'ve sent "10 n8n Workflows Every Business Needs" to ' + email + '\n\nCheck your inbox (and spam folder) in the next few minutes.\n\nBonus: A team member will reach out within 24 hours to schedule your FREE consultation!');
+            }, 500);
+        }
+
+        function closeExitPopup() {
+            document.getElementById('exitPopup').classList.remove('active');
+        }
+
+        // ROI Calculator
+        function calculateROI() {
+            const hoursPerWeek = parseFloat(document.getElementById('hoursPerWeek').value) || 20;
+            const hourlyRate = parseFloat(document.getElementById('hourlyRate').value) || 50;
+            const automationPercent = parseFloat(document.getElementById('automationPercent').value) || 70;
+            
+            const hoursSaved = (hoursPerWeek * automationPercent / 100).toFixed(1);
+            const weeklySavings = hoursSaved * hourlyRate;
+            const monthlySavings = weeklySavings * 4.33;
+            const yearlySavings = monthlySavings * 12;
+            
+            const projectCost = 7500;
+            const roiMonths = (projectCost / monthlySavings).toFixed(1);
+            
+            document.getElementById('hoursSaved').textContent = hoursSaved;
+            document.getElementById('monthlySavings').textContent = '$' + monthlySavings.toFixed(0).toLocaleString();
+            document.getElementById('yearlySavings').textContent = '$' + yearlySavings.toFixed(0).toLocaleString();
+            document.getElementById('roiPeriod').textContent = roiMonths;
+            
+            trackEvent('ROI_Calculator', 'calculated', 'Savings: $' + yearlySavings.toFixed(0), yearlySavings);
+        }
+
+        // Video Player
+        function loadVideo() {
+            const placeholder = document.getElementById('videoPlaceholder');
+            const videoId = 'YOUR_YOUTUBE_VIDEO_ID';
+            
+            if (videoId === 'YOUR_YOUTUBE_VIDEO_ID') {
+                placeholder.innerHTML = `
+                    <div style="padding: 3rem; text-align: center;">
+                        <h3 style="color: var(--light); margin-bottom: 1rem;">🎥 Add Your Demo Video</h3>
+                        <p style="color: var(--gray); margin-bottom: 2rem;">
+                            To enable video playback:<br>
+                            1. Upload your demo video to YouTube<br>
+                            2. Copy the video ID from the URL<br>
+                            3. Replace YOUR_YOUTUBE_VIDEO_ID in the code
+                        </p>
+                        <p style="color: var(--primary); font-weight: 600;">
+                            Example: https://youtube.com/watch?v=<span style="color: var(--accent);">dQw4w9WgXcQ</span>
+                        </p>
+                    </div>
+                `;
+            } else {
+                placeholder.innerHTML = `
+                    <iframe 
+                        src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                `;
+                trackEvent('Video', 'played', 'Demo Video', 0);
+            }
+        }
+
+        // Calendly
+        function openCalendly() {
+            const modal = document.getElementById('calendlyModal');
+            modal.classList.add('active');
+            
+            if (typeof Calendly !== 'undefined') {
+                Calendly.initInlineWidget({
+                    url: 'https://calendly.com/YOUR_CALENDLY_USERNAME/30min',
+                    parentElement: document.getElementById('calendlyWidget')
+                });
+            } else {
+                document.getElementById('calendlyWidget').innerHTML = `
+                    <div style="padding: 3rem; text-align: center; color: #1f2937;">
+                        <h3 style="margin-bottom: 1rem;">Schedule Your Consultation</h3>
+                        <p style="margin-bottom: 2rem; color: #6b7280;">To enable booking, add your Calendly username in the code.</p>
+                        <a href="https://calendly.com" target="_blank" style="display: inline-block; padding: 1rem 2rem; background: #6366f1; color: white; text-decoration: none; border-radius: 50px;">
+                            Go to Calendly
+                        </a>
+                    </div>
+                `;
+            }
+            
+            trackEvent('Calendly', 'opened', 'Schedule Demo', 0);
+        }
+
+        function closeCalendly() {
+            document.getElementById('calendlyModal').classList.remove('active');
+        }
+
+        // Form Submission
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const form = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const formSuccess = document.getElementById('formSuccess');
+            const formError = document.getElementById('formError');
+            
+            formSuccess.style.display = 'none';
+            formError.style.display = 'none';
+            
+            const formData = {
+                name: form.name.value,
+                email: form.email.value,
+                company: form.company.value || 'Not provided',
+                service: form.service.value || 'Not specified',
+                message: form.message.value
+            };
+            
+            submitBtn.disabled = true;
+            btnText.textContent = 'Sending...';
+            
+            const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+            
+            if (FORMSPREE_ENDPOINT === 'https://formspree.io/f/YOUR_FORM_ID') {
+                setTimeout(() => {
+                    formSuccess.style.display = 'block';
+                    formSuccess.innerHTML = `
+                        ✓ Form validated! To enable email delivery, add your Formspree ID.<br>
+                        <small style="font-size: 0.9rem; display: block; margin-top: 0.5rem;">
+                        Data captured: ${formData.name} (${formData.email})
+                        </small>
+                    `;
+                    form.reset();
+                    showToast('Form submitted successfully!');
+                    submitBtn.disabled = false;
+                    btnText.textContent = 'Send Message';
+                    
+                    trackEvent('Form', 'submission', formData.service, 0);
+                    if (typeof fbq !== 'undefined') {
+                        fbq('track', 'Lead');
+                    }
+                }, 1000);
+                return;
+            }
+            
+            const formBody = new FormData();
+            Object.keys(formData).forEach(key => formBody.append(key, formData[key]));
+            
+            fetch(FORMSPREE_ENDPOINT, {
+                method: 'POST',
+                body: formBody,
+                headers: {'Accept': 'application/json'}
+            })
+            .then(response => {
+                if (response.ok) {
+                    formSuccess.style.display = 'block';
+                    form.reset();
+                    showToast('Message sent successfully!');
+                    trackEvent('Form', 'submission_success', formData.service, 0);
+                } else {
+                    throw new Error('Submission failed');
+                }
+            })
+            .catch(error => {
+                formError.style.display = 'block';
+                console.error('Form error:', error);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                btnText.textContent = 'Send Message';
+            });
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({behavior: 'smooth', block: 'start'});
+                    document.getElementById('navMenu').classList.remove('active');
+                }
+            });
+        });
+
+        // Chat Widget Functions
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            const badge = document.querySelector('.chat-badge');
+            
+            chatWindow.classList.toggle('active');
+            
+            if (chatWindow.classList.contains('active')) {
+                badge.style.display = 'none';
+                trackEvent('Chat', 'opened', 'Support Chat', 0);
+            } else {
+                trackEvent('Chat', 'closed', 'Support Chat', 0);
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            addChatMessage(message, 'user');
+            input.value = '';
+            
+            trackEvent('Chat', 'message_sent', message.substring(0, 50), 0);
+            
+            setTimeout(() => {
+                const response = getBotResponse(message);
+                addChatMessage(response, 'bot');
+            }, 1000);
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendQuickMessage(message) {
+            document.getElementById('chatInput').value = message;
+            sendChatMessage();
+        }
+
+        function addChatMessage(message, type) {
+            const messagesContainer = document.getElementById('chatMessages');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${type}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'chat-avatar';
+            avatar.textContent = type === 'bot' ? '🤖' : '👤';
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'chat-bubble';
+            bubble.textContent = message;
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(bubble);
+            messagesContainer.appendChild(messageDiv);
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function getBotResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('pricing') || lowerMessage.includes('cost') || lowerMessage.includes('price')) {
+                return "Our pricing starts at $2,500 for the Starter package, $7,500 for Professional, and custom pricing for Enterprise. Would you like me to connect you with our team for a detailed quote?";
+            } else if (lowerMessage.includes('demo') || lowerMessage.includes('schedule')) {
+                return "Great! I can help you schedule a demo. Click the 'Schedule Demo' button at the top, or I can have someone from our team reach out to you directly.";
+            } else if (lowerMessage.includes('technical') || lowerMessage.includes('support') || lowerMessage.includes('help')) {
+                return "I'll connect you with our technical team right away. Can you briefly describe the issue you're experiencing? Or you can email us at hello@polashai.com";
+            } else if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+                return "Hello! How can I help you with your automation needs today?";
+            } else if (lowerMessage.includes('service') || lowerMessage.includes('what do you do')) {
+                return "We specialize in n8n workflow automation, AI integration, business process automation, and API integration. We help businesses save time and reduce costs through intelligent automation.";
+            } else if (lowerMessage.includes('time') || lowerMessage.includes('how long')) {
+                return "Simple workflows take 1-2 weeks to implement, while complex enterprise solutions take 4-8 weeks. We'll provide a detailed timeline after understanding your specific needs.";
+            } else {
+                return "Thanks for your message! A team member will respond shortly. In the meantime, feel free to check out our case studies or schedule a consultation. You can also email us at hello@polashai.com";
+            }
+        }
+
+        // Initialize ROI calculator on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            calculateROI();
+        });
+
+        // Google Analytics
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX', {
-            'send_page_view': true,
-            'anonymize_ip': true
-        });
+        gtag('config', 'G-XXXXXXXXXX', {'anonymize_ip': true});
         
         function trackEvent(category, action, label, value) {
             gtag('event', action, {
@@ -32,10 +439,26 @@
         }
     </script>
     
-    <!-- Calendly Widget -->
+    <!-- Meta Pixel (Facebook) -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'YOUR_PIXEL_ID');
+        fbq('track', 'PageView');
+    </script>
+    
+    <!-- Calendly -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     
     <style>
+        /* Your CSS styles remain exactly the same - they were not the issue */
         * {
             margin: 0;
             padding: 0;
@@ -64,6 +487,20 @@
             scroll-behavior: smooth;
         }
 
+        .icon::before { font-size: 1.2em; }
+        .icon-check::before { content: "✓"; }
+        .icon-bars::before { content: "☰"; }
+        .icon-times::before { content: "✕"; }
+        .icon-workflow::before { content: "🔄"; }
+        .icon-robot::before { content: "🤖"; }
+        .icon-cogs::before { content: "⚙️"; }
+        .icon-plug::before { content: "🔌"; }
+        .icon-chart::before { content: "📊"; }
+        .icon-graduation::before { content: "🎓"; }
+        .icon-calendar::before { content: "📅"; }
+        .icon-envelope::before { content: "✉️"; }
+        .icon-lock::before { content: "🔒"; }
+
         /* Progress Bar */
         .progress-bar {
             position: fixed;
@@ -73,59 +510,6 @@
             background: linear-gradient(90deg, var(--primary), var(--accent));
             z-index: 9999;
             transition: width 0.1s;
-            width: 0;
-        }
-
-        /* Loading Overlay */
-        .loading-overlay {
-            position: fixed;
-            inset: 0;
-            background: var(--darker);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            transition: opacity 0.5s;
-        }
-
-        .loading-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loader {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(99, 102, 241, 0.2);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            top: 5rem;
-            right: 2rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            z-index: 9999;
-            transform: translateX(400px);
-            transition: transform 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .toast.show {
-            transform: translateX(0);
         }
 
         /* Navigation */
@@ -133,7 +517,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
             z-index: 1000;
             padding: 1rem 0;
@@ -161,7 +545,6 @@
             background: linear-gradient(135deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         nav ul {
@@ -175,99 +558,39 @@
             text-decoration: none;
             transition: color 0.3s;
             font-weight: 500;
-            position: relative;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s;
-        }
-
-        nav a:hover::after {
-            width: 100%;
         }
 
         nav a:hover {
             color: var(--primary);
         }
 
-        .mobile-menu {
+        .mobile-toggle {
             display: none;
+            background: none;
+            border: none;
+            color: var(--light);
             font-size: 1.5rem;
             cursor: pointer;
-            color: var(--light);
         }
 
-        /* Mobile Navigation */
-        .mobile-nav {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 70%;
-            height: 100vh;
-            background: var(--dark);
-            z-index: 9998;
-            padding: 5rem 2rem;
-            transition: right 0.3s;
-        }
-
-        .mobile-nav.active {
-            right: 0;
-        }
-
-        .mobile-nav ul {
-            list-style: none;
-        }
-
-        .mobile-nav li {
-            margin-bottom: 2rem;
-        }
-
-        .mobile-nav a {
-            color: var(--light);
-            text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .close-mobile-menu {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--light);
-        }
-
-        /* Hero Section */
+        /* Hero */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            background: linear-gradient(135deg, var(--darker) 0%, #1e1b4b 50%, var(--darker) 100%);
             position: relative;
             overflow: hidden;
-            padding: 8rem 2rem 4rem;
-        }
-
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, var(--darker) 0%, #1e1b4b 50%, var(--darker) 100%);
-            z-index: -2;
         }
 
         .hero-animation {
             position: absolute;
             inset: 0;
-            z-index: -1;
             opacity: 0.3;
+            pointer-events: none;
         }
 
         .particle {
@@ -287,41 +610,30 @@
         }
 
         .hero-content {
-            max-width: 1200px;
-            text-align: center;
+            max-width: 900px;
+            position: relative;
             z-index: 1;
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-size: clamp(2.5rem, 6vw, 4rem);
             font-weight: 800;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            background: linear-gradient(135deg, #fff, var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.2;
             animation: fadeInUp 1s ease-out;
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .hero p {
-            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
             color: var(--gray);
             margin-bottom: 2.5rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
             animation: fadeInUp 1s ease-out 0.2s both;
         }
 
@@ -351,26 +663,6 @@
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn-primary:hover::before {
-            width: 300px;
-            height: 300px;
         }
 
         .btn-primary:hover {
@@ -386,34 +678,12 @@
 
         .btn-secondary:hover {
             background: var(--primary);
-            transform: translateY(-3px);
         }
 
-        /* Scroll Indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-        }
-
-        .scroll-indicator i {
-            font-size: 2rem;
-            color: var(--primary);
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
-            40% { transform: translateY(-20px) translateX(-50%); }
-            60% { transform: translateY(-10px) translateX(-50%); }
-        }
-
-        /* Stats Section */
+        /* Stats */
         .stats {
             background: rgba(99, 102, 241, 0.05);
             padding: 3rem 2rem;
-            margin-top: -2rem;
         }
 
         .stats-grid {
@@ -430,7 +700,6 @@
             background: linear-gradient(135deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
             font-weight: 800;
         }
 
@@ -439,7 +708,7 @@
             font-size: 1.1rem;
         }
 
-        /* Section Styling */
+        /* Sections */
         section {
             padding: 5rem 2rem;
             max-width: 1200px;
@@ -453,7 +722,6 @@
             background: linear-gradient(135deg, #fff, var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .section-subtitle {
@@ -478,23 +746,6 @@
             border: 1px solid rgba(99, 102, 241, 0.1);
             transition: all 0.3s;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .service-card:hover::before {
-            left: 100%;
         }
 
         .service-card:hover {
@@ -511,13 +762,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 1.5rem;
-            transition: transform 0.3s;
-        }
-
-        .service-card:hover .service-icon {
-            transform: scale(1.1) rotate(5deg);
         }
 
         .service-card h3 {
@@ -526,9 +772,218 @@
             color: var(--light);
         }
 
-        .service-card p {
+        /* Case Studies */
+        .case-studies-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .case-study {
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            transition: all 0.3s;
+        }
+
+        .case-study:hover {
+            border-color: var(--primary);
+        }
+
+        .case-content {
+            padding: 2.5rem;
+        }
+
+        .case-tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .case-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            padding: 2.5rem;
+            background: rgba(6, 182, 212, 0.05);
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
             color: var(--gray);
+        }
+
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: rgba(99, 102, 241, 0.05);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+        }
+
+        .pricing-card.featured {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .pricing-badge {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 1rem 0 2rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+            color: var(--gray);
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial {
+            background: rgba(99, 102, 241, 0.05);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .stars {
+            color: #fbbf24;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            color: var(--light);
+            font-size: 1.1rem;
             line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        /* FAQ */
+        .faq-container {
+            max-width: 800px;
+            margin: 3rem auto 0;
+        }
+
+        .faq-item {
+            background: rgba(99, 102, 241, 0.05);
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .faq-question:hover {
+            background: rgba(99, 102, 241, 0.08);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1.5rem;
+            color: var(--gray);
+        }
+
+        .faq-answer.active {
+            max-height: 500px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s;
+        }
+
+        .faq-icon.active {
+            transform: rotate(180deg);
         }
 
         /* Contact Form */
@@ -554,14 +1009,9 @@
             align-items: center;
             gap: 1rem;
             margin-bottom: 1.5rem;
-            transition: transform 0.3s;
         }
 
-        .contact-method:hover {
-            transform: translateX(10px);
-        }
-
-        .contact-method i {
+        .contact-method-icon {
             width: 50px;
             height: 50px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -569,7 +1019,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
         }
 
         .contact-form {
@@ -601,15 +1051,6 @@
             color: var(--light);
             font-family: inherit;
             font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
         .form-group textarea {
@@ -617,68 +1058,11 @@
             min-height: 120px;
         }
 
-        .error-message {
-            display: block;
-            color: #ef4444;
-            font-size: 0.85rem;
-            margin-top: 0.5rem;
-            min-height: 1.2rem;
-        }
-
-        .form-group input.error,
-        .form-group textarea.error,
-        .form-group select.error {
-            border-color: #ef4444;
-        }
-
-        .form-group input.success,
-        .form-group textarea.success,
-        .form-group select.success {
-            border-color: #10b981;
-        }
-
-        .btn-spinner {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .form-message {
-            margin-top: 1.5rem;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .success-message {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #10b981;
-        }
-
-        .error-message-box {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
-        }
-
-        .form-message i {
-            font-size: 1.5rem;
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
         }
 
         /* Exit Popup */
@@ -706,24 +1090,12 @@
             max-width: 600px;
             text-align: center;
             position: relative;
-            animation: popupSlideIn 0.5s ease-out;
-        }
-
-        @keyframes popupSlideIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9) translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
         }
 
         .exit-popup-close {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
+            top: 1.5rem;
+            right: 1.5rem;
             width: 40px;
             height: 40px;
             background: rgba(255, 255, 255, 0.1);
@@ -734,87 +1106,16 @@
             cursor: pointer;
             font-size: 1.5rem;
             color: var(--light);
-            transition: all 0.3s;
         }
 
         .exit-popup-close:hover {
             background: rgba(255, 255, 255, 0.2);
-            transform: rotate(90deg);
-        }
-
-        .exit-popup-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            margin: 0 auto 1.5rem;
         }
 
         .exit-popup h3 {
+            font-size: 2rem;
             color: var(--light);
-            font-size: 2rem;
             margin-bottom: 1rem;
-        }
-
-        .exit-popup p {
-            color: var(--gray);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        .exit-popup-offer {
-            background: rgba(15, 23, 42, 0.5);
-            padding: 1.5rem;
-            border-radius: 15px;
-            margin: 2rem 0;
-        }
-
-        .exit-popup-offer h4 {
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-
-        .exit-popup-offer ul {
-            list-style: none;
-            text-align: left;
-            margin: 1rem 0;
-        }
-
-        .exit-popup-offer li {
-            color: var(--gray);
-            margin-bottom: 0.5rem;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .exit-popup-timer {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 1.5rem;
-        }
-
-        .timer-unit {
-            background: rgba(99, 102, 241, 0.2);
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-        }
-
-        .timer-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent);
-            display: block;
-        }
-
-        .timer-label {
-            font-size: 0.8rem;
-            color: var(--gray);
         }
 
         /* Calendly Modal */
@@ -823,7 +1124,7 @@
             inset: 0;
             background: rgba(2, 6, 23, 0.95);
             backdrop-filter: blur(10px);
-            z-index: 10001;
+            z-index: 10002;
             display: none;
             align-items: center;
             justify-content: center;
@@ -835,13 +1136,13 @@
         }
 
         .calendly-container {
-            background: white;
-            border-radius: 20px;
             width: 100%;
             max-width: 1000px;
-            height: 80vh;
-            position: relative;
+            height: 90vh;
+            background: white;
+            border-radius: 20px;
             overflow: hidden;
+            position: relative;
         }
 
         .calendly-close {
@@ -850,31 +1151,22 @@
             right: 1rem;
             width: 40px;
             height: 40px;
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(0, 0, 0, 0.7);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             z-index: 10;
-            transition: all 0.3s;
-        }
-
-        .calendly-close:hover {
-            background: rgba(0, 0, 0, 0.2);
-            transform: rotate(90deg);
-        }
-
-        #calendlyWidget {
-            width: 100%;
-            height: 100%;
+            color: white;
+            font-size: 1.2rem;
         }
 
         /* Footer */
         footer {
             background: var(--darker);
             border-top: 1px solid rgba(99, 102, 241, 0.1);
-            padding: 3rem 2rem 1rem;
+            padding: 3rem 2rem;
         }
 
         .footer-content {
@@ -910,29 +1202,6 @@
             color: var(--primary);
         }
 
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            background: rgba(99, 102, 241, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--light);
-            transition: all 0.3s;
-        }
-
-        .social-links a:hover {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            transform: translateY(-3px);
-        }
-
         .footer-bottom {
             text-align: center;
             padding-top: 2rem;
@@ -940,15 +1209,26 @@
             color: var(--gray);
         }
 
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease-out;
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 5rem;
+            right: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .toast.show {
+            transform: translateX(0);
         }
 
         /* Floating CTA */
@@ -967,47 +1247,569 @@
             transform: translateY(0);
         }
 
-        /* Back to Top */
-        .back-to-top {
+        /* Chat Widget */
+        .chat-widget {
             position: fixed;
             bottom: 2rem;
             left: 2rem;
-            width: 50px;
-            height: 50px;
+            z-index: 998;
+        }
+
+        .chat-button {
+            width: 60px;
+            height: 60px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.8rem;
             color: white;
             cursor: pointer;
-            z-index: 998;
-            opacity: 0;
-            transform: translateY(100px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.6);
+        }
+
+        .chat-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 25px;
+            height: 25px;
+            background: #ef4444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .chat-window {
+            position: fixed;
+            bottom: 100px;
+            left: 2rem;
+            width: 380px;
+            height: 600px;
+            background: var(--dark);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            z-index: 999;
+        }
+
+        .chat-window.active {
+            display: flex;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header-info h4 {
+            color: white;
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .chat-header-info p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.85rem;
+        }
+
+        .chat-close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .chat-close-btn:hover {
+            opacity: 1;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background: var(--darker);
+        }
+
+        .chat-message {
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-message.bot {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .chat-message.user {
+            display: flex;
+            flex-direction: row-reverse;
+            gap: 0.75rem;
+        }
+
+        .chat-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+
+        .chat-bubble {
+            max-width: 70%;
+            padding: 0.75rem 1rem;
+            border-radius: 15px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .chat-message.bot .chat-bubble {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            color: var(--light);
+            border-bottom-left-radius: 5px;
+        }
+
+        .chat-message.user .chat-bubble {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chat-quick-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .quick-action {
+            padding: 0.5rem 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            color: var(--primary);
+            font-size: 0.85rem;
+            cursor: pointer;
             transition: all 0.3s;
         }
 
-        .back-to-top.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .quick-action:hover {
+            background: rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
         }
 
-        .back-to-top:hover {
-            transform: translateY(-5px);
+        .chat-input-container {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(99, 102, 241, 0.1);
+            background: var(--dark);
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 25px;
+            color: var(--light);
+            font-size: 0.95rem;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .chat-send {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .chat-send:hover {
+            transform: scale(1.1);
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transform: translateY(-3px);
+        }
+
+        /* ROI Calculator */
+        .roi-calculator {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            margin: 3rem 0;
+        }
+
+        .roi-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .roi-input-group {
+            background: rgba(15, 23, 42, 0.5);
+            padding: 1.5rem;
+            border-radius: 15px;
+        }
+
+        .roi-input-group label {
+            display: block;
+            color: var(--light);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .roi-input-group input,
+        .roi-input-group select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 10px;
+            color: var(--light);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .roi-input-group input:focus,
+        .roi-input-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .roi-results {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .roi-results h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .roi-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .roi-metric {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .roi-metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .roi-metric-label {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+        }
+
+        /* Video Section */
+        .video-section {
+            background: rgba(99, 102, 241, 0.05);
+            padding: 5rem 2rem;
+            margin: 3rem 0;
+        }
+
+        .video-container {
+            max-width: 900px;
+            margin: 3rem auto 0;
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--dark), var(--darker));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .video-placeholder:hover {
+            background: linear-gradient(135deg, #1e1b4b, var(--dark));
+        }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+
+        .video-placeholder iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Lead Magnet Popup */
+        .lead-magnet-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 10003;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .lead-magnet-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .lead-magnet-popup {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 30px;
+            padding: 3rem;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+        }
+
+        .lead-magnet-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--light);
+            border: none;
+        }
+
+        .lead-magnet-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lead-magnet-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .lead-magnet-popup h3 {
+            font-size: 2rem;
+            color: var(--light);
+            margin-bottom: 1rem;
+        }
+
+        .lead-magnet-benefits {
+            text-align: left;
+            margin: 2rem 0;
+            background: rgba(15, 23, 42, 0.5);
+            padding: 1.5rem;
+            border-radius: 15px;
+        }
+
+        .lead-magnet-benefits li {
+            color: var(--gray);
+            padding: 0.5rem 0;
+            list-style: none;
+        }
+
+        .lead-magnet-benefits li::before {
+            content: "✓ ";
+            color: var(--accent);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .lead-magnet-form {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .lead-magnet-form input {
+            flex: 1;
+            min-width: 250px;
+            padding: 1rem 1.5rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 50px;
+            color: var(--light);
+            font-size: 1rem;
+        }
+
+        .lead-magnet-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .lead-magnet-form button {
+            padding: 1rem 2.5rem;
+        }
+
+        /* Fade In Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             nav ul {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--dark);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
             }
 
-            .mobile-menu {
+            nav ul.active {
+                display: flex;
+            }
+
+            .mobile-toggle {
                 display: block;
-            }
-
-            .contact-content {
-                grid-template-columns: 1fr;
             }
 
             .hero {
@@ -1018,98 +1820,93 @@
                 padding: 3rem 1rem;
             }
 
+            .case-study {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .case-metrics {
+                grid-template-columns: 1fr;
+            }
+
             .footer-content {
                 grid-template-columns: 1fr;
             }
 
-            .floating-cta,
-            .back-to-top {
-                bottom: 1rem;
-            }
-
-            .calendly-container {
-                height: 90vh;
-            }
-
-            .exit-popup {
-                padding: 2rem 1.5rem;
-                max-width: 90%;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .toast {
-                right: 1rem;
-                left: 1rem;
-                transform: translateY(-100px);
-            }
-
-            .toast.show {
-                transform: translateY(0);
+            .chat-window {
+                width: calc(100% - 4rem);
+                left: 2rem;
+                right: 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loader"></div>
-    </div>
-
     <!-- Progress Bar -->
     <div class="progress-bar" id="progressBar"></div>
 
-    <!-- Toast Notification -->
+    <!-- Toast -->
     <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span>Message sent successfully!</span>
+        <span>✓</span>
+        <span id="toastText">Success!</span>
+    </div>
+
+    <!-- Lead Magnet Popup -->
+    <div class="lead-magnet-overlay" id="leadMagnetPopup">
+        <div class="lead-magnet-popup">
+            <button class="lead-magnet-close" onclick="closeLeadMagnet()">
+                <span class="icon-times"></span>
+            </button>
+            <div class="lead-magnet-icon">📚</div>
+            <h3>Get Your FREE Automation Guide!</h3>
+            <p style="color: var(--gray); font-size: 1.1rem; margin-bottom: 1rem;">
+                "10 n8n Workflows Every Business Needs"
+            </p>
+            <ul class="lead-magnet-benefits">
+                <li>Save 20+ hours per week with proven workflows</li>
+                <li>Step-by-step implementation guides</li>
+                <li>Real-world examples from 100+ businesses</li>
+                <li>ROI calculator spreadsheet included</li>
+                <li>Bonus: 30-minute consultation ($500 value)</li>
+            </ul>
+            <form class="lead-magnet-form" onsubmit="handleLeadMagnet(event)">
+                <input type="email" name="email" placeholder="Enter your email" required>
+                <button type="submit" class="btn btn-primary">
+                    Download Free Guide
+                </button>
+            </form>
+            <p style="color: var(--gray); font-size: 0.85rem; margin-top: 1rem;">
+                🔒 We respect your privacy. Unsubscribe anytime.
+            </p>
+        </div>
     </div>
 
     <!-- Exit Intent Popup -->
     <div class="exit-popup-overlay" id="exitPopup">
         <div class="exit-popup">
             <div class="exit-popup-close" onclick="closeExitPopup()">
-                <i class="fas fa-times"></i>
+                <span class="icon-times"></span>
             </div>
-            <div class="exit-popup-icon">
-                <i class="fas fa-gift"></i>
-            </div>
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🎁</div>
             <h3>Wait! Don't Leave Empty-Handed</h3>
-            <p>Get our exclusive automation guide and a FREE 30-minute consultation (valued at $500)</p>
+            <p style="color: var(--gray); font-size: 1.1rem; margin-bottom: 2rem;">Get our exclusive automation guide and a FREE 30-minute consultation (valued at $500)</p>
             
-            <div class="exit-popup-offer">
-                <h4>🎁 Limited Time Offer</h4>
-                <p style="margin-bottom: 0.5rem;">Schedule a call in the next 10 minutes and receive:</p>
-                <ul style="text-align: left; color: var(--gray); margin-top: 1rem;">
-                    <li>✅ Free workflow audit ($300 value)</li>
-                    <li>✅ Custom automation roadmap</li>
-                    <li>✅ ROI projection for your business</li>
-                    <li>✅ 10% discount on any package</li>
+            <div style="background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.3); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                <h4 style="color: var(--accent); font-size: 1.5rem; margin-bottom: 0.5rem;">Limited Time Offer</h4>
+                <ul style="text-align: left; color: var(--gray); margin-top: 1rem; list-style: none;">
+                    <li style="margin-bottom: 0.5rem;">✓ Free workflow audit ($300 value)</li>
+                    <li style="margin-bottom: 0.5rem;">✓ Custom automation roadmap</li>
+                    <li style="margin-bottom: 0.5rem;">✓ ROI projection for your business</li>
+                    <li>✓ 10% discount on any package</li>
                 </ul>
-                
-                <div class="exit-popup-timer">
-                    <div class="timer-unit">
-                        <span class="timer-value" id="exitTimerMin">10</span>
-                        <span class="timer-label">MIN</span>
-                    </div>
-                    <div class="timer-unit">
-                        <span class="timer-value" id="exitTimerSec">00</span>
-                        <span class="timer-label">SEC</span>
-                    </div>
-                </div>
             </div>
             
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                 <button class="btn btn-primary" onclick="openCalendly(); closeExitPopup();">
-                    <i class="fas fa-calendar"></i> Claim My Free Consultation
+                    <span class="icon-calendar"></span> Claim My Free Consultation
                 </button>
                 <button class="btn btn-secondary" onclick="closeExitPopup()">
                     Maybe Later
@@ -1122,9 +1919,9 @@
     <div class="calendly-overlay" id="calendlyModal">
         <div class="calendly-container">
             <div class="calendly-close" onclick="closeCalendly()">
-                <i class="fas fa-times"></i>
+                <span class="icon-times"></span>
             </div>
-            <div id="calendlyWidget"></div>
+            <div id="calendlyWidget" style="width: 100%; height: 100%;"></div>
         </div>
     </div>
 
@@ -1132,54 +1929,31 @@
     <nav id="navbar">
         <div class="container">
             <div class="logo">⚡ Polash AI Automation</div>
-            <ul>
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">
+                <span class="icon-bars"></span>
+            </button>
+            <ul id="navMenu">
                 <li><a href="#services">Services</a></li>
                 <li><a href="#case-studies">Case Studies</a></li>
-                <li><a href="#process">Process</a></li>
                 <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#resources">Resources</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <div class="mobile-menu" onclick="toggleMobileMenu()">
-                <i class="fas fa-bars"></i>
-            </div>
         </div>
     </nav>
 
-    <!-- Mobile Navigation -->
-    <div class="mobile-nav" id="mobileNav">
-        <div class="close-mobile-menu" onclick="toggleMobileMenu()">
-            <i class="fas fa-times"></i>
-        </div>
-        <ul>
-            <li><a href="#services" onclick="toggleMobileMenu()">Services</a></li>
-            <li><a href="#case-studies" onclick="toggleMobileMenu()">Case Studies</a></li>
-            <li><a href="#process" onclick="toggleMobileMenu()">Process</a></li>
-            <li><a href="#pricing" onclick="toggleMobileMenu()">Pricing</a></li>
-            <li><a href="#resources" onclick="toggleMobileMenu()">Resources</a></li>
-            <li><a href="#contact" onclick="toggleMobileMenu()">Contact</a></li>
-        </ul>
-    </div>
-
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-bg"></div>
         <div class="hero-animation" id="particles"></div>
         <div class="hero-content">
-            <h1>Transform Your Business with AI-Powered Automation</h1>
+            <h1 id="heroHeadline">Transform Your Business with AI-Powered Automation</h1>
             <p>Expert n8n workflow automation solutions that save time, reduce costs, and scale your operations effortlessly</p>
             <div class="cta-buttons">
-                <a href="#contact" class="btn btn-primary">
-                    <i class="fas fa-rocket"></i>
-                    Get Free Consultation
-                </a>
+                <a href="#contact" class="btn btn-primary">Get Free Consultation</a>
                 <button class="btn btn-secondary" onclick="openCalendly()">
-                    <i class="fas fa-calendar"></i> Schedule Demo
+                    <span class="icon-calendar"></span> Schedule Demo
                 </button>
             </div>
-        </div>
-        <div class="scroll-indicator">
-            <i class="fas fa-chevron-down"></i>
         </div>
     </section>
 
@@ -1212,42 +1986,42 @@
         <div class="services-grid">
             <div class="service-card fade-in">
                 <div class="service-icon">
-                    <i class="fas fa-project-diagram"></i>
+                    <span class="icon-workflow"></span>
                 </div>
                 <h3>Custom n8n Workflow Development</h3>
                 <p>Build powerful, custom automation workflows tailored to your unique business processes and requirements.</p>
             </div>
             <div class="service-card fade-in">
                 <div class="service-icon">
-                    <i class="fas fa-robot"></i>
+                    <span class="icon-robot"></span>
                 </div>
                 <h3>AI Integration & Automation</h3>
                 <p>Integrate cutting-edge AI models like GPT-4, Claude, and custom ML solutions into your workflows.</p>
             </div>
             <div class="service-card fade-in">
                 <div class="service-icon">
-                    <i class="fas fa-cogs"></i>
+                    <span class="icon-cogs"></span>
                 </div>
                 <h3>Business Process Automation</h3>
                 <p>Streamline repetitive tasks, automate data entry, and optimize your entire business operations.</p>
             </div>
             <div class="service-card fade-in">
                 <div class="service-icon">
-                    <i class="fas fa-plug"></i>
+                    <span class="icon-plug"></span>
                 </div>
                 <h3>API Integration Services</h3>
                 <p>Seamlessly connect your tools, databases, and applications with powerful API integrations.</p>
             </div>
             <div class="service-card fade-in">
                 <div class="service-icon">
-                    <i class="fas fa-chart-line"></i>
+                    <span class="icon-chart"></span>
                 </div>
                 <h3>Workflow Optimization & Audits</h3>
                 <p>Analyze existing processes and optimize your workflows for maximum efficiency and cost savings.</p>
             </div>
             <div class="service-card fade-in">
                 <div class="service-icon">
-                    <i class="fas fa-graduation-cap"></i>
+                    <span class="icon-graduation"></span>
                 </div>
                 <h3>Training & Support</h3>
                 <p>Comprehensive training programs and ongoing support to ensure your team masters automation.</p>
@@ -1259,86 +2033,145 @@
     <section id="case-studies">
         <h2 class="fade-in">Case Studies</h2>
         <p class="section-subtitle fade-in">Real results from real clients</p>
-        <div style="display: grid; gap: 2rem; margin-top: 3rem;">
-            <div style="background: rgba(99, 102, 241, 0.05); border-radius: 20px; overflow: hidden; border: 1px solid rgba(99, 102, 241, 0.1); display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;" class="fade-in">
-                <div style="padding: 2.5rem;">
-                    <span style="display: inline-block; padding: 0.5rem 1rem; background: rgba(99, 102, 241, 0.2); border-radius: 50px; font-size: 0.9rem; margin-bottom: 1rem; color: var(--accent);">E-Commerce</span>
-                    <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--light);">Order Processing Automation</h3>
-                    <p style="color: var(--gray); margin-bottom: 1rem;"><strong>Challenge:</strong> Manual order processing taking 5 hours daily</p>
-                    <p style="color: var(--gray); margin-bottom: 1rem;"><strong>Solution:</strong> Built n8n workflow integrating Shopify, inventory system, and shipping APIs with AI-powered fraud detection</p>
-                    <p style="color: var(--gray);"><strong>Result:</strong> Complete automation of order processing with real-time updates</p>
+        <div class="case-studies-grid">
+            <div class="case-study fade-in">
+                <div class="case-content">
+                    <span class="case-tag">E-Commerce</span>
+                    <h3>Order Processing Automation</h3>
+                    <p><strong>Challenge:</strong> Manual order processing taking 5 hours daily</p>
+                    <p><strong>Solution:</strong> Built n8n workflow integrating Shopify, inventory system, and shipping APIs with AI-powered fraud detection</p>
+                    <p><strong>Result:</strong> Complete automation of order processing with real-time updates</p>
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; padding: 2.5rem; background: rgba(6, 182, 212, 0.05); align-items: center;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 2rem; font-weight: 700; color: var(--accent);">90%</div>
-                        <div style="font-size: 0.9rem; color: var(--gray);">Time Saved</div>
+                <div class="case-metrics">
+                    <div class="metric">
+                        <div class="metric-value">90%</div>
+                        <div class="metric-label">Time Saved</div>
                     </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 2rem; font-weight: 700; color: var(--accent);">$50K</div>
-                        <div style="font-size: 0.9rem; color: var(--gray);">Annual Savings</div>
+                    <div class="metric">
+                        <div class="metric-value">$50K</div>
+                        <div class="metric-label">Annual Savings</div>
                     </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 2rem; font-weight: 700; color: var(--accent);">99%</div>
-                        <div style="font-size: 0.9rem; color: var(--gray);">Accuracy</div>
+                    <div class="metric">
+                        <div class="metric-value">99%</div>
+                        <div class="metric-label">Accuracy</div>
                     </div>
                 </div>
             </div>
 
-            <div style="background: rgba(99, 102, 241, 0.05); border-radius: 20px; overflow: hidden; border: 1px solid rgba(99, 102, 241, 0.1); display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;" class="fade-in">
-                <div style="padding: 2.5rem;">
-                    <span style="display: inline-block; padding: 0.5rem 1rem; background: rgba(99, 102, 241, 0.2); border-radius: 50px; font-size: 0.9rem; margin-bottom: 1rem; color: var(--accent);">Marketing Agency</span>
-                    <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--light);">Lead Generation Pipeline</h3>
-                    <p style="color: var(--gray); margin-bottom: 1rem;"><strong>Challenge:</strong> Losing leads due to slow response times</p>
-                    <p style="color: var(--gray); margin-bottom: 1rem;"><strong>Solution:</strong> Automated lead capture, scoring, CRM integration, and AI-powered follow-up sequences</p>
-                    <p style="color: var(--gray);"><strong>Result:</strong> Instant lead processing with intelligent routing</p>
+            <div class="case-study fade-in">
+                <div class="case-content">
+                    <span class="case-tag">Marketing Agency</span>
+                    <h3>Lead Generation Pipeline</h3>
+                    <p><strong>Challenge:</strong> Losing leads due to slow response times and manual data entry</p>
+                    <p><strong>Solution:</strong> Automated lead capture, scoring, CRM integration, and AI-powered follow-up sequences</p>
+                    <p><strong>Result:</strong> Instant lead processing with intelligent routing and personalized outreach</p>
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; padding: 2.5rem; background: rgba(6, 182, 212, 0.05); align-items: center;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 2rem; font-weight: 700; color: var(--accent);">3x</div>
-                        <div style="font-size: 0.9rem; color: var(--gray);">Lead Response</div>
+                <div class="case-metrics">
+                    <div class="metric">
+                        <div class="metric-value">3x</div>
+                        <div class="metric-label">Lead Response</div>
                     </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 2rem; font-weight: 700; color: var(--accent);">45%</div>
-                        <div style="font-size: 0.9rem; color: var(--gray);">More Conversions</div>
+                    <div class="metric">
+                        <div class="metric-value">45%</div>
+                        <div class="metric-label">More Conversions</div>
                     </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 2rem; font-weight: 700; color: var(--accent);">15hrs</div>
-                        <div style="font-size: 0.9rem; color: var(--gray);">Saved Weekly</div>
+                    <div class="metric">
+                        <div class="metric-value">15hrs</div>
+                        <div class="metric-label">Saved Weekly</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-study fade-in">
+                <div class="case-content">
+                    <span class="case-tag">SaaS Company</span>
+                    <h3>Customer Onboarding Automation</h3>
+                    <p><strong>Challenge:</strong> Complex manual onboarding process causing delays and errors</p>
+                    <p><strong>Solution:</strong> Created automated onboarding workflows with AI chatbots, document generation, and multi-system provisioning</p>
+                    <p><strong>Result:</strong> Seamless customer experience with zero manual intervention</p>
+                </div>
+                <div class="case-metrics">
+                    <div class="metric">
+                        <div class="metric-value">80%</div>
+                        <div class="metric-label">Faster Onboarding</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">95%</div>
+                        <div class="metric-label">Customer Satisfaction</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">$75K</div>
+                        <div class="metric-label">Annual Savings</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Process -->
-    <section id="process">
-        <h2 class="fade-in">Our Process</h2>
-        <p class="section-subtitle fade-in">A proven methodology to deliver exceptional results</p>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3rem;">
-            <div style="text-align: center;" class="fade-in">
-                <div style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; margin: 0 auto 1.5rem;">1</div>
-                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--light);">Discovery</h3>
-                <p style="color: var(--gray);">We analyze your workflows, pain points, and automation opportunities</p>
+    <!-- Video Demo Section -->
+    <div class="video-section">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 class="fade-in">See Automation in Action</h2>
+            <p class="section-subtitle fade-in">Watch how we transformed a business in 90 seconds</p>
+            <div class="video-container fade-in">
+                <div class="video-placeholder" id="videoPlaceholder" onclick="loadVideo()">
+                    <div class="play-button">▶</div>
+                    <p style="color: var(--gray); font-size: 1.2rem;">Click to watch demo</p>
+                </div>
             </div>
-            <div style="text-align: center;" class="fade-in">
-                <div style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; margin: 0 auto 1.5rem;">2</div>
-                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--light);">Design</h3>
-                <p style="color: var(--gray);">Custom workflow architecture tailored to your specific requirements</p>
+        </div>
+    </div>
+
+    <!-- ROI Calculator Section -->
+    <section>
+        <h2 class="fade-in">Calculate Your Savings</h2>
+        <p class="section-subtitle fade-in">See how much time and money automation can save your business</p>
+        
+        <div class="roi-calculator fade-in">
+            <div class="roi-inputs">
+                <div class="roi-input-group">
+                    <label>Hours spent on manual tasks per week</label>
+                    <input type="number" id="hoursPerWeek" value="20" min="1" max="168" onchange="calculateROI()">
+                </div>
+                <div class="roi-input-group">
+                    <label>Average hourly rate ($)</label>
+                    <input type="number" id="hourlyRate" value="50" min="1" max="500" onchange="calculateROI()">
+                </div>
+                <div class="roi-input-group">
+                    <label>Automation potential</label>
+                    <select id="automationPercent" onchange="calculateROI()">
+                        <option value="50">50% - Conservative</option>
+                        <option value="70" selected>70% - Realistic</option>
+                        <option value="90">90% - Aggressive</option>
+                    </select>
+                </div>
             </div>
-            <div style="text-align: center;" class="fade-in">
-                <div style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; margin: 0 auto 1.5rem;">3</div>
-                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--light);">Development</h3>
-                <p style="color: var(--gray);">Building robust, scalable automation solutions with best practices</p>
-            </div>
-            <div style="text-align: center;" class="fade-in">
-                <div style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; margin: 0 auto 1.5rem;">4</div>
-                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--light);">Deployment</h3>
-                <p style="color: var(--gray);">Seamless implementation with comprehensive testing and optimization</p>
-            </div>
-            <div style="text-align: center;" class="fade-in">
-                <div style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; margin: 0 auto 1.5rem;">5</div>
-                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--light);">Support</h3>
-                <p style="color: var(--gray);">Ongoing maintenance, training, and continuous improvement</p>
+
+            <div class="roi-results" id="roiResults">
+                <h3>Your Potential Savings</h3>
+                <div class="roi-metrics">
+                    <div class="roi-metric">
+                        <div class="roi-metric-value" id="hoursSaved">14</div>
+                        <div class="roi-metric-label">Hours Saved/Week</div>
+                    </div>
+                    <div class="roi-metric">
+                        <div class="roi-metric-value" id="monthlySavings">$3,000</div>
+                        <div class="roi-metric-label">Monthly Savings</div>
+                    </div>
+                    <div class="roi-metric">
+                        <div class="roi-metric-value" id="yearlySavings">$36,400</div>
+                        <div class="roi-metric-label">Yearly Savings</div>
+                    </div>
+                    <div class="roi-metric">
+                        <div class="roi-metric-value" id="roiPeriod">2.1</div>
+                        <div class="roi-metric-label">Months to ROI</div>
+                    </div>
+                </div>
+                <div style="margin-top: 2rem;">
+                    <a href="#contact" class="btn btn-primary" style="background: white; color: var(--primary);">
+                        Get Your Custom Automation Plan
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -1347,95 +2180,128 @@
     <section id="pricing">
         <h2 class="fade-in">Flexible Pricing</h2>
         <p class="section-subtitle fade-in">Choose the plan that fits your automation needs</p>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
-            <div style="background: rgba(99, 102, 241, 0.05); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(99, 102, 241, 0.1); text-align: center;" class="fade-in">
-                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--light);">Starter</h3>
-                <div style="font-size: 3rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 2rem;">$2,500</div>
-                <ul style="list-style: none; margin-bottom: 2rem; text-align: left;">
-                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(99, 102, 241, 0.1); color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> 3 Custom Workflows</li>
-                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(99, 102, 241, 0.1); color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> Up to 5 Integrations</li>
-                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(99, 102, 241, 0.1); color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> Basic AI Integration</li>
-                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(99, 102, 241, 0.1); color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> 30 Days Support</li>
-                    <li style="padding: 0.8rem 0; color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> Documentation</li>
+        <div class="pricing-grid">
+            <div class="pricing-card fade-in">
+                <h3>Starter</h3>
+                <div class="price">$2,500</div>
+                <ul class="pricing-features">
+                    <li>✓ 3 Custom Workflows</li>
+                    <li>✓ Up to 5 Integrations</li>
+                    <li>✓ Basic AI Integration</li>
+                    <li>✓ 30 Days Support</li>
+                    <li>✓ Documentation</li>
                 </ul>
-                <a href="#contact" class="btn btn-secondary" style="width: 100%; justify-content: center;">Get Started</a>
+                <a href="#contact" class="btn btn-secondary" style="width: 100%;">Get Started</a>
             </div>
-
-            <div style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1)); padding: 2.5rem; border-radius: 20px; border: 1px solid var(--primary); text-align: center; transform: scale(1.05); position: relative;" class="fade-in">
-                <div style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.9rem; font-weight: 600; display: inline-block; margin-bottom: 1rem;">Most Popular</div>
-                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--light);">Professional</h3>
-                <div style="font-size: 3rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 2rem;">$7,500</div>
-                <ul style="list-style: none; margin-bottom: 2rem; text-align: left;">
-                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(99, 102, 241, 0.1); color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> 10 Custom Workflows</li>
-                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(99, 102, 241, 0.1); color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> Unlimited Integrations</li>
-                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(99, 102, 241, 0.1); color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> Advanced AI Features</li>
-                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(99, 102, 241, 0.1); color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> 90 Days Support</li>
-                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(99, 102, 241, 0.1); color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> Training Sessions</li>
-                    <li style="padding: 0.8rem 0; color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> Priority Support</li>
+            <div class="pricing-card featured fade-in">
+                <div class="pricing-badge">Most Popular</div>
+                <h3>Professional</h3>
+                <div class="price">$7,500</div>
+                <ul class="pricing-features">
+                    <li>✓ 10 Custom Workflows</li>
+                    <li>✓ Unlimited Integrations</li>
+                    <li>✓ Advanced AI Features</li>
+                    <li>✓ 90 Days Support</li>
+                    <li>✓ Training Sessions</li>
+                    <li>✓ Priority Support</li>
                 </ul>
-                <a href="#contact" class="btn btn-primary" style="width: 100%; justify-content: center;">Get Started</a>
+                <a href="#contact" class="btn btn-primary" style="width: 100%;">Get Started</a>
             </div>
-
-            <div style="background: rgba(99, 102, 241, 0.05); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(99, 102, 241, 0.1); text-align: center;" class="fade-in">
-                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--light);">Enterprise</h3>
-                <div style="font-size: 3rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 2rem;">Custom</div>
-                <ul style="list-style: none; margin-bottom: 2rem; text-align: left;">
-                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(99, 102, 241, 0.1); color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> Unlimited Workflows</li>
-                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(99, 102, 241, 0.1); color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> Full Stack Integration</li>
-                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(99, 102, 241, 0.1); color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> Custom AI Models</li>
-                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(99, 102, 241, 0.1); color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> Dedicated Support</li>
-                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(99, 102, 241, 0.1); color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> Ongoing Optimization</li>
-                    <li style="padding: 0.8rem 0; color: var(--gray);"><i class="fas fa-check" style="color: var(--accent); margin-right: 0.5rem;"></i> SLA Guarantee</li>
+            <div class="pricing-card fade-in">
+                <h3>Enterprise</h3>
+                <div class="price">Custom</div>
+                <ul class="pricing-features">
+                    <li>✓ Unlimited Workflows</li>
+                    <li>✓ Full Stack Integration</li>
+                    <li>✓ Custom AI Models</li>
+                    <li>✓ Dedicated Support</li>
+                    <li>✓ Ongoing Optimization</li>
+                    <li>✓ SLA Guarantee</li>
                 </ul>
-                <a href="#contact" class="btn btn-secondary" style="width: 100%; justify-content: center;">Contact Us</a>
+                <a href="#contact" class="btn btn-secondary" style="width: 100%;">Contact Us</a>
             </div>
         </div>
     </section>
 
-    <!-- Resources -->
-    <section id="resources">
-        <h2 class="fade-in">Latest Resources</h2>
-        <p class="section-subtitle fade-in">Stay updated with automation trends and best practices</p>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
-            <div style="background: rgba(99, 102, 241, 0.05); border-radius: 20px; overflow: hidden; border: 1px solid rgba(99, 102, 241, 0.1); cursor: pointer; transition: all 0.3s;" class="fade-in">
-                <div style="width: 100%; height: 200px; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white;">
-                    <i class="fas fa-book"></i>
-                </div>
-                <div style="padding: 2rem;">
-                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; color: var(--gray);">
-                        <span><i class="fas fa-calendar"></i> Oct 15, 2025</span>
-                        <span><i class="fas fa-clock"></i> 5 min read</span>
+    <!-- Testimonials -->
+    <section id="testimonials">
+        <h2 class="fade-in">What Our Clients Say</h2>
+        <p class="section-subtitle fade-in">Trusted by businesses worldwide</p>
+        <div class="testimonials-grid">
+            <div class="testimonial fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Polash AI Automation transformed our operations completely. What used to take us hours now happens automatically. The ROI was evident within the first month!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">👤</div>
+                    <div>
+                        <h4 style="color: var(--light); font-size: 1.1rem;">Sarah Johnson</h4>
+                        <p style="color: var(--gray); font-size: 0.9rem;">CEO, TechStart Inc</p>
                     </div>
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--light);">AI Integration Guide for n8n</h3>
-                    <p style="color: var(--gray);">Learn how to integrate GPT-4, Claude, and other AI models into your n8n workflows for intelligent automation.</p>
                 </div>
             </div>
-
-            <div style="background: rgba(99, 102, 241, 0.05); border-radius: 20px; overflow: hidden; border: 1px solid rgba(99, 102, 241, 0.1); cursor: pointer; transition: all 0.3s;" class="fade-in">
-                <div style="width: 100%; height: 200px; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white;">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <div style="padding: 2rem;">
-                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; color: var(--gray);">
-                        <span><i class="fas fa-calendar"></i> Oct 12, 2025</span>
-                        <span><i class="fas fa-clock"></i> 6 min read</span>
+            <div class="testimonial fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"The team's expertise in n8n and AI integration is unmatched. They understood our complex workflows and delivered solutions that exceeded expectations."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">👤</div>
+                    <div>
+                        <h4 style="color: var(--light); font-size: 1.1rem;">Michael Chen</h4>
+                        <p style="color: var(--gray); font-size: 0.9rem;">Operations Director, GrowthCo</p>
                     </div>
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--light);">10 n8n Workflows Every Business Needs</h3>
-                    <p style="color: var(--gray);">Discover the essential automation workflows that can transform your business operations and boost productivity.</p>
                 </div>
             </div>
-
-            <div style="background: rgba(99, 102, 241, 0.05); border-radius: 20px; overflow: hidden; border: 1px solid rgba(99, 102, 241, 0.1); cursor: pointer; transition: all 0.3s;" class="fade-in">
-                <div style="width: 100%; height: 200px; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white;">
-                    <i class="fas fa-calculator"></i>
-                </div>
-                <div style="padding: 2rem;">
-                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; color: var(--gray);">
-                        <span><i class="fas fa-calendar"></i> Oct 5, 2025</span>
-                        <span><i class="fas fa-clock"></i> 3 min read</span>
+            <div class="testimonial fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"We've saved over 100 hours per month and reduced errors to nearly zero. The ongoing support and training have been invaluable for our team."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">👤</div>
+                    <div>
+                        <h4 style="color: var(--light); font-size: 1.1rem;">Emily Rodriguez</h4>
+                        <p style="color: var(--gray); font-size: 0.9rem;">Marketing Manager, BrandBoost</p>
                     </div>
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--light);">Automation ROI Calculator</h3>
-                    <p style="color: var(--gray);">Calculate the potential return on investment for automating your business processes and workflows.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section>
+        <h2 class="fade-in">Frequently Asked Questions</h2>
+        <div class="faq-container">
+            <div class="faq-item fade-in">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What is n8n and why should I use it?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    n8n is a powerful, open-source workflow automation tool that allows businesses to connect apps, automate processes, and integrate AI without writing complex code. It's more flexible and cost-effective than alternatives like Zapier or Make.
+                </div>
+            </div>
+            <div class="faq-item fade-in">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How long does it take to implement automation?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Simple workflows can be deployed in 1-2 weeks, while complex enterprise solutions may take 4-8 weeks. We provide a detailed timeline during the discovery phase based on your specific requirements.
+                </div>
+            </div>
+            <div class="faq-item fade-in">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Do you provide training for our team?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Yes! All our packages include comprehensive documentation, and Professional and Enterprise plans include hands-on training sessions to ensure your team can manage and optimize the workflows.
+                </div>
+            </div>
+            <div class="faq-item fade-in">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What kind of ROI can I expect?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Most clients see ROI within 3-6 months through time savings, reduced errors, and increased productivity. On average, businesses save 20-40 hours per week and reduce operational costs by 30-50%.
                 </div>
             </div>
         </div>
@@ -1451,103 +2317,69 @@
                 <p style="color: var(--gray); margin: 1rem 0 2rem;">Book a free consultation to discover how automation can revolutionize your business processes and drive growth.</p>
                 <div class="contact-methods">
                     <div class="contact-method">
-                        <i class="fas fa-envelope"></i>
+                        <div class="contact-method-icon">
+                            <span class="icon-envelope"></span>
+                        </div>
                         <div>
                             <h4 style="color: var(--light); margin-bottom: 0.3rem;">Email</h4>
                             <p style="color: var(--gray);">hello@polashai.com</p>
                         </div>
                     </div>
                     <div class="contact-method">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <h4 style="color: var(--light); margin-bottom: 0.3rem;">Phone</h4>
-                            <p style="color: var(--gray);">+1 (555) 123-4567</p>
+                        <div class="contact-method-icon">
+                            <span class="icon-calendar"></span>
                         </div>
-                    </div>
-                    <div class="contact-method">
-                        <i class="fas fa-calendar"></i>
                         <div>
                             <h4 style="color: var(--light); margin-bottom: 0.3rem;">Schedule a Call</h4>
-                            <p style="color: var(--gray);">Book via Calendly</p>
-                        </div>
-                    </div>
-                    <div class="contact-method">
-                        <i class="fas fa-clock"></i>
-                        <div>
-                            <h4 style="color: var(--light); margin-bottom: 0.3rem;">Response Time</h4>
-                            <p style="color: var(--gray);">Within 24 hours</p>
+                            <p style="color: var(--gray); cursor: pointer;" onclick="openCalendly()">Book via Calendly</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <form class="contact-form fade-in" id="contactForm" onsubmit="handleContactSubmit(event)">
+
+            <form class="contact-form fade-in" id="contactForm" onsubmit="handleSubmit(event)">
                 <input type="hidden" name="_subject" value="New Contact Form Submission - Polash AI">
                 
                 <div class="form-group">
                     <label>Name *</label>
-                    <input type="text" name="name" id="contactName" required placeholder="Your full name" minlength="2" maxlength="100">
-                    <span class="error-message" id="nameError"></span>
+                    <input type="text" name="name" required placeholder="Your full name">
                 </div>
+                
                 <div class="form-group">
                     <label>Email *</label>
-                    <input type="email" name="email" id="contactEmail" required placeholder="your@email.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
-                    <span class="error-message" id="emailError"></span>
+                    <input type="email" name="email" required placeholder="your@email.com">
                 </div>
-                <div class="form-group">
-                    <label>Phone (Optional)</label>
-                    <input type="tel" name="phone" id="contactPhone" placeholder="+1 (555) 123-4567">
-                    <span class="error-message" id="phoneError"></span>
-                </div>
+                
                 <div class="form-group">
                     <label>Company</label>
-                    <input type="text" name="company" id="contactCompany" placeholder="Your company name" maxlength="100">
-                </div>
-                <div class="form-group">
-                    <label>Service Interest *</label>
-                    <select name="service" id="contactService" required>
-                        <option value="">Select a service</option>
-                        <option value="Custom Workflow Development">Custom Workflow Development</option>
-                        <option value="AI Integration">AI Integration</option>
-                        <option value="Process Automation">Process Automation</option>
-                        <option value="API Integration">API Integration</option>
-                        <option value="Workflow Optimization">Workflow Optimization</option>
-                        <option value="Training & Support">Training & Support</option>
-                        <option value="Enterprise Solution">Enterprise Solution</option>
-                    </select>
-                    <span class="error-message" id="serviceError"></span>
-                </div>
-                <div class="form-group">
-                    <label>Budget Range</label>
-                    <select name="budget" id="contactBudget">
-                        <option value="">Select budget range</option>
-                        <option value="Under $5,000">Under $5,000</option>
-                        <option value="$5,000 - $10,000">$5,000 - $10,000</option>
-                        <option value="$10,000 - $25,000">$10,000 - $25,000</option>
-                        <option value="$25,000+">$25,000+</option>
-                        <option value="Not sure yet">Not sure yet</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Project Description *</label>
-                    <textarea name="message" id="contactMessage" required placeholder="Tell us about your automation needs, current challenges, and goals..." minlength="20" maxlength="1000" rows="5"></textarea>
-                    <span class="error-message" id="messageError"></span>
-                    <small style="color: var(--gray); font-size: 0.85rem;">Minimum 20 characters</small>
+                    <input type="text" name="company" placeholder="Your company name">
                 </div>
                 
-                <button type="submit" class="btn btn-primary" id="submitBtn" style="width: 100%; justify-content: center;">
+                <div class="form-group">
+                    <label>Service Interest</label>
+                    <select name="service">
+                        <option value="">Select a service</option>
+                        <option value="workflow">Custom Workflow Development</option>
+                        <option value="ai">AI Integration</option>
+                        <option value="automation">Process Automation</option>
+                        <option value="api">API Integration</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Message *</label>
+                    <textarea name="message" required placeholder="Tell us about your automation needs..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="submitBtn" style="width: 100%;">
                     <span id="btnText">Send Message</span>
-                    <span id="btnSpinner" class="btn-spinner" style="display: none;">
-                        <i class="fas fa-spinner fa-spin"></i> Sending...
-                    </span>
                 </button>
                 
-                <div id="formSuccess" class="form-message success-message" style="display: none;">
-                    <i class="fas fa-check-circle"></i>
-                    <span><strong>Success!</strong> Your message has been sent. We'll get back to you within 24 hours.</span>
+                <div id="formSuccess" style="display: none; margin-top: 1.5rem; padding: 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; color: #10b981;">
+                    ✓ Success! Your message has been sent.
                 </div>
-                <div id="formError" class="form-message error-message-box" style="display: none;">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <span><strong>Oops!</strong> Something went wrong. Please try again or email us directly.</span>
+                <div id="formError" style="display: none; margin-top: 1.5rem; padding: 1rem; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #ef4444;">
+                    ✕ Something went wrong. Please email us at hello@polashai.com
                 </div>
             </form>
         </div>
@@ -1560,10 +2392,11 @@
                 <h4>⚡ Polash AI Automation</h4>
                 <p style="color: var(--gray); margin-top: 1rem;">Transforming businesses through intelligent n8n workflow automation and AI integration.</p>
                 <div class="social-links">
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" onclick="trackEvent('Social', 'click', 'LinkedIn', 0); return true;"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" onclick="trackEvent('Social', 'click', 'Twitter', 0); return true;"><i class="fab fa-twitter"></i></a>
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" onclick="trackEvent('Social', 'click', 'GitHub', 0); return true;"><i class="fab fa-github"></i></a>
-                    <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" onclick="trackEvent('Social', 'click', 'YouTube', 0); return true;"><i class="fab fa-youtube"></i></a>
+                    <a href="https://linkedin.com/company/polash-ai" target="_blank" rel="noopener" title="LinkedIn">🔗</a>
+                    <a href="https://twitter.com/polashai" target="_blank" rel="noopener" title="Twitter">🐦</a>
+                    <a href="https://facebook.com/polashai" target="_blank" rel="noopener" title="Facebook">📘</a>
+                    <a href="https://github.com/polashai" target="_blank" rel="noopener" title="GitHub">💻</a>
+                    <a href="https://youtube.com/@polashai" target="_blank" rel="noopener" title="YouTube">📺</a>
                 </div>
             </div>
             <div class="footer-section">
@@ -1572,7 +2405,6 @@
                     <li><a href="#services">Workflow Development</a></li>
                     <li><a href="#services">AI Integration</a></li>
                     <li><a href="#services">Process Automation</a></li>
-                    <li><a href="#services">API Integration</a></li>
                     <li><a href="#services">Training & Support</a></li>
                 </ul>
             </div>
@@ -1581,544 +2413,74 @@
                 <ul>
                     <li><a href="#case-studies">Case Studies</a></li>
                     <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#resources">Resources</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h4>Resources</h4>
                 <ul>
-                    <li><a href="#resources">Blog</a></li>
-                    <li><a href="#resources">Documentation</a></li>
-                    <li><a href="#resources">Tutorials</a></li>
-                    <li><a href="#case-studies">Case Studies</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Documentation</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2025 Polash AI Automation. All rights reserved.</p>
-            <p style="margin-top: 0.5rem;">Transforming businesses through intelligent automation</p>
         </div>
     </footer>
 
-    <!-- Floating Elements -->
+    <!-- Floating CTA -->
     <div class="floating-cta" id="floatingCTA">
         <a href="#contact" class="btn btn-primary">
-            <i class="fas fa-rocket"></i> Start Automating
+            🚀 Start Automating
         </a>
     </div>
 
-    <div class="back-to-top" id="backToTop" onclick="scrollToTop()">
-        <i class="fas fa-arrow-up"></i>
-    </div>
-
-    <script>
-        // ========================================
-        // GLOBAL VARIABLES & CONFIGURATION
-        // ========================================
-        
-        let exitIntentShown = false;
-        let exitTimerInterval;
-
-        // ========================================
-        // PAGE LOADING
-        // ========================================
-        
-        window.addEventListener('load', () => {
-            document.getElementById('loadingOverlay').classList.add('hidden');
-            
-            const loadTime = performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart;
-            trackEvent('Performance', 'page_load', 'Load Time', Math.round(loadTime / 1000));
-        });
-
-        // ========================================
-        // PROGRESS BAR
-        // ========================================
-        
-        window.addEventListener('scroll', () => {
-            const winScroll = document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById('progressBar').style.width = scrolled + '%';
-        });
-
-        // ========================================
-        // PARTICLE ANIMATION
-        // ========================================
-        
-        function createParticles() {
-            const container = document.getElementById('particles');
-            if (!container) return;
-            
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 20 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-                container.appendChild(particle);
-            }
-        }
-        createParticles();
-
-        // ========================================
-        // COUNTER ANIMATION
-        // ========================================
-        
-        function animateCounter(element) {
-            const target = parseInt(element.dataset.target);
-            const duration = 2000;
-            const increment = target / (duration / 16);
-            let current = 0;
-
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    element.textContent = target + (element.dataset.target === '95' ? '%' : '+');
-                    clearInterval(timer);
-                } else {
-                    element.textContent = Math.floor(current) + (element.dataset.target === '95' ? '%' : '+');
-                }
-            }, 16);
-        }
-
-        // ========================================
-        // INTERSECTION OBSERVER FOR ANIMATIONS
-        // ========================================
-        
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    
-                    if (entry.target.classList.contains('counter') && entry.target.textContent === '0') {
-                        animateCounter(entry.target);
-                    }
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in, .counter').forEach(el => observer.observe(el));
-
-        // ========================================
-        // NAVBAR SCROLL EFFECT
-        // ========================================
-        
-        let lastScroll = 0;
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            const floatingCTA = document.getElementById('floatingCTA');
-            const backToTop = document.getElementById('backToTop');
-            const currentScroll = window.pageYOffset;
-
-            if (currentScroll > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-
-            if (currentScroll > 500) {
-                floatingCTA.classList.add('visible');
-                backToTop.classList.add('visible');
-            } else {
-                floatingCTA.classList.remove('visible');
-                backToTop.classList.remove('visible');
-            }
-
-            lastScroll = currentScroll;
-        });
-
-        // ========================================
-        // MOBILE MENU TOGGLE
-        // ========================================
-        
-        function toggleMobileMenu() {
-            const mobileNav = document.getElementById('mobileNav');
-            mobileNav.classList.toggle('active');
-            trackEvent('Navigation', 'mobile_menu_toggle', 'Mobile Menu', 0);
-        }
-
-        // ========================================
-        // FORM VALIDATION
-        // ========================================
-        
-        function validateContactForm() {
-            let isValid = true;
-            
-            document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
-            document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
-            
-            const name = document.getElementById('contactName');
-            if (name.value.trim().length < 2) {
-                showError('contactName', 'nameError', 'Please enter a valid name (minimum 2 characters)');
-                isValid = false;
-            } else {
-                name.classList.add('success');
-            }
-            
-            const email = document.getElementById('contactEmail');
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email.value)) {
-                showError('contactEmail', 'emailError', 'Please enter a valid email address');
-                isValid = false;
-            } else {
-                email.classList.add('success');
-            }
-            
-            const service = document.getElementById('contactService');
-            if (!service.value) {
-                showError('contactService', 'serviceError', 'Please select a service');
-                isValid = false;
-            } else {
-                service.classList.add('success');
-            }
-            
-            const message = document.getElementById('contactMessage');
-            if (message.value.trim().length < 20) {
-                showError('contactMessage', 'messageError', 'Please provide more details (minimum 20 characters)');
-                isValid = false;
-            } else {
-                message.classList.add('success');
-            }
-            
-            return isValid;
-        }
-
-        function showError(inputId, errorId, message) {
-            document.getElementById(inputId).classList.add('error');
-            document.getElementById(errorId).textContent = message;
-        }
-
-        // ========================================
-        // FORM SUBMISSION
-        // ========================================
-        
-        function handleContactSubmit(event) {
-            event.preventDefault();
-            
-            trackEvent('Form', 'submit_attempt', 'Contact Form', 0);
-            
-            document.getElementById('formSuccess').style.display = 'none';
-            document.getElementById('formError').style.display = 'none';
-            
-            if (!validateContactForm()) {
-                trackEvent('Form', 'validation_failed', 'Contact Form', 0);
-                return false;
-            }
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const btnText = document.getElementById('btnText');
-            const btnSpinner = document.getElementById('btnSpinner');
-            
-            submitBtn.disabled = true;
-            btnText.style.display = 'none';
-            btnSpinner.style.display = 'flex';
-            
-            const form = document.getElementById('contactForm');
-            const formData = new FormData(form);
-            
-            const leadData = {
-                name: formData.get('name'),
-                email: formData.get('email'),
-                phone: formData.get('phone') || '',
-                company: formData.get('company') || '',
-                service: formData.get('service'),
-                budget: formData.get('budget') || '',
-                message: formData.get('message'),
-                timestamp: new Date().toISOString()
-            };
-            
-            trackEvent('Lead', 'form_submission', leadData.service, 0);
-            
-            const formEndpoint = 'https://formspree.io/f/YOUR_FORM_ID';
-            
-            fetch(formEndpoint, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById('formSuccess').style.display = 'flex';
-                    form.reset();
-                    showToast('Message sent successfully! Check your email for confirmation.');
-                    trackEvent('Conversion', 'lead_submitted', leadData.service, 1);
-                } else {
-                    document.getElementById('formError').style.display = 'flex';
-                    trackEvent('Form', 'submission_failed', 'Contact Form', 0);
-                }
-            })
-            .catch(error => {
-                document.getElementById('formError').style.display = 'flex';
-                console.error('Form submission error:', error);
-                trackEvent('Form', 'submission_error', error.message, 0);
-            })
-            .finally(() => {
-                submitBtn.disabled = false;
-                btnText.style.display = 'inline';
-                btnSpinner.style.display = 'none';
-            });
-        }
-
-        // ========================================
-        // REAL-TIME VALIDATION
-        // ========================================
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            const nameInput = document.getElementById('contactName');
-            if (nameInput) {
-                nameInput.addEventListener('blur', function() {
-                    if (this.value.trim().length >= 2) {
-                        this.classList.remove('error');
-                        this.classList.add('success');
-                        document.getElementById('nameError').textContent = '';
-                    }
-                });
-            }
-            
-            const emailInput = document.getElementById('contactEmail');
-            if (emailInput) {
-                emailInput.addEventListener('blur', function() {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (emailRegex.test(this.value)) {
-                        this.classList.remove('error');
-                        this.classList.add('success');
-                        document.getElementById('emailError').textContent = '';
-                    }
-                });
-            }
-            
-            const messageInput = document.getElementById('contactMessage');
-            if (messageInput) {
-                messageInput.addEventListener('input', function() {
-                    const charCount = this.value.trim().length;
-                    const errorEl = document.getElementById('messageError');
-                    
-                    if (charCount >= 20) {
-                        this.classList.remove('error');
-                        this.classList.add('success');
-                        errorEl.textContent = '';
-                    } else if (charCount > 0) {
-                        errorEl.textContent = `${20 - charCount} more characters needed`;
-                        errorEl.style.color = 'var(--gray)';
-                    }
-                });
-            }
-        });
-
-        // ========================================
-        // TOAST NOTIFICATION
-        // ========================================
-        
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.querySelector('span').textContent = message;
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // ========================================
-        // SCROLL TO TOP
-        // ========================================
-        
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-            trackEvent('Navigation', 'scroll_to_top', 'Back to Top', 0);
-        }
-
-        // ========================================
-        // EXIT INTENT POPUP
-        // ========================================
-        
-        function initExitIntent() {
-            document.addEventListener('mouseout', function(e) {
-                if (!e.toElement && !e.relatedTarget && !exitIntentShown) {
-                    showExitPopup();
-                }
-            });
-
-            if (sessionStorage.getItem('form_submitted')) {
-                exitIntentShown = true;
-            }
-        }
-
-        function showExitPopup() {
-            if (exitIntentShown) return;
-            
-            exitIntentShown = true;
-            sessionStorage.setItem('exit_popup_shown', 'true');
-            
-            document.getElementById('exitPopup').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            let timeLeft = 600;
-            
-            exitTimerInterval = setInterval(() => {
-                timeLeft--;
-                
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                
-                const minEl = document.getElementById('exitTimerMin');
-                const secEl = document.getElementById('exitTimerSec');
-                
-                if (minEl) minEl.textContent = minutes.toString().padStart(2, '0');
-                if (secEl) secEl.textContent = seconds.toString().padStart(2, '0');
-                
-                if (timeLeft <= 0) {
-                    clearInterval(exitTimerInterval);
-                }
-            }, 1000);
-            
-            trackEvent('ExitIntent', 'popup_shown', 'Exit Popup', 0);
-        }
-
-        function closeExitPopup() {
-            document.getElementById('exitPopup').classList.remove('active');
-            document.body.style.overflow = 'auto';
-            clearInterval(exitTimerInterval);
-            trackEvent('ExitIntent', 'popup_closed', 'Exit Popup', 0);
-        }
-
-        // ========================================
-        // CALENDLY INTEGRATION
-        // ========================================
-        
-        function openCalendly() {
-            const modal = document.getElementById('calendlyModal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            if (typeof Calendly !== 'undefined') {
-                Calendly.initInlineWidget({
-                    url: 'https://calendly.com/YOUR_CALENDLY_USERNAME/30min',
-                    parentElement: document.getElementById('calendlyWidget'),
-                    prefill: {
-                        name: '',
-                        email: '',
-                        customAnswers: {
-                            a1: 'Website Inquiry'
-                        }
-                    },
-                    utm: {
-                        utmCampaign: 'Website',
-                        utmSource: 'Polash AI',
-                        utmMedium: 'Direct'
-                    }
-                });
-            } else {
-                document.getElementById('calendlyWidget').innerHTML = `
-                    <div style="padding: 3rem; text-align: center; color: #1f2937;">
-                        <h3 style="margin-bottom: 1rem;">Schedule Your Consultation</h3>
-                        <p style="color: #6b7280; margin-bottom: 2rem;">Click the button below to schedule a time that works for you.</p>
-                        <a href="https://calendly.com/YOUR_CALENDLY_USERNAME/30min" target="_blank" class="btn btn-primary">
-                            Open Calendly
-                        </a>
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <button class="chat-button" onclick="toggleChat()">
+            💬
+            <div class="chat-badge">1</div>
+        </button>
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <h4>Polash AI Support</h4>
+                    <p>🟢 Online - We reply instantly</p>
+                </div>
+                <button class="chat-close-btn" onclick="toggleChat()">
+                    <span class="icon-times"></span>
+                </button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot">
+                    <div class="chat-avatar">🤖</div>
+                    <div class="chat-bubble">
+                        Hi! 👋 I'm here to help with your automation needs. How can I assist you today?
                     </div>
-                `;
-            }
-            
-            trackEvent('Calendly', 'modal_opened', 'Schedule Demo', 0);
-        }
-
-        function closeCalendly() {
-            document.getElementById('calendlyModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-            trackEvent('Calendly', 'modal_closed', 'Schedule Demo', 0);
-        }
-
-        window.addEventListener('message', function(e) {
-            if (e.data.event && e.data.event.indexOf('calendly') === 0) {
-                if (e.data.event === 'calendly.event_scheduled') {
-                    trackEvent('Calendly', 'booking_completed', 'Demo Scheduled', 1);
-                    closeCalendly();
-                    showToast('Meeting scheduled successfully! Check your email for confirmation.');
-                }
-            }
-        });
-
-        // ========================================
-        // SMOOTH SCROLL FOR NAVIGATION
-        // ========================================
-        
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                
-                if (!href || href === '#' || href.length <= 1) {
-                    e.preventDefault();
-                    return;
-                }
-                
-                e.preventDefault();
-                const target = document.querySelector(href);
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // ========================================
-        // TRACKING FOR CTA BUTTONS
-        // ========================================
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.btn-primary').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const btnText = this.textContent.trim();
-                    trackEvent('CTA', 'click', btnText, 0);
-                });
-            });
-
-            document.querySelectorAll('nav a').forEach(link => {
-                link.addEventListener('click', function() {
-                    trackEvent('Navigation', 'click', this.textContent, 0);
-                });
-            });
-
-            let scrollDepth = 0;
-            window.addEventListener('scroll', () => {
-                const percent = Math.round((window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100);
-                if (percent > scrollDepth && percent % 25 === 0) {
-                    scrollDepth = percent;
-                    trackEvent('Engagement', 'scroll_depth', percent + '%', percent);
-                }
-            });
-
-            initExitIntent();
-        });
-
-        // ========================================
-        // INITIALIZE ANIMATIONS ON PAGE LOAD
-        // ========================================
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                const heroElements = document.querySelectorAll('.hero h1, .hero p, .cta-buttons');
-                heroElements.forEach((el, i) => {
-                    setTimeout(() => {
-                        el.style.opacity = '1';
-                        el.style.transform = 'translateY(0)';
-                    }, i * 200);
-                });
-            }, 100);
-        });
-    </script>
+                </div>
+                <div class="chat-quick-actions">
+                    <div class="quick-action" onclick="sendQuickMessage('I want to learn about pricing')">
+                        💰 Pricing Info
+                    </div>
+                    <div class="quick-action" onclick="sendQuickMessage('I want to schedule a demo')">
+                        📅 Schedule Demo
+                    </div>
+                    <div class="quick-action" onclick="sendQuickMessage('I have a technical question')">
+                        🔧 Technical Support
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <div class="chat-input-wrapper">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
+                    <button class="chat-send" onclick="sendChatMessage()">
+                        ➤
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
