@@ -8,423 +8,6 @@
     <!-- Google Analytics (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
-        // Create particles
-        function createParticles() {
-            const container = document.getElementById('particles');
-            if (!container) return;
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 20 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-                container.appendChild(particle);
-            }
-        }
-        createParticles();
-
-        // Counter Animation
-        function animateCounter(element) {
-            const target = parseInt(element.dataset.target);
-            const duration = 2000;
-            const increment = target / (duration / 16);
-            let current = 0;
-
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    element.textContent = target + (element.dataset.target === '95' ? '%' : '+');
-                    clearInterval(timer);
-                } else {
-                    element.textContent = Math.floor(current) + (element.dataset.target === '95' ? '%' : '+');
-                }
-            }, 16);
-        }
-
-        // Intersection Observer
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    
-                    if (entry.target.classList.contains('counter') && entry.target.textContent === '0') {
-                        animateCounter(entry.target);
-                    }
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in, .counter').forEach(el => observer.observe(el));
-
-        // Progress Bar
-        window.addEventListener('scroll', () => {
-            const winScroll = document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById('progressBar').style.width = scrolled + '%';
-
-            // Navbar scroll effect
-            const navbar = document.getElementById('navbar');
-            if (winScroll > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-
-            // Floating CTA
-            const floatingCTA = document.getElementById('floatingCTA');
-            if (winScroll > 500) {
-                floatingCTA.classList.add('visible');
-            } else {
-                floatingCTA.classList.remove('visible');
-            }
-        });
-
-        // Mobile Menu
-        function toggleMobileMenu() {
-            document.getElementById('navMenu').classList.toggle('active');
-        }
-
-        // FAQ Toggle
-        function toggleFAQ(element) {
-            const answer = element.nextElementSibling;
-            const icon = element.querySelector('.faq-icon');
-            
-            answer.classList.toggle('active');
-            icon.classList.toggle('active');
-        }
-
-        // Toast
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastText').textContent = message;
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // Exit Intent
-        let exitIntentShown = false;
-        let leadMagnetShown = false;
-
-        document.addEventListener('mouseout', function(e) {
-            if (!e.toElement && !e.relatedTarget && !exitIntentShown && e.clientY < 10) {
-                if (!leadMagnetShown) {
-                    showLeadMagnet();
-                } else {
-                    exitIntentShown = true;
-                    document.getElementById('exitPopup').classList.add('active');
-                    trackEvent('ExitIntent', 'shown', 'Exit Popup', 0);
-                }
-            }
-        });
-
-        setTimeout(() => {
-            if (!leadMagnetShown) {
-                showLeadMagnet();
-            }
-        }, 30000);
-
-        function showLeadMagnet() {
-            leadMagnetShown = true;
-            document.getElementById('leadMagnetPopup').classList.add('active');
-            trackEvent('LeadMagnet', 'shown', 'Free Guide Popup', 0);
-        }
-
-        function closeLeadMagnet() {
-            document.getElementById('leadMagnetPopup').classList.remove('active');
-            trackEvent('LeadMagnet', 'closed', 'Free Guide Popup', 0);
-        }
-
-        function handleLeadMagnet(event) {
-            event.preventDefault();
-            const email = event.target.email.value;
-            
-            trackEvent('LeadMagnet', 'conversion', email, 0);
-            if (typeof fbq !== 'undefined') {
-                fbq('track', 'Lead', {content_name: 'Free Guide'});
-            }
-            
-            showToast('Success! Check your email for the download link.');
-            closeLeadMagnet();
-            
-            setTimeout(() => {
-                alert('📧 Thank you! We\'ve sent "10 n8n Workflows Every Business Needs" to ' + email + '\n\nCheck your inbox (and spam folder) in the next few minutes.\n\nBonus: A team member will reach out within 24 hours to schedule your FREE consultation!');
-            }, 500);
-        }
-
-        function closeExitPopup() {
-            document.getElementById('exitPopup').classList.remove('active');
-        }
-
-        // ROI Calculator
-        function calculateROI() {
-            const hoursPerWeek = parseFloat(document.getElementById('hoursPerWeek').value) || 20;
-            const hourlyRate = parseFloat(document.getElementById('hourlyRate').value) || 50;
-            const automationPercent = parseFloat(document.getElementById('automationPercent').value) || 70;
-            
-            const hoursSaved = (hoursPerWeek * automationPercent / 100).toFixed(1);
-            const weeklySavings = hoursSaved * hourlyRate;
-            const monthlySavings = weeklySavings * 4.33;
-            const yearlySavings = monthlySavings * 12;
-            
-            const projectCost = 7500;
-            const roiMonths = (projectCost / monthlySavings).toFixed(1);
-            
-            document.getElementById('hoursSaved').textContent = hoursSaved;
-            document.getElementById('monthlySavings').textContent = '$' + monthlySavings.toFixed(0).toLocaleString();
-            document.getElementById('yearlySavings').textContent = '$' + yearlySavings.toFixed(0).toLocaleString();
-            document.getElementById('roiPeriod').textContent = roiMonths;
-            
-            trackEvent('ROI_Calculator', 'calculated', 'Savings: $' + yearlySavings.toFixed(0), yearlySavings);
-        }
-
-        // Video Player
-        function loadVideo() {
-            const placeholder = document.getElementById('videoPlaceholder');
-            const videoId = 'YOUR_YOUTUBE_VIDEO_ID';
-            
-            if (videoId === 'YOUR_YOUTUBE_VIDEO_ID') {
-                placeholder.innerHTML = `
-                    <div style="padding: 3rem; text-align: center;">
-                        <h3 style="color: var(--light); margin-bottom: 1rem;">🎥 Add Your Demo Video</h3>
-                        <p style="color: var(--gray); margin-bottom: 2rem;">
-                            To enable video playback:<br>
-                            1. Upload your demo video to YouTube<br>
-                            2. Copy the video ID from the URL<br>
-                            3. Replace YOUR_YOUTUBE_VIDEO_ID in the code
-                        </p>
-                        <p style="color: var(--primary); font-weight: 600;">
-                            Example: https://youtube.com/watch?v=<span style="color: var(--accent);">dQw4w9WgXcQ</span>
-                        </p>
-                    </div>
-                `;
-            } else {
-                placeholder.innerHTML = `
-                    <iframe 
-                        src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
-                `;
-                trackEvent('Video', 'played', 'Demo Video', 0);
-            }
-        }
-
-        // Calendly
-        function openCalendly() {
-            const modal = document.getElementById('calendlyModal');
-            modal.classList.add('active');
-            
-            if (typeof Calendly !== 'undefined') {
-                Calendly.initInlineWidget({
-                    url: 'https://calendly.com/YOUR_CALENDLY_USERNAME/30min',
-                    parentElement: document.getElementById('calendlyWidget')
-                });
-            } else {
-                document.getElementById('calendlyWidget').innerHTML = `
-                    <div style="padding: 3rem; text-align: center; color: #1f2937;">
-                        <h3 style="margin-bottom: 1rem;">Schedule Your Consultation</h3>
-                        <p style="margin-bottom: 2rem; color: #6b7280;">To enable booking, add your Calendly username in the code.</p>
-                        <a href="https://calendly.com" target="_blank" style="display: inline-block; padding: 1rem 2rem; background: #6366f1; color: white; text-decoration: none; border-radius: 50px;">
-                            Go to Calendly
-                        </a>
-                    </div>
-                `;
-            }
-            
-            trackEvent('Calendly', 'opened', 'Schedule Demo', 0);
-        }
-
-        function closeCalendly() {
-            document.getElementById('calendlyModal').classList.remove('active');
-        }
-
-        // Form Submission
-        function handleSubmit(event) {
-            event.preventDefault();
-            
-            const form = document.getElementById('contactForm');
-            const submitBtn = document.getElementById('submitBtn');
-            const btnText = document.getElementById('btnText');
-            const formSuccess = document.getElementById('formSuccess');
-            const formError = document.getElementById('formError');
-            
-            formSuccess.style.display = 'none';
-            formError.style.display = 'none';
-            
-            const formData = {
-                name: form.name.value,
-                email: form.email.value,
-                company: form.company.value || 'Not provided',
-                service: form.service.value || 'Not specified',
-                message: form.message.value
-            };
-            
-            submitBtn.disabled = true;
-            btnText.textContent = 'Sending...';
-            
-            const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
-            
-            if (FORMSPREE_ENDPOINT === 'https://formspree.io/f/YOUR_FORM_ID') {
-                setTimeout(() => {
-                    formSuccess.style.display = 'block';
-                    formSuccess.innerHTML = `
-                        ✓ Form validated! To enable email delivery, add your Formspree ID.<br>
-                        <small style="font-size: 0.9rem; display: block; margin-top: 0.5rem;">
-                        Data captured: ${formData.name} (${formData.email})
-                        </small>
-                    `;
-                    form.reset();
-                    showToast('Form submitted successfully!');
-                    submitBtn.disabled = false;
-                    btnText.textContent = 'Send Message';
-                    
-                    trackEvent('Form', 'submission', formData.service, 0);
-                    if (typeof fbq !== 'undefined') {
-                        fbq('track', 'Lead');
-                    }
-                }, 1000);
-                return;
-            }
-            
-            const formBody = new FormData();
-            Object.keys(formData).forEach(key => formBody.append(key, formData[key]));
-            
-            fetch(FORMSPREE_ENDPOINT, {
-                method: 'POST',
-                body: formBody,
-                headers: {'Accept': 'application/json'}
-            })
-            .then(response => {
-                if (response.ok) {
-                    formSuccess.style.display = 'block';
-                    form.reset();
-                    showToast('Message sent successfully!');
-                    trackEvent('Form', 'submission_success', formData.service, 0);
-                } else {
-                    throw new Error('Submission failed');
-                }
-            })
-            .catch(error => {
-                formError.style.display = 'block';
-                console.error('Form error:', error);
-            })
-            .finally(() => {
-                submitBtn.disabled = false;
-                btnText.textContent = 'Send Message';
-            });
-        }
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({behavior: 'smooth', block: 'start'});
-                    document.getElementById('navMenu').classList.remove('active');
-                }
-            });
-        });
-
-        // Chat Widget Functions
-        function toggleChat() {
-            const chatWindow = document.getElementById('chatWindow');
-            const badge = document.querySelector('.chat-badge');
-            
-            chatWindow.classList.toggle('active');
-            
-            if (chatWindow.classList.contains('active')) {
-                badge.style.display = 'none';
-                trackEvent('Chat', 'opened', 'Support Chat', 0);
-            } else {
-                trackEvent('Chat', 'closed', 'Support Chat', 0);
-            }
-        }
-
-        function sendChatMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
-            
-            if (!message) return;
-            
-            addChatMessage(message, 'user');
-            input.value = '';
-            
-            trackEvent('Chat', 'message_sent', message.substring(0, 50), 0);
-            
-            setTimeout(() => {
-                const response = getBotResponse(message);
-                addChatMessage(response, 'bot');
-            }, 1000);
-        }
-
-        function handleChatKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendChatMessage();
-            }
-        }
-
-        function sendQuickMessage(message) {
-            document.getElementById('chatInput').value = message;
-            sendChatMessage();
-        }
-
-        function addChatMessage(message, type) {
-            const messagesContainer = document.getElementById('chatMessages');
-            
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `chat-message ${type}`;
-            
-            const avatar = document.createElement('div');
-            avatar.className = 'chat-avatar';
-            avatar.textContent = type === 'bot' ? '🤖' : '👤';
-            
-            const bubble = document.createElement('div');
-            bubble.className = 'chat-bubble';
-            bubble.textContent = message;
-            
-            messageDiv.appendChild(avatar);
-            messageDiv.appendChild(bubble);
-            messagesContainer.appendChild(messageDiv);
-            
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        function getBotResponse(message) {
-            const lowerMessage = message.toLowerCase();
-            
-            if (lowerMessage.includes('pricing') || lowerMessage.includes('cost') || lowerMessage.includes('price')) {
-                return "Our pricing starts at $2,500 for the Starter package, $7,500 for Professional, and custom pricing for Enterprise. Would you like me to connect you with our team for a detailed quote?";
-            } else if (lowerMessage.includes('demo') || lowerMessage.includes('schedule')) {
-                return "Great! I can help you schedule a demo. Click the 'Schedule Demo' button at the top, or I can have someone from our team reach out to you directly.";
-            } else if (lowerMessage.includes('technical') || lowerMessage.includes('support') || lowerMessage.includes('help')) {
-                return "I'll connect you with our technical team right away. Can you briefly describe the issue you're experiencing? Or you can email us at hello@polashai.com";
-            } else if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
-                return "Hello! How can I help you with your automation needs today?";
-            } else if (lowerMessage.includes('service') || lowerMessage.includes('what do you do')) {
-                return "We specialize in n8n workflow automation, AI integration, business process automation, and API integration. We help businesses save time and reduce costs through intelligent automation.";
-            } else if (lowerMessage.includes('time') || lowerMessage.includes('how long')) {
-                return "Simple workflows take 1-2 weeks to implement, while complex enterprise solutions take 4-8 weeks. We'll provide a detailed timeline after understanding your specific needs.";
-            } else {
-                return "Thanks for your message! A team member will respond shortly. In the meantime, feel free to check out our case studies or schedule a consultation. You can also email us at hello@polashai.com";
-            }
-        }
-
-        // Initialize ROI calculator on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            calculateROI();
-        });
-
-        // Google Analytics
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -458,7 +41,6 @@
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     
     <style>
-        /* Your CSS styles remain exactly the same - they were not the issue */
         * {
             margin: 0;
             padding: 0;
@@ -1835,12 +1417,6 @@
             .footer-content {
                 grid-template-columns: 1fr;
             }
-
-            .chat-window {
-                width: calc(100% - 4rem);
-                left: 2rem;
-                right: 2rem;
-            }
         }
     </style>
 </head>
@@ -1979,6 +1555,74 @@
         </div>
     </div>
 
+    <!-- Video Demo Section -->
+    <div class="video-section">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 class="fade-in">See Automation in Action</h2>
+            <p class="section-subtitle fade-in">Watch how we transformed a business in 90 seconds</p>
+            <div class="video-container fade-in">
+                <div class="video-placeholder" id="videoPlaceholder" onclick="loadVideo()">
+                    <div class="play-button">▶</div>
+                    <p style="color: var(--gray); font-size: 1.2rem;">Click to watch demo</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROI Calculator Section -->
+    <section>
+        <h2 class="fade-in">Calculate Your Savings</h2>
+        <p class="section-subtitle fade-in">See how much time and money automation can save your business</p>
+        
+        <div class="roi-calculator fade-in">
+            <div class="roi-inputs">
+                <div class="roi-input-group">
+                    <label>Hours spent on manual tasks per week</label>
+                    <input type="number" id="hoursPerWeek" value="20" min="1" max="168" onchange="calculateROI()">
+                </div>
+                <div class="roi-input-group">
+                    <label>Average hourly rate ($)</label>
+                    <input type="number" id="hourlyRate" value="50" min="1" max="500" onchange="calculateROI()">
+                </div>
+                <div class="roi-input-group">
+                    <label>Automation potential</label>
+                    <select id="automationPercent" onchange="calculateROI()">
+                        <option value="50">50% - Conservative</option>
+                        <option value="70" selected>70% - Realistic</option>
+                        <option value="90">90% - Aggressive</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="roi-results" id="roiResults">
+                <h3>Your Potential Savings</h3>
+                <div class="roi-metrics">
+                    <div class="roi-metric">
+                        <div class="roi-metric-value" id="hoursSaved">14</div>
+                        <div class="roi-metric-label">Hours Saved/Week</div>
+                    </div>
+                    <div class="roi-metric">
+                        <div class="roi-metric-value" id="monthlySavings">$3,000</div>
+                        <div class="roi-metric-label">Monthly Savings</div>
+                    </div>
+                    <div class="roi-metric">
+                        <div class="roi-metric-value" id="yearlySavings">$36,400</div>
+                        <div class="roi-metric-label">Yearly Savings</div>
+                    </div>
+                    <div class="roi-metric">
+                        <div class="roi-metric-value" id="roiPeriod">2.1</div>
+                        <div class="roi-metric-label">Months to ROI</div>
+                    </div>
+                </div>
+                <div style="margin-top: 2rem;">
+                    <a href="#contact" class="btn btn-primary" style="background: white; color: var(--primary);">
+                        Get Your Custom Automation Plan
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Services Section -->
     <section id="services">
         <h2 class="fade-in">Our Services</h2>
@@ -2103,74 +1747,6 @@
                         <div class="metric-value">$75K</div>
                         <div class="metric-label">Annual Savings</div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Video Demo Section -->
-    <div class="video-section">
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <h2 class="fade-in">See Automation in Action</h2>
-            <p class="section-subtitle fade-in">Watch how we transformed a business in 90 seconds</p>
-            <div class="video-container fade-in">
-                <div class="video-placeholder" id="videoPlaceholder" onclick="loadVideo()">
-                    <div class="play-button">▶</div>
-                    <p style="color: var(--gray); font-size: 1.2rem;">Click to watch demo</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ROI Calculator Section -->
-    <section>
-        <h2 class="fade-in">Calculate Your Savings</h2>
-        <p class="section-subtitle fade-in">See how much time and money automation can save your business</p>
-        
-        <div class="roi-calculator fade-in">
-            <div class="roi-inputs">
-                <div class="roi-input-group">
-                    <label>Hours spent on manual tasks per week</label>
-                    <input type="number" id="hoursPerWeek" value="20" min="1" max="168" onchange="calculateROI()">
-                </div>
-                <div class="roi-input-group">
-                    <label>Average hourly rate ($)</label>
-                    <input type="number" id="hourlyRate" value="50" min="1" max="500" onchange="calculateROI()">
-                </div>
-                <div class="roi-input-group">
-                    <label>Automation potential</label>
-                    <select id="automationPercent" onchange="calculateROI()">
-                        <option value="50">50% - Conservative</option>
-                        <option value="70" selected>70% - Realistic</option>
-                        <option value="90">90% - Aggressive</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="roi-results" id="roiResults">
-                <h3>Your Potential Savings</h3>
-                <div class="roi-metrics">
-                    <div class="roi-metric">
-                        <div class="roi-metric-value" id="hoursSaved">14</div>
-                        <div class="roi-metric-label">Hours Saved/Week</div>
-                    </div>
-                    <div class="roi-metric">
-                        <div class="roi-metric-value" id="monthlySavings">$3,000</div>
-                        <div class="roi-metric-label">Monthly Savings</div>
-                    </div>
-                    <div class="roi-metric">
-                        <div class="roi-metric-value" id="yearlySavings">$36,400</div>
-                        <div class="roi-metric-label">Yearly Savings</div>
-                    </div>
-                    <div class="roi-metric">
-                        <div class="roi-metric-value" id="roiPeriod">2.1</div>
-                        <div class="roi-metric-label">Months to ROI</div>
-                    </div>
-                </div>
-                <div style="margin-top: 2rem;">
-                    <a href="#contact" class="btn btn-primary" style="background: white; color: var(--primary);">
-                        Get Your Custom Automation Plan
-                    </a>
                 </div>
             </div>
         </div>
@@ -2392,11 +1968,21 @@
                 <h4>⚡ Polash AI Automation</h4>
                 <p style="color: var(--gray); margin-top: 1rem;">Transforming businesses through intelligent n8n workflow automation and AI integration.</p>
                 <div class="social-links">
-                    <a href="https://linkedin.com/company/polash-ai" target="_blank" rel="noopener" title="LinkedIn">🔗</a>
-                    <a href="https://twitter.com/polashai" target="_blank" rel="noopener" title="Twitter">🐦</a>
-                    <a href="https://facebook.com/polashai" target="_blank" rel="noopener" title="Facebook">📘</a>
-                    <a href="https://github.com/polashai" target="_blank" rel="noopener" title="GitHub">💻</a>
-                    <a href="https://youtube.com/@polashai" target="_blank" rel="noopener" title="YouTube">📺</a>
+                    <a href="https://linkedin.com/company/polash-ai" target="_blank" rel="noopener" title="LinkedIn">
+                        🔗
+                    </a>
+                    <a href="https://twitter.com/polashai" target="_blank" rel="noopener" title="Twitter">
+                        🐦
+                    </a>
+                    <a href="https://facebook.com/polashai" target="_blank" rel="noopener" title="Facebook">
+                        📘
+                    </a>
+                    <a href="https://github.com/polashai" target="_blank" rel="noopener" title="GitHub">
+                        💻
+                    </a>
+                    <a href="https://youtube.com/@polashai" target="_blank" rel="noopener" title="YouTube">
+                        📺
+                    </a>
                 </div>
             </div>
             <div class="footer-section">
@@ -2482,5 +2068,324 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Create particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Counter Animation
+        function animateCounter(element) {
+            const target = parseInt(element.dataset.target);
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + (element.dataset.target === '95' ? '%' : '+');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + (element.dataset.target === '95' ? '%' : '+');
+                }
+            }, 16);
+        }
+
+        // Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    if (entry.target.classList.contains('counter') && entry.target.textContent === '0') {
+                        animateCounter(entry.target);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in, .counter').forEach(el => observer.observe(el));
+
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+
+            // Navbar scroll effect
+            const navbar = document.getElementById('navbar');
+            if (winScroll > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Floating CTA
+            const floatingCTA = document.getElementById('floatingCTA');
+            if (winScroll > 500) {
+                floatingCTA.classList.add('visible');
+            } else {
+                floatingCTA.classList.remove('visible');
+            }
+        });
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        // FAQ Toggle
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('.faq-icon');
+            
+            answer.classList.toggle('active');
+            icon.classList.toggle('active');
+        }
+
+        // Toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastText').textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Exit Intent
+        let exitIntentShown = false;
+        document.addEventListener('mouseout', function(e) {
+            if (!e.toElement && !e.relatedTarget && !exitIntentShown && e.clientY < 10) {
+                exitIntentShown = true;
+                document.getElementById('exitPopup').classList.add('active');
+                trackEvent('ExitIntent', 'shown', 'Exit Popup', 0);
+            }
+        });
+
+        function closeExitPopup() {
+            document.getElementById('exitPopup').classList.remove('active');
+        }
+
+        // Calendly
+        function openCalendly() {
+            const modal = document.getElementById('calendlyModal');
+            modal.classList.add('active');
+            
+            if (typeof Calendly !== 'undefined') {
+                Calendly.initInlineWidget({
+                    url: 'https://calendly.com/YOUR_CALENDLY_USERNAME/30min',
+                    parentElement: document.getElementById('calendlyWidget')
+                });
+            } else {
+                document.getElementById('calendlyWidget').innerHTML = `
+                    <div style="padding: 3rem; text-align: center; color: #1f2937;">
+                        <h3 style="margin-bottom: 1rem;">Schedule Your Consultation</h3>
+                        <p style="margin-bottom: 2rem; color: #6b7280;">To enable booking, add your Calendly username in the code.</p>
+                        <a href="https://calendly.com" target="_blank" style="display: inline-block; padding: 1rem 2rem; background: #6366f1; color: white; text-decoration: none; border-radius: 50px;">
+                            Go to Calendly
+                        </a>
+                    </div>
+                `;
+            }
+            
+            trackEvent('Calendly', 'opened', 'Schedule Demo', 0);
+        }
+
+        function closeCalendly() {
+            document.getElementById('calendlyModal').classList.remove('active');
+        }
+
+        // Form Submission
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const form = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const formSuccess = document.getElementById('formSuccess');
+            const formError = document.getElementById('formError');
+            
+            formSuccess.style.display = 'none';
+            formError.style.display = 'none';
+            
+            const formData = {
+                name: form.name.value,
+                email: form.email.value,
+                company: form.company.value || 'Not provided',
+                service: form.service.value || 'Not specified',
+                message: form.message.value
+            };
+            
+            submitBtn.disabled = true;
+            btnText.textContent = 'Sending...';
+            
+            const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+            
+            if (FORMSPREE_ENDPOINT === 'https://formspree.io/f/YOUR_FORM_ID') {
+                setTimeout(() => {
+                    formSuccess.style.display = 'block';
+                    formSuccess.innerHTML = `
+                        ✓ Form validated! To enable email delivery, add your Formspree ID.<br>
+                        <small style="font-size: 0.9rem; display: block; margin-top: 0.5rem;">
+                        Data captured: ${formData.name} (${formData.email})
+                        </small>
+                    `;
+                    form.reset();
+                    showToast('Form submitted successfully!');
+                    submitBtn.disabled = false;
+                    btnText.textContent = 'Send Message';
+                    
+                    trackEvent('Form', 'submission', formData.service, 0);
+                    if (typeof fbq !== 'undefined') {
+                        fbq('track', 'Lead');
+                    }
+                }, 1000);
+                return;
+            }
+            
+            const formBody = new FormData();
+            Object.keys(formData).forEach(key => formBody.append(key, formData[key]));
+            
+            fetch(FORMSPREE_ENDPOINT, {
+                method: 'POST',
+                body: formBody,
+                headers: {'Accept': 'application/json'}
+            })
+            .then(response => {
+                if (response.ok) {
+                    formSuccess.style.display = 'block';
+                    form.reset();
+                    showToast('Message sent successfully!');
+                    trackEvent('Form', 'submission_success', formData.service, 0);
+                } else {
+                    throw new Error('Submission failed');
+                }
+            })
+            .catch(error => {
+                formError.style.display = 'block';
+                console.error('Form error:', error);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                btnText.textContent = 'Send Message';
+            });
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({behavior: 'smooth', block: 'start'});
+                    document.getElementById('navMenu').classList.remove('active');
+                }
+            });
+        });
+
+        // Chat Widget Functions
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            const badge = document.querySelector('.chat-badge');
+            
+            chatWindow.classList.toggle('active');
+            
+            if (chatWindow.classList.contains('active')) {
+                badge.style.display = 'none';
+                trackEvent('Chat', 'opened', 'Support Chat', 0);
+            } else {
+                trackEvent('Chat', 'closed', 'Support Chat', 0);
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            addChatMessage(message, 'user');
+            input.value = '';
+            
+            trackEvent('Chat', 'message_sent', message.substring(0, 50), 0);
+            
+            setTimeout(() => {
+                const response = getBotResponse(message);
+                addChatMessage(response, 'bot');
+            }, 1000);
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendQuickMessage(message) {
+            document.getElementById('chatInput').value = message;
+            sendChatMessage();
+        }
+
+        function addChatMessage(message, type) {
+            const messagesContainer = document.getElementById('chatMessages');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${type}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'chat-avatar';
+            avatar.textContent = type === 'bot' ? '🤖' : '👤';
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'chat-bubble';
+            bubble.textContent = message;
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(bubble);
+            messagesContainer.appendChild(messageDiv);
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function getBotResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('pricing') || lowerMessage.includes('cost') || lowerMessage.includes('price')) {
+                return "Our pricing starts at $2,500 for the Starter package, $7,500 for Professional, and custom pricing for Enterprise. Would you like me to connect you with our team for a detailed quote?";
+            } else if (lowerMessage.includes('demo') || lowerMessage.includes('schedule')) {
+                return "Great! I can help you schedule a demo. Click the 'Schedule Demo' button at the top, or I can have someone from our team reach out to you directly.";
+            } else if (lowerMessage.includes('technical') || lowerMessage.includes('support') || lowerMessage.includes('help')) {
+                return "I'll connect you with our technical team right away. Can you briefly describe the issue you're experiencing? Or you can email us at hello@polashai.com";
+            } else if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+                return "Hello! How can I help you with your automation needs today?";
+            } else if (lowerMessage.includes('service') || lowerMessage.includes('what do you do')) {
+                return "We specialize in n8n workflow automation, AI integration, business process automation, and API integration. We help businesses save time and reduce costs through intelligent automation.";
+            } else if (lowerMessage.includes('time') || lowerMessage.includes('how long')) {
+                return "Simple workflows take 1-2 weeks to implement, while complex enterprise solutions take 4-8 weeks. We'll provide a detailed timeline after understanding your specific needs.";
+            } else {
+                return "Thanks for your message! A team member will respond shortly. In the meantime, feel free to check out our case studies or schedule a consultation. You can also email us at hello@polashai.com";
+            }
+        }
+    </script>
 </body>
 </html>
