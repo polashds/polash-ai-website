@@ -5,6 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Polash AI Automation - n8n Workflow Automation Experts</title>
     
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Expert n8n workflow automation solutions that save time, reduce costs, and scale your operations effortlessly. AI-powered automation for businesses.">
+    <meta name="keywords" content="n8n automation, workflow automation, AI integration, business process automation, API integration, Polash AI">
+    <meta name="author" content="Polash AI Automation">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Polash AI Automation - n8n Workflow Automation Experts">
+    <meta property="og:description" content="Transform your business with AI-powered automation solutions. Save time, reduce costs, and scale operations effortlessly.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://polashai.com">
+    <meta property="og:image" content="https://polashai.com/images/og-image.jpg">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Polash AI Automation - n8n Workflow Automation Experts">
+    <meta name="twitter:description" content="Transform your business with AI-powered automation solutions.">
+    <meta name="twitter:image" content="https://polashai.com/images/twitter-image.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://polashai.com">
+    
+    <!-- Alternate Languages -->
+    <link rel="alternate" hreflang="en" href="https://polashai.com/en/">
+    <link rel="alternate" hreflang="es" href="https://polashai.com/es/">
+    <link rel="alternate" hreflang="fr" href="https://polashai.com/fr/">
+    <link rel="alternate" hreflang="de" href="https://polashai.com/de/">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Polash AI Automation",
+      "url": "https://polashai.com",
+      "logo": "https://polashai.com/images/logo.png",
+      "description": "Expert n8n workflow automation solutions that save time, reduce costs, and scale your operations effortlessly.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Your City",
+        "addressCountry": "Your Country"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-555-123-4567",
+        "contactType": "customer service",
+        "email": "hello@polashai.com"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/polash-ai",
+        "https://twitter.com/polashai",
+        "https://facebook.com/polashai",
+        "https://github.com/polashai",
+        "https://youtube.com/@polashai"
+      ]
+    }
+    </script>
+    
     <!-- Google Analytics (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
@@ -41,6 +99,7 @@
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     
     <style>
+        /* All existing CSS remains unchanged */
         * {
             margin: 0;
             padding: 0;
@@ -81,7 +140,313 @@
         .icon-graduation::before { content: "🎓"; }
         .icon-calendar::before { content: "📅"; }
         .icon-envelope::before { content: "✉️"; }
+        .icon-blog::before { content: "📝"; }
+        .icon-globe::before { content: "🌐"; }
 
+        /* Language Selector */
+        .language-selector {
+            position: relative;
+            display: inline-block;
+            margin-left: 1rem;
+        }
+
+        .language-button {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            color: var(--light);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .language-button:hover {
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--dark);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 10px;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            min-width: 150px;
+            display: none;
+            z-index: 1001;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .language-dropdown.active {
+            display: block;
+        }
+
+        .language-option {
+            padding: 0.75rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .language-option:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .language-option.active {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+        }
+
+        /* Breadcrumbs */
+        .breadcrumbs {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            padding: 0 2rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .breadcrumbs a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+
+        /* Blog Section */
+        .blog-section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .blog-card {
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .blog-tag {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--accent);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        .blog-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            line-height: 1.4;
+        }
+
+        .blog-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .blog-read-more {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s;
+        }
+
+        .blog-read-more:hover {
+            gap: 0.75rem;
+        }
+
+        /* Blog Post Page */
+        .blog-post {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .blog-post-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .blog-post-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .blog-post-meta {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .blog-post-content {
+            background: rgba(99, 102, 241, 0.05);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .blog-post-content h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: var(--light);
+            background: none;
+            -webkit-text-fill-color: var(--light);
+        }
+
+        .blog-post-content h3 {
+            font-size: 1.4rem;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--light);
+        }
+
+        .blog-post-content p {
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+
+        .blog-post-content ul, .blog-post-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--gray);
+        }
+
+        .blog-post-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-post-content blockquote {
+            border-left: 4px solid var(--primary);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--light);
+        }
+
+        .blog-post-content code {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            font-family: monospace;
+            color: var(--accent);
+        }
+
+        .blog-post-content pre {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 1.5rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .blog-post-content img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .blog-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .blog-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            border-radius: 10px;
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .blog-nav-btn:hover {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--primary);
+        }
+
+        /* Related Posts */
+        .related-posts {
+            margin-top: 5rem;
+        }
+
+        .related-posts h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* All other existing CSS remains unchanged */
         /* Progress Bar */
         .progress-bar {
             position: fixed;
@@ -132,6 +497,7 @@
             display: flex;
             gap: 2rem;
             list-style: none;
+            align-items: center;
         }
 
         nav a {
@@ -1416,6 +1782,24 @@
                 left: 2rem;
                 right: 2rem;
             }
+
+            .language-selector {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-post-content {
+                padding: 2rem;
+            }
+
+            .blog-navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
     </style>
 </head>
@@ -1511,8 +1895,36 @@
                 <li><a href="#services">Services</a></li>
                 <li><a href="#case-studies">Case Studies</a></li>
                 <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#blog">Blog</a></li>
                 <li><a href="#testimonials">Testimonials</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li>
+                    <div class="language-selector">
+                        <button class="language-button" onclick="toggleLanguageDropdown()">
+                            <span class="icon-globe"></span>
+                            <span id="currentLanguage">EN</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="language-dropdown" id="languageDropdown">
+                            <div class="language-option active" data-lang="en" onclick="changeLanguage('en')">
+                                <span>🇺🇸</span>
+                                <span>English</span>
+                            </div>
+                            <div class="language-option" data-lang="es" onclick="changeLanguage('es')">
+                                <span>🇪🇸</span>
+                                <span>Español</span>
+                            </div>
+                            <div class="language-option" data-lang="fr" onclick="changeLanguage('fr')">
+                                <span>🇫🇷</span>
+                                <span>Français</span>
+                            </div>
+                            <div class="language-option" data-lang="de" onclick="changeLanguage('de')">
+                                <span>🇩🇪</span>
+                                <span>Deutsch</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>
@@ -1521,12 +1933,12 @@
     <section class="hero">
         <div class="hero-animation" id="particles"></div>
         <div class="hero-content">
-            <h1>Transform Your Business with AI-Powered Automation</h1>
-            <p>Expert n8n workflow automation solutions that save time, reduce costs, and scale your operations effortlessly</p>
+            <h1 data-translate="hero_title">Transform Your Business with AI-Powered Automation</h1>
+            <p data-translate="hero_subtitle">Expert n8n workflow automation solutions that save time, reduce costs, and scale your operations effortlessly</p>
             <div class="cta-buttons">
-                <a href="#contact" class="btn btn-primary">Get Free Consultation</a>
+                <a href="#contact" class="btn btn-primary" data-translate="hero_cta1">Get Free Consultation</a>
                 <button class="btn btn-secondary" onclick="openCalendly()">
-                    <span class="icon-calendar"></span> Schedule Demo
+                    <span class="icon-calendar"></span> <span data-translate="hero_cta2">Schedule Demo</span>
                 </button>
             </div>
         </div>
@@ -1537,19 +1949,19 @@
         <div class="stats-grid">
             <div class="stat-item">
                 <h3 class="counter" data-target="500">0</h3>
-                <p>Workflows Built</p>
+                <p data-translate="stat1">Workflows Built</p>
             </div>
             <div class="stat-item">
                 <h3 class="counter" data-target="95">0</h3>
-                <p>Client Satisfaction</p>
+                <p data-translate="stat2">Client Satisfaction</p>
             </div>
             <div class="stat-item">
                 <h3 class="counter" data-target="10000">0</h3>
-                <p>Hours Saved Monthly</p>
+                <p data-translate="stat3">Hours Saved Monthly</p>
             </div>
             <div class="stat-item">
                 <h3 class="counter" data-target="150">0</h3>
-                <p>Happy Clients</p>
+                <p data-translate="stat4">Happy Clients</p>
             </div>
         </div>
     </div>
@@ -1557,12 +1969,12 @@
     <!-- Video Demo Section -->
     <div class="video-section">
         <div style="max-width: 1200px; margin: 0 auto;">
-            <h2 class="fade-in">See Automation in Action</h2>
-            <p class="section-subtitle fade-in">Watch how we transformed a business in 90 seconds</p>
+            <h2 class="fade-in" data-translate="video_title">See Automation in Action</h2>
+            <p class="section-subtitle fade-in" data-translate="video_subtitle">Watch how we transformed a business in 90 seconds</p>
             <div class="video-container fade-in">
                 <div class="video-placeholder" id="videoPlaceholder" onclick="loadVideo()">
                     <div class="play-button">▶</div>
-                    <p style="color: var(--gray); font-size: 1.2rem;">Click to watch demo</p>
+                    <p style="color: var(--gray); font-size: 1.2rem;" data-translate="video_cta">Click to watch demo</p>
                 </div>
             </div>
         </div>
@@ -1570,51 +1982,51 @@
 
     <!-- ROI Calculator Section -->
     <section>
-        <h2 class="fade-in">Calculate Your Savings</h2>
-        <p class="section-subtitle fade-in">See how much time and money automation can save your business</p>
+        <h2 class="fade-in" data-translate="roi_title">Calculate Your Savings</h2>
+        <p class="section-subtitle fade-in" data-translate="roi_subtitle">See how much time and money automation can save your business</p>
         
         <div class="roi-calculator fade-in">
             <div class="roi-inputs">
                 <div class="roi-input-group">
-                    <label>Hours spent on manual tasks per week</label>
+                    <label data-translate="roi_label1">Hours spent on manual tasks per week</label>
                     <input type="number" id="hoursPerWeek" value="20" min="1" max="168" onchange="calculateROI()">
                 </div>
                 <div class="roi-input-group">
-                    <label>Average hourly rate ($)</label>
+                    <label data-translate="roi_label2">Average hourly rate ($)</label>
                     <input type="number" id="hourlyRate" value="50" min="1" max="500" onchange="calculateROI()">
                 </div>
                 <div class="roi-input-group">
-                    <label>Automation potential</label>
+                    <label data-translate="roi_label3">Automation potential</label>
                     <select id="automationPercent" onchange="calculateROI()">
-                        <option value="50">50% - Conservative</option>
-                        <option value="70" selected>70% - Realistic</option>
-                        <option value="90">90% - Aggressive</option>
+                        <option value="50" data-translate="roi_option1">50% - Conservative</option>
+                        <option value="70" selected data-translate="roi_option2">70% - Realistic</option>
+                        <option value="90" data-translate="roi_option3">90% - Aggressive</option>
                     </select>
                 </div>
             </div>
 
             <div class="roi-results" id="roiResults">
-                <h3>Your Potential Savings</h3>
+                <h3 data-translate="roi_results_title">Your Potential Savings</h3>
                 <div class="roi-metrics">
                     <div class="roi-metric">
                         <div class="roi-metric-value" id="hoursSaved">14</div>
-                        <div class="roi-metric-label">Hours Saved/Week</div>
+                        <div class="roi-metric-label" data-translate="roi_metric1">Hours Saved/Week</div>
                     </div>
                     <div class="roi-metric">
                         <div class="roi-metric-value" id="monthlySavings">$3,000</div>
-                        <div class="roi-metric-label">Monthly Savings</div>
+                        <div class="roi-metric-label" data-translate="roi_metric2">Monthly Savings</div>
                     </div>
                     <div class="roi-metric">
                         <div class="roi-metric-value" id="yearlySavings">$36,400</div>
-                        <div class="roi-metric-label">Yearly Savings</div>
+                        <div class="roi-metric-label" data-translate="roi_metric3">Yearly Savings</div>
                     </div>
                     <div class="roi-metric">
                         <div class="roi-metric-value" id="roiPeriod">2.1</div>
-                        <div class="roi-metric-label">Months to ROI</div>
+                        <div class="roi-metric-label" data-translate="roi_metric4">Months to ROI</div>
                     </div>
                 </div>
                 <div style="margin-top: 2rem;">
-                    <a href="#contact" class="btn btn-primary" style="background: white; color: var(--primary);">
+                    <a href="#contact" class="btn btn-primary" style="background: white; color: var(--primary);" data-translate="roi_cta">
                         Get Your Custom Automation Plan
                     </a>
                 </div>
@@ -1624,188 +2036,249 @@
 
     <!-- Services Section -->
     <section id="services">
-        <h2 class="fade-in">Our Services</h2>
-        <p class="section-subtitle fade-in">Comprehensive automation solutions tailored to your business needs</p>
+        <h2 class="fade-in" data-translate="services_title">Our Services</h2>
+        <p class="section-subtitle fade-in" data-translate="services_subtitle">Comprehensive automation solutions tailored to your business needs</p>
         <div class="services-grid">
             <div class="service-card fade-in">
                 <div class="service-icon">
                     <span class="icon-workflow"></span>
                 </div>
-                <h3>Custom n8n Workflow Development</h3>
-                <p>Build powerful, custom automation workflows tailored to your unique business processes and requirements.</p>
+                <h3 data-translate="service1_title">Custom n8n Workflow Development</h3>
+                <p data-translate="service1_desc">Build powerful, custom automation workflows tailored to your unique business processes and requirements.</p>
             </div>
             <div class="service-card fade-in">
                 <div class="service-icon">
                     <span class="icon-robot"></span>
                 </div>
-                <h3>AI Integration & Automation</h3>
-                <p>Integrate cutting-edge AI models like GPT-4, Claude, and custom ML solutions into your workflows.</p>
+                <h3 data-translate="service2_title">AI Integration & Automation</h3>
+                <p data-translate="service2_desc">Integrate cutting-edge AI models like GPT-4, Claude, and custom ML solutions into your workflows.</p>
             </div>
             <div class="service-card fade-in">
                 <div class="service-icon">
                     <span class="icon-cogs"></span>
                 </div>
-                <h3>Business Process Automation</h3>
-                <p>Streamline repetitive tasks, automate data entry, and optimize your entire business operations.</p>
+                <h3 data-translate="service3_title">Business Process Automation</h3>
+                <p data-translate="service3_desc">Streamline repetitive tasks, automate data entry, and optimize your entire business operations.</p>
             </div>
             <div class="service-card fade-in">
                 <div class="service-icon">
                     <span class="icon-plug"></span>
                 </div>
-                <h3>API Integration Services</h3>
-                <p>Seamlessly connect your tools, databases, and applications with powerful API integrations.</p>
+                <h3 data-translate="service4_title">API Integration Services</h3>
+                <p data-translate="service4_desc">Seamlessly connect your tools, databases, and applications with powerful API integrations.</p>
             </div>
             <div class="service-card fade-in">
                 <div class="service-icon">
                     <span class="icon-chart"></span>
                 </div>
-                <h3>Workflow Optimization & Audits</h3>
-                <p>Analyze existing processes and optimize your workflows for maximum efficiency and cost savings.</p>
+                <h3 data-translate="service5_title">Workflow Optimization & Audits</h3>
+                <p data-translate="service5_desc">Analyze existing processes and optimize your workflows for maximum efficiency and cost savings.</p>
             </div>
             <div class="service-card fade-in">
                 <div class="service-icon">
                     <span class="icon-graduation"></span>
                 </div>
-                <h3>Training & Support</h3>
-                <p>Comprehensive training programs and ongoing support to ensure your team masters automation.</p>
+                <h3 data-translate="service6_title">Training & Support</h3>
+                <p data-translate="service6_desc">Comprehensive training programs and ongoing support to ensure your team masters automation.</p>
             </div>
         </div>
     </section>
 
     <!-- Case Studies Section -->
     <section id="case-studies">
-        <h2 class="fade-in">Case Studies</h2>
-        <p class="section-subtitle fade-in">Real results from real clients</p>
+        <h2 class="fade-in" data-translate="cases_title">Case Studies</h2>
+        <p class="section-subtitle fade-in" data-translate="cases_subtitle">Real results from real clients</p>
         <div class="case-studies-grid">
             <div class="case-study fade-in">
                 <div class="case-content">
-                    <span class="case-tag">E-Commerce</span>
-                    <h3>Order Processing Automation</h3>
-                    <p><strong>Challenge:</strong> Manual order processing taking 5 hours daily</p>
-                    <p><strong>Solution:</strong> Built n8n workflow integrating Shopify, inventory system, and shipping APIs with AI-powered fraud detection</p>
-                    <p><strong>Result:</strong> Complete automation of order processing with real-time updates</p>
+                    <span class="case-tag" data-translate="case1_tag">E-Commerce</span>
+                    <h3 data-translate="case1_title">Order Processing Automation</h3>
+                    <p><strong data-translate="case1_challenge_label">Challenge:</strong> <span data-translate="case1_challenge">Manual order processing taking 5 hours daily</span></p>
+                    <p><strong data-translate="case1_solution_label">Solution:</strong> <span data-translate="case1_solution">Built n8n workflow integrating Shopify, inventory system, and shipping APIs with AI-powered fraud detection</span></p>
+                    <p><strong data-translate="case1_result_label">Result:</strong> <span data-translate="case1_result">Complete automation of order processing with real-time updates</span></p>
                 </div>
                 <div class="case-metrics">
                     <div class="metric">
                         <div class="metric-value">90%</div>
-                        <div class="metric-label">Time Saved</div>
+                        <div class="metric-label" data-translate="case1_metric1">Time Saved</div>
                     </div>
                     <div class="metric">
                         <div class="metric-value">$50K</div>
-                        <div class="metric-label">Annual Savings</div>
+                        <div class="metric-label" data-translate="case1_metric2">Annual Savings</div>
                     </div>
                     <div class="metric">
                         <div class="metric-value">99%</div>
-                        <div class="metric-label">Accuracy</div>
+                        <div class="metric-label" data-translate="case1_metric3">Accuracy</div>
                     </div>
                 </div>
             </div>
 
             <div class="case-study fade-in">
                 <div class="case-content">
-                    <span class="case-tag">Marketing Agency</span>
-                    <h3>Lead Generation Pipeline</h3>
-                    <p><strong>Challenge:</strong> Losing leads due to slow response times and manual data entry</p>
-                    <p><strong>Solution:</strong> Automated lead capture, scoring, CRM integration, and AI-powered follow-up sequences</p>
-                    <p><strong>Result:</strong> Instant lead processing with intelligent routing and personalized outreach</p>
+                    <span class="case-tag" data-translate="case2_tag">Marketing Agency</span>
+                    <h3 data-translate="case2_title">Lead Generation Pipeline</h3>
+                    <p><strong data-translate="case2_challenge_label">Challenge:</strong> <span data-translate="case2_challenge">Losing leads due to slow response times and manual data entry</span></p>
+                    <p><strong data-translate="case2_solution_label">Solution:</strong> <span data-translate="case2_solution">Automated lead capture, scoring, CRM integration, and AI-powered follow-up sequences</span></p>
+                    <p><strong data-translate="case2_result_label">Result:</strong> <span data-translate="case2_result">Instant lead processing with intelligent routing and personalized outreach</span></p>
                 </div>
                 <div class="case-metrics">
                     <div class="metric">
                         <div class="metric-value">3x</div>
-                        <div class="metric-label">Lead Response</div>
+                        <div class="metric-label" data-translate="case2_metric1">Lead Response</div>
                     </div>
                     <div class="metric">
                         <div class="metric-value">45%</div>
-                        <div class="metric-label">More Conversions</div>
+                        <div class="metric-label" data-translate="case2_metric2">More Conversions</div>
                     </div>
                     <div class="metric">
                         <div class="metric-value">15hrs</div>
-                        <div class="metric-label">Saved Weekly</div>
+                        <div class="metric-label" data-translate="case2_metric3">Saved Weekly</div>
                     </div>
                 </div>
             </div>
 
             <div class="case-study fade-in">
                 <div class="case-content">
-                    <span class="case-tag">SaaS Company</span>
-                    <h3>Customer Onboarding Automation</h3>
-                    <p><strong>Challenge:</strong> Complex manual onboarding process causing delays and errors</p>
-                    <p><strong>Solution:</strong> Created automated onboarding workflows with AI chatbots, document generation, and multi-system provisioning</p>
-                    <p><strong>Result:</strong> Seamless customer experience with zero manual intervention</p>
+                    <span class="case-tag" data-translate="case3_tag">SaaS Company</span>
+                    <h3 data-translate="case3_title">Customer Onboarding Automation</h3>
+                    <p><strong data-translate="case3_challenge_label">Challenge:</strong> <span data-translate="case3_challenge">Complex manual onboarding process causing delays and errors</span></p>
+                    <p><strong data-translate="case3_solution_label">Solution:</strong> <span data-translate="case3_solution">Created automated onboarding workflows with AI chatbots, document generation, and multi-system provisioning</span></p>
+                    <p><strong data-translate="case3_result_label">Result:</strong> <span data-translate="case3_result">Seamless customer experience with zero manual intervention</span></p>
                 </div>
                 <div class="case-metrics">
                     <div class="metric">
                         <div class="metric-value">80%</div>
-                        <div class="metric-label">Faster Onboarding</div>
+                        <div class="metric-label" data-translate="case3_metric1">Faster Onboarding</div>
                     </div>
                     <div class="metric">
                         <div class="metric-value">95%</div>
-                        <div class="metric-label">Customer Satisfaction</div>
+                        <div class="metric-label" data-translate="case3_metric2">Customer Satisfaction</div>
                     </div>
                     <div class="metric">
                         <div class="metric-value">$75K</div>
-                        <div class="metric-label">Annual Savings</div>
+                        <div class="metric-label" data-translate="case3_metric3">Annual Savings</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Blog Section -->
+    <section id="blog">
+        <h2 class="fade-in" data-translate="blog_title">Latest from Our Blog</h2>
+        <p class="section-subtitle fade-in" data-translate="blog_subtitle">Insights, tips, and best practices for workflow automation</p>
+        <div class="blog-grid">
+            <div class="blog-card fade-in">
+                <div class="blog-image">
+                    <span class="icon-workflow"></span>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span data-translate="blog1_date">May 15, 2025</span>
+                        <span class="blog-tag" data-translate="blog1_tag">n8n Tips</span>
+                    </div>
+                    <h3 data-translate="blog1_title">10 Essential n8n Workflows for Small Businesses</h3>
+                    <p data-translate="blog1_desc">Discover the most impactful automation workflows that can transform your business operations and save you hours every week.</p>
+                    <a href="#blog-post-1" class="blog-read-more" data-translate="blog_read_more">
+                        Read More <span>→</span>
+                    </a>
+                </div>
+            </div>
+            <div class="blog-card fade-in">
+                <div class="blog-image">
+                    <span class="icon-robot"></span>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span data-translate="blog2_date">April 28, 2025</span>
+                        <span class="blog-tag" data-translate="blog2_tag">AI Integration</span>
+                    </div>
+                    <h3 data-translate="blog2_title">How to Integrate GPT-4 with n8n for Smarter Workflows</h3>
+                    <p data-translate="blog2_desc">Learn step-by-step how to leverage AI in your automation workflows to make them more intelligent and context-aware.</p>
+                    <a href="#blog-post-2" class="blog-read-more" data-translate="blog_read_more">
+                        Read More <span>→</span>
+                    </a>
+                </div>
+            </div>
+            <div class="blog-card fade-in">
+                <div class="blog-image">
+                    <span class="icon-chart"></span>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span data-translate="blog3_date">April 10, 2025</span>
+                        <span class="blog-tag" data-translate="blog3_tag">ROI Analysis</span>
+                    </div>
+                    <h3 data-translate="blog3_title">Measuring the ROI of Automation: A Complete Guide</h3>
+                    <p data-translate="blog3_desc">Understand how to calculate and track the return on investment from your automation initiatives with real-world examples.</p>
+                    <a href="#blog-post-3" class="blog-read-more" data-translate="blog_read_more">
+                        Read More <span>→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="#blog-archive" class="btn btn-secondary" data-translate="blog_view_all">
+                <span class="icon-blog"></span> View All Articles
+            </a>
+        </div>
+    </section>
+
     <!-- Pricing Section -->
     <section id="pricing">
-        <h2 class="fade-in">Flexible Pricing</h2>
-        <p class="section-subtitle fade-in">Choose the plan that fits your automation needs</p>
+        <h2 class="fade-in" data-translate="pricing_title">Flexible Pricing</h2>
+        <p class="section-subtitle fade-in" data-translate="pricing_subtitle">Choose the plan that fits your automation needs</p>
         <div class="pricing-grid">
             <div class="pricing-card fade-in">
-                <h3>Starter</h3>
+                <h3 data-translate="pricing1_title">Starter</h3>
                 <div class="price">$2,500</div>
                 <ul class="pricing-features">
-                    <li>✓ 3 Custom Workflows</li>
-                    <li>✓ Up to 5 Integrations</li>
-                    <li>✓ Basic AI Integration</li>
-                    <li>✓ 30 Days Support</li>
-                    <li>✓ Documentation</li>
+                    <li data-translate="pricing1_feature1">✓ 3 Custom Workflows</li>
+                    <li data-translate="pricing1_feature2">✓ Up to 5 Integrations</li>
+                    <li data-translate="pricing1_feature3">✓ Basic AI Integration</li>
+                    <li data-translate="pricing1_feature4">✓ 30 Days Support</li>
+                    <li data-translate="pricing1_feature5">✓ Documentation</li>
                 </ul>
-                <a href="#contact" class="btn btn-secondary" style="width: 100%;">Get Started</a>
+                <a href="#contact" class="btn btn-secondary" style="width: 100%;" data-translate="pricing_cta">Get Started</a>
             </div>
             <div class="pricing-card featured fade-in">
-                <div class="pricing-badge">Most Popular</div>
-                <h3>Professional</h3>
+                <div class="pricing-badge" data-translate="pricing_badge">Most Popular</div>
+                <h3 data-translate="pricing2_title">Professional</h3>
                 <div class="price">$7,500</div>
                 <ul class="pricing-features">
-                    <li>✓ 10 Custom Workflows</li>
-                    <li>✓ Unlimited Integrations</li>
-                    <li>✓ Advanced AI Features</li>
-                    <li>✓ 90 Days Support</li>
-                    <li>✓ Training Sessions</li>
-                    <li>✓ Priority Support</li>
+                    <li data-translate="pricing2_feature1">✓ 10 Custom Workflows</li>
+                    <li data-translate="pricing2_feature2">✓ Unlimited Integrations</li>
+                    <li data-translate="pricing2_feature3">✓ Advanced AI Features</li>
+                    <li data-translate="pricing2_feature4">✓ 90 Days Support</li>
+                    <li data-translate="pricing2_feature5">✓ Training Sessions</li>
+                    <li data-translate="pricing2_feature6">✓ Priority Support</li>
                 </ul>
-                <a href="#contact" class="btn btn-primary" style="width: 100%;">Get Started</a>
+                <a href="#contact" class="btn btn-primary" style="width: 100%;" data-translate="pricing_cta">Get Started</a>
             </div>
             <div class="pricing-card fade-in">
-                <h3>Enterprise</h3>
+                <h3 data-translate="pricing3_title">Enterprise</h3>
                 <div class="price">Custom</div>
                 <ul class="pricing-features">
-                    <li>✓ Unlimited Workflows</li>
-                    <li>✓ Full Stack Integration</li>
-                    <li>✓ Custom AI Models</li>
-                    <li>✓ Dedicated Support</li>
-                    <li>✓ Ongoing Optimization</li>
-                    <li>✓ SLA Guarantee</li>
+                    <li data-translate="pricing3_feature1">✓ Unlimited Workflows</li>
+                    <li data-translate="pricing3_feature2">✓ Full Stack Integration</li>
+                    <li data-translate="pricing3_feature3">✓ Custom AI Models</li>
+                    <li data-translate="pricing3_feature4">✓ Dedicated Support</li>
+                    <li data-translate="pricing3_feature5">✓ Ongoing Optimization</li>
+                    <li data-translate="pricing3_feature6">✓ SLA Guarantee</li>
                 </ul>
-                <a href="#contact" class="btn btn-secondary" style="width: 100%;">Contact Us</a>
+                <a href="#contact" class="btn btn-secondary" style="width: 100%;" data-translate="pricing_cta2">Contact Us</a>
             </div>
         </div>
     </section>
 
     <!-- Testimonials Section -->
     <section id="testimonials">
-        <h2 class="fade-in">What Our Clients Say</h2>
-        <p class="section-subtitle fade-in">Trusted by businesses worldwide</p>
+        <h2 class="fade-in" data-translate="testimonials_title">What Our Clients Say</h2>
+        <p class="section-subtitle fade-in" data-translate="testimonials_subtitle">Trusted by businesses worldwide</p>
         <div class="testimonials-grid">
             <div class="testimonial fade-in">
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"Polash AI Automation transformed our operations completely. What used to take us hours now happens automatically. The ROI was evident within the first month!"</p>
+                <p class="testimonial-text" data-translate="testimonial1_text">"Polash AI Automation transformed our operations completely. What used to take us hours now happens automatically. The ROI was evident within the first month!"</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">👤</div>
                     <div>
@@ -1816,7 +2289,7 @@
             </div>
             <div class="testimonial fade-in">
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"The team's expertise in n8n and AI integration is unmatched. They understood our complex workflows and delivered solutions that exceeded expectations."</p>
+                <p class="testimonial-text" data-translate="testimonial2_text">"The team's expertise in n8n and AI integration is unmatched. They understood our complex workflows and delivered solutions that exceeded expectations."</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">👤</div>
                     <div>
@@ -1827,7 +2300,7 @@
             </div>
             <div class="testimonial fade-in">
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"We've saved over 100 hours per month and reduced errors to nearly zero. The ongoing support and training have been invaluable for our team."</p>
+                <p class="testimonial-text" data-translate="testimonial3_text">"We've saved over 100 hours per month and reduced errors to nearly zero. The ongoing support and training have been invaluable for our team."</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">👤</div>
                     <div>
@@ -1841,41 +2314,41 @@
 
     <!-- FAQ Section -->
     <section>
-        <h2 class="fade-in">Frequently Asked Questions</h2>
+        <h2 class="fade-in" data-translate="faq_title">Frequently Asked Questions</h2>
         <div class="faq-container">
             <div class="faq-item fade-in">
                 <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>What is n8n and why should I use it?</span>
+                    <span data-translate="faq1_question">What is n8n and why should I use it?</span>
                     <span class="faq-icon">▼</span>
                 </div>
-                <div class="faq-answer">
+                <div class="faq-answer" data-translate="faq1_answer">
                     n8n is a powerful, open-source workflow automation tool that allows businesses to connect apps, automate processes, and integrate AI without writing complex code. It's more flexible and cost-effective than alternatives like Zapier or Make.
                 </div>
             </div>
             <div class="faq-item fade-in">
                 <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>How long does it take to implement automation?</span>
+                    <span data-translate="faq2_question">How long does it take to implement automation?</span>
                     <span class="faq-icon">▼</span>
                 </div>
-                <div class="faq-answer">
+                <div class="faq-answer" data-translate="faq2_answer">
                     Simple workflows can be deployed in 1-2 weeks, while complex enterprise solutions may take 4-8 weeks. We provide a detailed timeline during the discovery phase based on your specific requirements.
                 </div>
             </div>
             <div class="faq-item fade-in">
                 <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>Do you provide training for our team?</span>
+                    <span data-translate="faq3_question">Do you provide training for our team?</span>
                     <span class="faq-icon">▼</span>
                 </div>
-                <div class="faq-answer">
+                <div class="faq-answer" data-translate="faq3_answer">
                     Yes! All our packages include comprehensive documentation, and Professional and Enterprise plans include hands-on training sessions to ensure your team can manage and optimize the workflows.
                 </div>
             </div>
             <div class="faq-item fade-in">
                 <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>What kind of ROI can I expect?</span>
+                    <span data-translate="faq4_question">What kind of ROI can I expect?</span>
                     <span class="faq-icon">▼</span>
                 </div>
-                <div class="faq-answer">
+                <div class="faq-answer" data-translate="faq4_answer">
                     Most clients see ROI within 3-6 months through time savings, reduced errors, and increased productivity. On average, businesses save 20-40 hours per week and reduce operational costs by 30-50%.
                 </div>
             </div>
@@ -1884,19 +2357,19 @@
 
     <!-- Contact Section -->
     <section id="contact">
-        <h2 class="fade-in">Let's Automate Your Business</h2>
-        <p class="section-subtitle fade-in">Get in touch for a free consultation</p>
+        <h2 class="fade-in" data-translate="contact_title">Let's Automate Your Business</h2>
+        <p class="section-subtitle fade-in" data-translate="contact_subtitle">Get in touch for a free consultation</p>
         <div class="contact-content">
             <div class="fade-in">
-                <h3>Ready to transform your operations?</h3>
-                <p style="color: var(--gray); margin: 1rem 0 2rem;">Book a free consultation to discover how automation can revolutionize your business processes and drive growth.</p>
+                <h3 data-translate="contact_heading">Ready to transform your operations?</h3>
+                <p style="color: var(--gray); margin: 1rem 0 2rem;" data-translate="contact_description">Book a free consultation to discover how automation can revolutionize your business processes and drive growth.</p>
                 <div class="contact-methods">
                     <div class="contact-method">
                         <div class="contact-method-icon">
                             <span class="icon-envelope"></span>
                         </div>
                         <div>
-                            <h4 style="color: var(--light); margin-bottom: 0.3rem;">Email</h4>
+                            <h4 style="color: var(--light); margin-bottom: 0.3rem;" data-translate="contact_email_label">Email</h4>
                             <p style="color: var(--gray);">hello@polashai.com</p>
                         </div>
                     </div>
@@ -1905,8 +2378,8 @@
                             <span class="icon-calendar"></span>
                         </div>
                         <div>
-                            <h4 style="color: var(--light); margin-bottom: 0.3rem;">Schedule a Call</h4>
-                            <p style="color: var(--gray); cursor: pointer;" onclick="openCalendly()">Book via Calendly</p>
+                            <h4 style="color: var(--light); margin-bottom: 0.3rem;" data-translate="contact_schedule_label">Schedule a Call</h4>
+                            <p style="color: var(--gray); cursor: pointer;" onclick="openCalendly()" data-translate="contact_schedule_text">Book via Calendly</p>
                         </div>
                     </div>
                 </div>
@@ -1916,45 +2389,45 @@
                 <input type="hidden" name="_subject" value="New Contact Form Submission - Polash AI">
                 
                 <div class="form-group">
-                    <label>Name *</label>
+                    <label data-translate="form_name">Name *</label>
                     <input type="text" name="name" required placeholder="Your full name">
                 </div>
                 
                 <div class="form-group">
-                    <label>Email *</label>
+                    <label data-translate="form_email">Email *</label>
                     <input type="email" name="email" required placeholder="your@email.com">
                 </div>
                 
                 <div class="form-group">
-                    <label>Company</label>
+                    <label data-translate="form_company">Company</label>
                     <input type="text" name="company" placeholder="Your company name">
                 </div>
                 
                 <div class="form-group">
-                    <label>Service Interest</label>
+                    <label data-translate="form_service">Service Interest</label>
                     <select name="service">
-                        <option value="">Select a service</option>
-                        <option value="workflow">Custom Workflow Development</option>
-                        <option value="ai">AI Integration</option>
-                        <option value="automation">Process Automation</option>
-                        <option value="api">API Integration</option>
+                        <option value="" data-translate="form_service_default">Select a service</option>
+                        <option value="workflow" data-translate="form_service1">Custom Workflow Development</option>
+                        <option value="ai" data-translate="form_service2">AI Integration</option>
+                        <option value="automation" data-translate="form_service3">Process Automation</option>
+                        <option value="api" data-translate="form_service4">API Integration</option>
                     </select>
                 </div>
                 
                 <div class="form-group">
-                    <label>Message *</label>
+                    <label data-translate="form_message">Message *</label>
                     <textarea name="message" required placeholder="Tell us about your automation needs..."></textarea>
                 </div>
                 
                 <button type="submit" class="btn btn-primary" id="submitBtn" style="width: 100%;">
-                    <span id="btnText">Send Message</span>
+                    <span id="btnText" data-translate="form_submit">Send Message</span>
                 </button>
                 
                 <div id="formSuccess" style="display: none; margin-top: 1.5rem; padding: 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; color: #10b981;">
-                    ✓ Success! Your message has been sent.
+                    <span data-translate="form_success">✓ Success! Your message has been sent.</span>
                 </div>
                 <div id="formError" style="display: none; margin-top: 1.5rem; padding: 1rem; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #ef4444;">
-                    ✕ Something went wrong. Please email us at hello@polashai.com
+                    <span data-translate="form_error">✕ Something went wrong. Please email us at hello@polashai.com</span>
                 </div>
             </form>
         </div>
@@ -1965,7 +2438,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h4>⚡ Polash AI Automation</h4>
-                <p style="color: var(--gray); margin-top: 1rem;">Transforming businesses through intelligent n8n workflow automation and AI integration.</p>
+                <p style="color: var(--gray); margin-top: 1rem;" data-translate="footer_description">Transforming businesses through intelligent n8n workflow automation and AI integration.</p>
                 <div class="social-links">
                     <a href="https://linkedin.com/company/polash-ai" target="_blank" rel="noopener" title="LinkedIn">🔗</a>
                     <a href="https://twitter.com/polashai" target="_blank" rel="noopener" title="Twitter">🐦</a>
@@ -1975,28 +2448,29 @@
                 </div>
             </div>
             <div class="footer-section">
-                <h4>Services</h4>
+                <h4 data-translate="footer_services">Services</h4>
                 <ul>
-                    <li><a href="#services">Workflow Development</a></li>
-                    <li><a href="#services">AI Integration</a></li>
-                    <li><a href="#services">Process Automation</a></li>
-                    <li><a href="#services">Training & Support</a></li>
+                    <li><a href="#services" data-translate="footer_service1">Workflow Development</a></li>
+                    <li><a href="#services" data-translate="footer_service2">AI Integration</a></li>
+                    <li><a href="#services" data-translate="footer_service3">Process Automation</a></li>
+                    <li><a href="#services" data-translate="footer_service4">Training & Support</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h4>Company</h4>
+                <h4 data-translate="footer_company">Company</h4>
                 <ul>
-                    <li><a href="#case-studies">Case Studies</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#case-studies" data-translate="footer_company1">Case Studies</a></li>
+                    <li><a href="#pricing" data-translate="footer_company2">Pricing</a></li>
+                    <li><a href="#blog" data-translate="footer_company3">Blog</a></li>
+                    <li><a href="#contact" data-translate="footer_company4">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h4>Resources</h4>
+                <h4 data-translate="footer_resources">Resources</h4>
                 <ul>
-                    <li><a href="#faq">FAQ</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#faq" data-translate="footer_resource1">FAQ</a></li>
+                    <li><a href="#blog" data-translate="footer_resource2">Blog</a></li>
+                    <li><a href="#" data-translate="footer_resource3">Documentation</a></li>
                 </ul>
             </div>
         </div>
@@ -2008,7 +2482,7 @@
     <!-- Floating CTA -->
     <div class="floating-cta" id="floatingCTA">
         <a href="#contact" class="btn btn-primary">
-            🚀 Start Automating
+            <span data-translate="floating_cta">🚀 Start Automating</span>
         </a>
     </div>
 
@@ -2021,8 +2495,8 @@
         <div class="chat-window" id="chatWindow">
             <div class="chat-header">
                 <div class="chat-header-info">
-                    <h4>Polash AI Support</h4>
-                    <p>🟢 Online - We reply instantly</p>
+                    <h4 data-translate="chat_title">Polash AI Support</h4>
+                    <p data-translate="chat_status">🟢 Online - We reply instantly</p>
                 </div>
                 <button class="chat-close-btn" onclick="toggleChat()">
                     <span class="icon-times"></span>
@@ -2031,19 +2505,19 @@
             <div class="chat-messages" id="chatMessages">
                 <div class="chat-message bot">
                     <div class="chat-avatar">🤖</div>
-                    <div class="chat-bubble">
+                    <div class="chat-bubble" data-translate="chat_welcome">
                         Hi! 👋 I'm here to help with your automation needs. How can I assist you today?
                     </div>
                 </div>
                 <div class="chat-quick-actions">
                     <div class="quick-action" onclick="sendQuickMessage('I want to learn about pricing')">
-                        💰 Pricing Info
+                        <span data-translate="chat_option1">💰 Pricing Info</span>
                     </div>
                     <div class="quick-action" onclick="sendQuickMessage('I want to schedule a demo')">
-                        📅 Schedule Demo
+                        <span data-translate="chat_option2">📅 Schedule Demo</span>
                     </div>
                     <div class="quick-action" onclick="sendQuickMessage('I have a technical question')">
-                        🔧 Technical Support
+                        <span data-translate="chat_option3">🔧 Technical Support</span>
                     </div>
                 </div>
             </div>
@@ -2059,6 +2533,311 @@
     </div>
 
     <script>
+        // Language Management
+        let currentLanguage = 'en';
+        const translations = {
+            en: {
+                // Hero Section
+                hero_title: "Transform Your Business with AI-Powered Automation",
+                hero_subtitle: "Expert n8n workflow automation solutions that save time, reduce costs, and scale your operations effortlessly",
+                hero_cta1: "Get Free Consultation",
+                hero_cta2: "Schedule Demo",
+                
+                // Stats
+                stat1: "Workflows Built",
+                stat2: "Client Satisfaction",
+                stat3: "Hours Saved Monthly",
+                stat4: "Happy Clients",
+                
+                // Video Section
+                video_title: "See Automation in Action",
+                video_subtitle: "Watch how we transformed a business in 90 seconds",
+                video_cta: "Click to watch demo",
+                
+                // ROI Calculator
+                roi_title: "Calculate Your Savings",
+                roi_subtitle: "See how much time and money automation can save your business",
+                roi_label1: "Hours spent on manual tasks per week",
+                roi_label2: "Average hourly rate ($)",
+                roi_label3: "Automation potential",
+                roi_option1: "50% - Conservative",
+                roi_option2: "70% - Realistic",
+                roi_option3: "90% - Aggressive",
+                roi_results_title: "Your Potential Savings",
+                roi_metric1: "Hours Saved/Week",
+                roi_metric2: "Monthly Savings",
+                roi_metric3: "Yearly Savings",
+                roi_metric4: "Months to ROI",
+                roi_cta: "Get Your Custom Automation Plan",
+                
+                // Services
+                services_title: "Our Services",
+                services_subtitle: "Comprehensive automation solutions tailored to your business needs",
+                service1_title: "Custom n8n Workflow Development",
+                service1_desc: "Build powerful, custom automation workflows tailored to your unique business processes and requirements.",
+                service2_title: "AI Integration & Automation",
+                service2_desc: "Integrate cutting-edge AI models like GPT-4, Claude, and custom ML solutions into your workflows.",
+                service3_title: "Business Process Automation",
+                service3_desc: "Streamline repetitive tasks, automate data entry, and optimize your entire business operations.",
+                service4_title: "API Integration Services",
+                service4_desc: "Seamlessly connect your tools, databases, and applications with powerful API integrations.",
+                service5_title: "Workflow Optimization & Audits",
+                service5_desc: "Analyze existing processes and optimize your workflows for maximum efficiency and cost savings.",
+                service6_title: "Training & Support",
+                service6_desc: "Comprehensive training programs and ongoing support to ensure your team masters automation.",
+                
+                // Case Studies
+                cases_title: "Case Studies",
+                cases_subtitle: "Real results from real clients",
+                case1_tag: "E-Commerce",
+                case1_title: "Order Processing Automation",
+                case1_challenge_label: "Challenge:",
+                case1_challenge: "Manual order processing taking 5 hours daily",
+                case1_solution_label: "Solution:",
+                case1_solution: "Built n8n workflow integrating Shopify, inventory system, and shipping APIs with AI-powered fraud detection",
+                case1_result_label: "Result:",
+                case1_result: "Complete automation of order processing with real-time updates",
+                case1_metric1: "Time Saved",
+                case1_metric2: "Annual Savings",
+                case1_metric3: "Accuracy",
+                
+                case2_tag: "Marketing Agency",
+                case2_title: "Lead Generation Pipeline",
+                case2_challenge_label: "Challenge:",
+                case2_challenge: "Losing leads due to slow response times and manual data entry",
+                case2_solution_label: "Solution:",
+                case2_solution: "Automated lead capture, scoring, CRM integration, and AI-powered follow-up sequences",
+                case2_result_label: "Result:",
+                case2_result: "Instant lead processing with intelligent routing and personalized outreach",
+                case2_metric1: "Lead Response",
+                case2_metric2: "More Conversions",
+                case2_metric3: "Saved Weekly",
+                
+                case3_tag: "SaaS Company",
+                case3_title: "Customer Onboarding Automation",
+                case3_challenge_label: "Challenge:",
+                case3_challenge: "Complex manual onboarding process causing delays and errors",
+                case3_solution_label: "Solution:",
+                case3_solution: "Created automated onboarding workflows with AI chatbots, document generation, and multi-system provisioning",
+                case3_result_label: "Result:",
+                case3_result: "Seamless customer experience with zero manual intervention",
+                case3_metric1: "Faster Onboarding",
+                case3_metric2: "Customer Satisfaction",
+                case3_metric3: "Annual Savings",
+                
+                // Blog
+                blog_title: "Latest from Our Blog",
+                blog_subtitle: "Insights, tips, and best practices for workflow automation",
+                blog1_date: "May 15, 2025",
+                blog1_tag: "n8n Tips",
+                blog1_title: "10 Essential n8n Workflows for Small Businesses",
+                blog1_desc: "Discover the most impactful automation workflows that can transform your business operations and save you hours every week.",
+                blog2_date: "April 28, 2025",
+                blog2_tag: "AI Integration",
+                blog2_title: "How to Integrate GPT-4 with n8n for Smarter Workflows",
+                blog2_desc: "Learn step-by-step how to leverage AI in your automation workflows to make them more intelligent and context-aware.",
+                blog3_date: "April 10, 2025",
+                blog3_tag: "ROI Analysis",
+                blog3_title: "Measuring the ROI of Automation: A Complete Guide",
+                blog3_desc: "Understand how to calculate and track the return on investment from your automation initiatives with real-world examples.",
+                blog_read_more: "Read More →",
+                blog_view_all: "View All Articles",
+                
+                // Pricing
+                pricing_title: "Flexible Pricing",
+                pricing_subtitle: "Choose the plan that fits your automation needs",
+                pricing1_title: "Starter",
+                pricing1_feature1: "✓ 3 Custom Workflows",
+                pricing1_feature2: "✓ Up to 5 Integrations",
+                pricing1_feature3: "✓ Basic AI Integration",
+                pricing1_feature4: "✓ 30 Days Support",
+                pricing1_feature5: "✓ Documentation",
+                pricing2_title: "Professional",
+                pricing2_feature1: "✓ 10 Custom Workflows",
+                pricing2_feature2: "✓ Unlimited Integrations",
+                pricing2_feature3: "✓ Advanced AI Features",
+                pricing2_feature4: "✓ 90 Days Support",
+                pricing2_feature5: "✓ Training Sessions",
+                pricing2_feature6: "✓ Priority Support",
+                pricing3_title: "Enterprise",
+                pricing3_feature1: "✓ Unlimited Workflows",
+                pricing3_feature2: "✓ Full Stack Integration",
+                pricing3_feature3: "✓ Custom AI Models",
+                pricing3_feature4: "✓ Dedicated Support",
+                pricing3_feature5: "✓ Ongoing Optimization",
+                pricing3_feature6: "✓ SLA Guarantee",
+                pricing_badge: "Most Popular",
+                pricing_cta: "Get Started",
+                pricing_cta2: "Contact Us",
+                
+                // Testimonials
+                testimonials_title: "What Our Clients Say",
+                testimonials_subtitle: "Trusted by businesses worldwide",
+                testimonial1_text: "\"Polash AI Automation transformed our operations completely. What used to take us hours now happens automatically. The ROI was evident within the first month!\"",
+                testimonial2_text: "\"The team's expertise in n8n and AI integration is unmatched. They understood our complex workflows and delivered solutions that exceeded expectations.\"",
+                testimonial3_text: "\"We've saved over 100 hours per month and reduced errors to nearly zero. The ongoing support and training have been invaluable for our team.\"",
+                
+                // FAQ
+                faq_title: "Frequently Asked Questions",
+                faq1_question: "What is n8n and why should I use it?",
+                faq1_answer: "n8n is a powerful, open-source workflow automation tool that allows businesses to connect apps, automate processes, and integrate AI without writing complex code. It's more flexible and cost-effective than alternatives like Zapier or Make.",
+                faq2_question: "How long does it take to implement automation?",
+                faq2_answer: "Simple workflows can be deployed in 1-2 weeks, while complex enterprise solutions may take 4-8 weeks. We provide a detailed timeline during the discovery phase based on your specific requirements.",
+                faq3_question: "Do you provide training for our team?",
+                faq3_answer: "Yes! All our packages include comprehensive documentation, and Professional and Enterprise plans include hands-on training sessions to ensure your team can manage and optimize the workflows.",
+                faq4_question: "What kind of ROI can I expect?",
+                faq4_answer: "Most clients see ROI within 3-6 months through time savings, reduced errors, and increased productivity. On average, businesses save 20-40 hours per week and reduce operational costs by 30-50%.",
+                
+                // Contact
+                contact_title: "Let's Automate Your Business",
+                contact_subtitle: "Get in touch for a free consultation",
+                contact_heading: "Ready to transform your operations?",
+                contact_description: "Book a free consultation to discover how automation can revolutionize your business processes and drive growth.",
+                contact_email_label: "Email",
+                contact_schedule_label: "Schedule a Call",
+                contact_schedule_text: "Book via Calendly",
+                
+                // Form
+                form_name: "Name *",
+                form_email: "Email *",
+                form_company: "Company",
+                form_service: "Service Interest",
+                form_service_default: "Select a service",
+                form_service1: "Custom Workflow Development",
+                form_service2: "AI Integration",
+                form_service3: "Process Automation",
+                form_service4: "API Integration",
+                form_message: "Message *",
+                form_submit: "Send Message",
+                form_success: "✓ Success! Your message has been sent.",
+                form_error: "✕ Something went wrong. Please email us at hello@polashai.com",
+                
+                // Footer
+                footer_description: "Transforming businesses through intelligent n8n workflow automation and AI integration.",
+                footer_services: "Services",
+                footer_service1: "Workflow Development",
+                footer_service2: "AI Integration",
+                footer_service3: "Process Automation",
+                footer_service4: "Training & Support",
+                footer_company: "Company",
+                footer_company1: "Case Studies",
+                footer_company2: "Pricing",
+                footer_company3: "Blog",
+                footer_company4: "Contact",
+                footer_resources: "Resources",
+                footer_resource1: "FAQ",
+                footer_resource2: "Blog",
+                footer_resource3: "Documentation",
+                
+                // Floating CTA
+                floating_cta: "🚀 Start Automating",
+                
+                // Chat
+                chat_title: "Polash AI Support",
+                chat_status: "🟢 Online - We reply instantly",
+                chat_welcome: "Hi! 👋 I'm here to help with your automation needs. How can I assist you today?",
+                chat_option1: "💰 Pricing Info",
+                chat_option2: "📅 Schedule Demo",
+                chat_option3: "🔧 Technical Support"
+            },
+            es: {
+                // Spanish translations would go here
+                hero_title: "Transforma Tu Negocio con Automatización Impulsada por IA",
+                hero_subtitle: "Soluciones expertas de automatización de flujos de trabajo con n8n que ahorran tiempo, reducen costos y escalan tus operaciones sin esfuerzo",
+                hero_cta1: "Obtener Consulta Gratuita",
+                hero_cta2: "Programar Demo"
+                // ... other Spanish translations
+            },
+            fr: {
+                // French translations would go here
+                hero_title: "Transformez Votre Entreprise avec l'Automatisation Pilotée par l'IA",
+                hero_subtitle: "Des solutions expertes d'automatisation de workflows n8n qui font gagner du temps, réduisent les coûts et font évoluer vos opérations sans effort",
+                hero_cta1: "Obtenir une Consultation Gratuite",
+                hero_cta2: "Planifier une Démo"
+                // ... other French translations
+            },
+            de: {
+                // German translations would go here
+                hero_title: "Transformieren Sie Ihr Unternehmen mit KI-gesteuerter Automatisierung",
+                hero_subtitle: "Expertenlösungen für n8n-Workflow-Automatisierung, die Zeit sparen, Kosten senken und Ihre Betriebsabläufe mühelos skalieren",
+                hero_cta1: "Kostenlose Beratung Erhalten",
+                hero_cta2: "Demo Terminieren"
+                // ... other German translations
+            }
+        };
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            document.getElementById('currentLanguage').textContent = lang.toUpperCase();
+            
+            // Update all translatable elements
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update select options
+            const automationSelect = document.getElementById('automationPercent');
+            if (automationSelect) {
+                const options = automationSelect.querySelectorAll('option');
+                options.forEach((option, index) => {
+                    const key = `roi_option${index + 1}`;
+                    if (translations[lang] && translations[lang][key]) {
+                        option.textContent = translations[lang][key];
+                    }
+                });
+            }
+            
+            // Update service select in contact form
+            const serviceSelect = document.querySelector('select[name="service"]');
+            if (serviceSelect) {
+                const options = serviceSelect.querySelectorAll('option');
+                options.forEach((option, index) => {
+                    if (index === 0) {
+                        const key = 'form_service_default';
+                        if (translations[lang] && translations[lang][key]) {
+                            option.textContent = translations[lang][key];
+                        }
+                    } else {
+                        const key = `form_service${index}`;
+                        if (translations[lang] && translations[lang][key]) {
+                            option.textContent = translations[lang][key];
+                        }
+                    }
+                });
+            }
+            
+            // Close dropdown
+            document.getElementById('languageDropdown').classList.remove('active');
+            
+            // Update active state in dropdown
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-lang') === lang) {
+                    option.classList.add('active');
+                }
+            });
+            
+            // Track language change
+            trackEvent('Language', 'changed', lang, 0);
+        }
+
+        function toggleLanguageDropdown() {
+            document.getElementById('languageDropdown').classList.toggle('active');
+        }
+
+        // Close language dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('languageDropdown');
+            const button = document.querySelector('.language-button');
+            if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // All existing JavaScript functions remain unchanged
         // Create particles
         function createParticles() {
             const container = document.getElementById('particles');
