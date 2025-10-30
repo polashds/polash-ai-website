@@ -5,35 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Polash AI Automation - n8n Workflow Automation Experts</title>
     
-    <!-- SEO Meta Tags -->
+    <!-- SEO Meta Tags (unchanged) -->
     <meta name="description" content="Expert n8n workflow automation solutions that save time, reduce costs, and scale your operations effortlessly. AI-powered automation for businesses.">
     <meta name="keywords" content="n8n automation, workflow automation, AI integration, business process automation, API integration, Polash AI">
     <meta name="author" content="Polash AI Automation">
     <meta name="robots" content="index, follow">
     
-    <!-- Open Graph Meta Tags -->
+    <!-- Open Graph Meta Tags (unchanged) -->
     <meta property="og:title" content="Polash AI Automation - n8n Workflow Automation Experts">
     <meta property="og:description" content="Transform your business with AI-powered automation solutions. Save time, reduce costs, and scale operations effortlessly.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://polashai.com">
     <meta property="og:image" content="https://polashai.com/images/og-image.jpg">
     
-    <!-- Twitter Card Meta Tags -->
+    <!-- Twitter Card Meta Tags (unchanged) -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Polash AI Automation - n8n Workflow Automation Experts">
     <meta name="twitter:description" content="Transform your business with AI-powered automation solutions.">
     <meta name="twitter:image" content="https://polashai.com/images/twitter-image.jpg">
     
-    <!-- Canonical URL -->
+    <!-- Canonical URL (unchanged) -->
     <link rel="canonical" href="https://polashai.com">
     
-    <!-- Alternate Languages -->
+    <!-- Alternate Languages (unchanged) -->
     <link rel="alternate" hreflang="en" href="https://polashai.com/en/">
     <link rel="alternate" hreflang="es" href="https://polashai.com/es/">
     <link rel="alternate" hreflang="fr" href="https://polashai.com/fr/">
     <link rel="alternate" hreflang="de" href="https://polashai.com/de/">
     
-    <!-- Structured Data -->
+    <!-- Structured Data (unchanged) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -63,7 +63,7 @@
     }
     </script>
     
-    <!-- Google Analytics (GA4) -->
+    <!-- Google Analytics (GA4) (unchanged) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -80,7 +80,7 @@
         }
     </script>
     
-    <!-- Meta Pixel (Facebook) -->
+    <!-- Meta Pixel (Facebook) (unchanged) -->
     <script>
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -94,11 +94,11 @@
         fbq('track', 'PageView');
     </script>
     
-    <!-- Calendly -->
+    <!-- Calendly (unchanged) -->
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     
-    <!-- Stripe.js for Payments -->
+    <!-- Stripe.js for Payments (unchanged) -->
     <script src="https://js.stripe.com/v3/"></script>
     
     <style>
@@ -158,6 +158,371 @@
         .icon-document::before { content: "📄"; }
         .icon-search::before { content: "🔍"; }
 
+        /* NEW: Interactive Demo Styles */
+        .interactive-demo-section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .demo-container {
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            padding: 2.5rem;
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .demo-steps {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .demo-step {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .demo-step.active {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--primary);
+        }
+
+        .demo-step.completed {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success);
+        }
+
+        .demo-content {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 15px;
+            padding: 2rem;
+            min-height: 400px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .demo-workflow {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .workflow-node {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .workflow-node.active {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--primary);
+            transform: scale(1.02);
+        }
+
+        .workflow-node.completed {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success);
+        }
+
+        .node-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .node-content {
+            flex: 1;
+        }
+
+        .node-connector {
+            height: 20px;
+            width: 2px;
+            background: rgba(99, 102, 241, 0.3);
+            margin-left: 20px;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .demo-progress {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .progress-bar-demo {
+            width: 100%;
+            height: 8px;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 0.5s;
+        }
+
+        /* NEW: Gamification Styles */
+        .gamification-section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gamification-container {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 3rem;
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gamification-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .gamification-badge {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .gamification-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .gamification-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .gamification-stat {
+            background: rgba(15, 23, 42, 0.5);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .achievement-card {
+            background: rgba(15, 23, 42, 0.5);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .achievement-card.locked {
+            opacity: 0.5;
+            filter: grayscale(1);
+        }
+
+        .achievement-card.unlocked {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .achievement-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 1rem;
+        }
+
+        .achievement-card.unlocked .achievement-icon {
+            background: linear-gradient(135deg, var(--success), var(--accent));
+        }
+
+        .achievement-progress {
+            height: 6px;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 3px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .achievement-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 0.5s;
+        }
+
+        .achievement-card.unlocked .achievement-progress-fill {
+            width: 100%;
+            background: linear-gradient(90deg, var(--success), var(--accent));
+        }
+
+        .gamification-rewards {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .reward-item {
+            background: rgba(15, 23, 42, 0.5);
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .reward-item.claimed {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success);
+        }
+
+        /* NEW: Demo Completion Modal */
+        .demo-completion-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 10007;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .demo-completion-modal.active {
+            display: flex;
+        }
+
+        .completion-content {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 30px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+
+        .completion-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .completion-badge {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--success), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+        }
+
+        .completion-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--light);
+            border: none;
+        }
+
+        .completion-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* All other existing CSS remains unchanged */
         /* Client Portal Styles */
         .portal-section {
             padding: 5rem 2rem;
@@ -1983,6 +2348,23 @@
                 flex-direction: column;
                 gap: 0.5rem;
             }
+
+            /* NEW: Responsive styles for interactive demos */
+            .demo-steps {
+                flex-direction: column;
+            }
+
+            .demo-controls {
+                flex-direction: column;
+            }
+
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gamification-stats {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -1996,7 +2378,34 @@
         <span id="toastText">Success!</span>
     </div>
 
-    <!-- Login Modal -->
+    <!-- NEW: Demo Completion Modal -->
+    <div class="demo-completion-modal" id="demoCompletionModal">
+        <div class="completion-content">
+            <button class="completion-close" onclick="closeDemoCompletion()">
+                <span class="icon-times"></span>
+            </button>
+            <div class="completion-badge">🏆</div>
+            <h3 style="color: var(--light); margin-bottom: 1rem;">Demo Completed!</h3>
+            <p style="color: var(--gray); margin-bottom: 2rem;">Congratulations! You've successfully completed the automation workflow demo.</p>
+            
+            <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                <h4 style="color: var(--success); margin-bottom: 1rem;">🎉 Achievement Unlocked!</h4>
+                <p style="color: var(--light);">Workflow Master</p>
+                <p style="color: var(--gray); font-size: 0.9rem; margin-top: 0.5rem;">You've successfully built and executed a complete automation workflow!</p>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="openCalendly(); closeDemoCompletion();">
+                    <span class="icon-calendar"></span> Book a Consultation
+                </button>
+                <button class="btn btn-secondary" onclick="closeDemoCompletion()">
+                    Try Another Demo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal (unchanged) -->
     <div class="login-overlay" id="loginModal">
         <div class="login-modal">
             <button class="login-close" onclick="closeLoginModal()">
@@ -2052,7 +2461,7 @@
         </div>
     </div>
 
-    <!-- Payment Modal -->
+    <!-- Payment Modal (unchanged) -->
     <div class="payment-overlay" id="paymentModal">
         <div class="payment-modal">
             <button class="payment-close" onclick="closePaymentModal()">
@@ -2097,7 +2506,7 @@
         </div>
     </div>
 
-    <!-- Client Dashboard -->
+    <!-- Client Dashboard (unchanged) -->
     <div class="dashboard-overlay" id="dashboard">
         <div class="dashboard-header">
             <div style="display: flex; align-items: center; gap: 1rem;">
@@ -2208,7 +2617,7 @@
         </div>
     </div>
 
-    <!-- Lead Magnet Popup -->
+    <!-- Lead Magnet Popup (unchanged) -->
     <div class="lead-magnet-overlay" id="leadMagnetPopup">
         <div class="lead-magnet-popup">
             <button class="lead-magnet-close" onclick="closeLeadMagnet()">
@@ -2238,7 +2647,7 @@
         </div>
     </div>
 
-    <!-- Exit Intent Popup -->
+    <!-- Exit Intent Popup (unchanged) -->
     <div class="exit-popup-overlay" id="exitPopup">
         <div class="exit-popup">
             <div class="exit-popup-close" onclick="closeExitPopup()">
@@ -2269,7 +2678,7 @@
         </div>
     </div>
 
-    <!-- Calendly Modal -->
+    <!-- Calendly Modal (unchanged) -->
     <div class="calendly-overlay" id="calendlyModal">
         <div class="calendly-container">
             <div class="calendly-close" onclick="closeCalendly()">
@@ -2279,7 +2688,7 @@
         </div>
     </div>
 
-    <!-- Navigation -->
+    <!-- Navigation (unchanged) -->
     <nav id="navbar">
         <div class="container">
             <div class="logo">⚡ Polash AI Automation</div>
@@ -2292,6 +2701,8 @@
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="#blog">Blog</a></li>
                 <li><a href="#knowledge">Knowledge Base</a></li>
+                <li><a href="#interactive-demos">Interactive Demos</a></li>
+                <li><a href="#gamification">Gamification</a></li>
                 <li><a href="#portal">Client Portal</a></li>
                 <li><a href="#testimonials">Testimonials</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -2304,7 +2715,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section (unchanged) -->
     <section class="hero">
         <div class="hero-animation" id="particles"></div>
         <div class="hero-content">
@@ -2319,7 +2730,7 @@
         </div>
     </section>
 
-    <!-- Stats Section -->
+    <!-- Stats Section (unchanged) -->
     <div class="stats">
         <div class="stats-grid">
             <div class="stat-item">
@@ -2341,7 +2752,563 @@
         </div>
     </div>
 
-    <!-- Client Portal Section -->
+    <!-- NEW: Interactive Demos Section -->
+    <section id="interactive-demos" class="interactive-demo-section">
+        <h2 class="fade-in">Interactive Automation Demos</h2>
+        <p class="section-subtitle fade-in">Experience the power of n8n workflow automation firsthand</p>
+        
+        <div class="demo-container fade-in">
+            <div class="demo-header">
+                <h3 style="color: var(--light);">Lead Processing Workflow Demo</h3>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span style="color: var(--gray); font-size: 0.9rem;">Difficulty: <span style="color: var(--success);">Beginner</span></span>
+                    <span style="color: var(--gray); font-size: 0.9rem;">Time: <span style="color: var(--accent);">5-7 minutes</span></span>
+                </div>
+            </div>
+            
+            <div class="demo-steps">
+                <div class="demo-step active" onclick="switchDemoStep(1)">
+                    <span style="display: block; font-weight: 600; margin-bottom: 0.5rem;">1. Setup</span>
+                    <span style="font-size: 0.85rem; color: var(--gray);">Configure triggers</span>
+                </div>
+                <div class="demo-step" onclick="switchDemoStep(2)">
+                    <span style="display: block; font-weight: 600; margin-bottom: 0.5rem;">2. Data Processing</span>
+                    <span style="font-size: 0.85rem; color: var(--gray);">Transform lead data</span>
+                </div>
+                <div class="demo-step" onclick="switchDemoStep(3)">
+                    <span style="display: block; font-weight: 600; margin-bottom: 0.5rem;">3. AI Integration</span>
+                    <span style="font-size: 0.85rem; color: var(--gray);">Score & categorize</span>
+                </div>
+                <div class="demo-step" onclick="switchDemoStep(4)">
+                    <span style="display: block; font-weight: 600; margin-bottom: 0.5rem;">4. Distribution</span>
+                    <span style="font-size: 0.85rem; color: var(--gray);">Route to teams</span>
+                </div>
+                <div class="demo-step" onclick="switchDemoStep(5)">
+                    <span style="display: block; font-weight: 600; margin-bottom: 0.5rem;">5. Notification</span>
+                    <span style="font-size: 0.85rem; color: var(--gray);">Send alerts</span>
+                </div>
+            </div>
+            
+            <div class="demo-content">
+                <div id="demo-step-1" class="demo-step-content active">
+                    <h4 style="color: var(--light); margin-bottom: 1.5rem;">Step 1: Configure Webhook Trigger</h4>
+                    <p style="color: var(--gray); margin-bottom: 2rem;">Set up a webhook to receive lead data from your website forms or landing pages.</p>
+                    
+                    <div class="demo-workflow">
+                        <div class="workflow-node active" onclick="activateNode(this)">
+                            <div class="node-icon">🌐</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Webhook Trigger</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Receives form submissions</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node" onclick="activateNode(this)">
+                            <div class="node-icon">🔍</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Data Validation</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Checks required fields</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <h5 style="color: var(--light); margin-bottom: 1rem;">Try it yourself:</h5>
+                        <div style="background: rgba(15, 23, 42, 0.8); padding: 1.5rem; border-radius: 10px; border: 1px solid rgba(99, 102, 241, 0.2);">
+                            <p style="color: var(--gray); margin-bottom: 1rem;">Configure the webhook URL:</p>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <input type="text" value="https://api.polashai.com/webhook/lead-capture" readonly style="flex: 1; padding: 0.75rem; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 5px; color: var(--light);">
+                                <button class="btn btn-secondary" onclick="copyToClipboard(this)" style="padding: 0.75rem 1.5rem; font-size: 0.9rem;">Copy URL</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="demo-step-2" class="demo-step-content">
+                    <h4 style="color: var(--light); margin-bottom: 1.5rem;">Step 2: Process Lead Data</h4>
+                    <p style="color: var(--gray); margin-bottom: 2rem;">Transform and enrich the lead information for better processing.</p>
+                    
+                    <div class="demo-workflow">
+                        <div class="workflow-node completed">
+                            <div class="node-icon">🌐</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Webhook Trigger</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Receives form submissions</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node completed">
+                            <div class="node-icon">🔍</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Data Validation</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Checks required fields</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node active" onclick="activateNode(this)">
+                            <div class="node-icon">🔄</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Data Transformation</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Standardizes format</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node" onclick="activateNode(this)">
+                            <div class="node-icon">📊</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Data Enrichment</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Adds company info</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <h5 style="color: var(--light); margin-bottom: 1rem;">Sample Data Transformation:</h5>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div style="background: rgba(15, 23, 42, 0.8); padding: 1.5rem; border-radius: 10px; border: 1px solid rgba(99, 102, 241, 0.2);">
+                                <h6 style="color: var(--light); margin-bottom: 1rem;">Input Data</h6>
+                                <pre style="color: var(--gray); font-size: 0.85rem; line-height: 1.5;">
+{
+  "name": "john doe",
+  "email": "JOHN@EXAMPLE.COM",
+  "company": "tech corp"
+}</pre>
+                            </div>
+                            <div style="background: rgba(15, 23, 42, 0.8); padding: 1.5rem; border-radius: 10px; border: 1px solid rgba(99, 102, 241, 0.2);">
+                                <h6 style="color: var(--light); margin-bottom: 1rem;">Transformed Data</h6>
+                                <pre style="color: var(--gray); font-size: 0.85rem; line-height: 1.5;">
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "company": "Tech Corp",
+  "timestamp": "2025-01-15T10:30:00Z"
+}</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="demo-step-3" class="demo-step-content">
+                    <h4 style="color: var(--light); margin-bottom: 1.5rem;">Step 3: AI-Powered Lead Scoring</h4>
+                    <p style="color: var(--gray); margin-bottom: 2rem;">Use AI to automatically score and categorize leads based on their potential.</p>
+                    
+                    <div class="demo-workflow">
+                        <div class="workflow-node completed">
+                            <div class="node-icon">🌐</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Webhook Trigger</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Receives form submissions</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node completed">
+                            <div class="node-icon">🔍</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Data Validation</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Checks required fields</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node completed">
+                            <div class="node-icon">🔄</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Data Transformation</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Standardizes format</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node completed">
+                            <div class="node-icon">📊</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Data Enrichment</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Adds company info</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node active" onclick="activateNode(this)">
+                            <div class="node-icon">🤖</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">AI Lead Scoring</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Analyzes lead potential</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <h5 style="color: var(--light); margin-bottom: 1rem;">AI Analysis Results:</h5>
+                        <div style="background: rgba(15, 23, 42, 0.8); padding: 1.5rem; border-radius: 10px; border: 1px solid rgba(99, 102, 241, 0.2);">
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center;">
+                                <div>
+                                    <div style="font-size: 2rem; color: var(--primary);">85%</div>
+                                    <div style="color: var(--gray); font-size: 0.9rem;">Lead Score</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 2rem; color: var(--accent);">Hot</div>
+                                    <div style="color: var(--gray); font-size: 0.9rem;">Priority</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 2rem; color: var(--success);">Sales</div>
+                                    <div style="color: var(--gray); font-size: 0.9rem;">Team</div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 1.5rem;">
+                                <h6 style="color: var(--light); margin-bottom: 0.5rem;">AI Insights:</h6>
+                                <p style="color: var(--gray); font-size: 0.9rem;">High-value enterprise lead based on company size, industry, and engagement patterns. Recommend immediate follow-up.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="demo-step-4" class="demo-step-content">
+                    <h4 style="color: var(--light); margin-bottom: 1.5rem;">Step 4: Route to Appropriate Team</h4>
+                    <p style="color: var(--gray); margin-bottom: 2rem;">Automatically distribute leads to the right sales or marketing teams based on scoring.</p>
+                    
+                    <div class="demo-workflow">
+                        <div class="workflow-node completed">
+                            <div class="node-icon">🌐</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Webhook Trigger</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Receives form submissions</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node completed">
+                            <div class="node-icon">🔍</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Data Validation</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Checks required fields</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node completed">
+                            <div class="node-icon">🔄</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Data Transformation</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Standardizes format</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node completed">
+                            <div class="node-icon">📊</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Data Enrichment</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Adds company info</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node completed">
+                            <div class="node-icon">🤖</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">AI Lead Scoring</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Analyzes lead potential</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node active" onclick="activateNode(this)">
+                            <div class="node-icon">🚀</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Team Routing</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Sends to appropriate team</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <h5 style="color: var(--light); margin-bottom: 1rem;">Routing Logic:</h5>
+                        <div style="background: rgba(15, 23, 42, 0.8); padding: 1.5rem; border-radius: 10px; border: 1px solid rgba(99, 102, 241, 0.2);">
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                                <div style="text-align: center; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3);">
+                                    <div style="font-size: 1.5rem; color: var(--danger);">🔥 Hot</div>
+                                    <div style="color: var(--gray); font-size: 0.85rem; margin-top: 0.5rem;">Score: 80-100%</div>
+                                    <div style="color: var(--light); font-size: 0.9rem; margin-top: 0.5rem;">→ Sales Team</div>
+                                </div>
+                                <div style="text-align: center; padding: 1rem; background: rgba(245, 158, 11, 0.1); border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.3);">
+                                    <div style="font-size: 1.5rem; color: var(--warning);">🌤️ Warm</div>
+                                    <div style="color: var(--gray); font-size: 0.85rem; margin-top: 0.5rem;">Score: 50-79%</div>
+                                    <div style="color: var(--light); font-size: 0.9rem; margin-top: 0.5rem;">→ Marketing Team</div>
+                                </div>
+                                <div style="text-align: center; padding: 1rem; background: rgba(99, 102, 241, 0.1); border-radius: 8px; border: 1px solid rgba(99, 102, 241, 0.3);">
+                                    <div style="font-size: 1.5rem; color: var(--primary);">❄️ Cold</div>
+                                    <div style="color: var(--gray); font-size: 0.85rem; margin-top: 0.5rem;">Score: 0-49%</div>
+                                    <div style="color: var(--light); font-size: 0.9rem; margin-top: 0.5rem;">→ Nurture Sequence</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="demo-step-5" class="demo-step-content">
+                    <h4 style="color: var(--light); margin-bottom: 1.5rem;">Step 5: Send Notifications & Log Results</h4>
+                    <p style="color: var(--gray); margin-bottom: 2rem;">Complete the workflow by notifying teams and logging the processed lead.</p>
+                    
+                    <div class="demo-workflow">
+                        <div class="workflow-node completed">
+                            <div class="node-icon">🌐</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Webhook Trigger</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Receives form submissions</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node completed">
+                            <div class="node-icon">🔍</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Data Validation</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Checks required fields</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node completed">
+                            <div class="node-icon">🔄</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Data Transformation</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Standardizes format</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node completed">
+                            <div class="node-icon">📊</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Data Enrichment</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Adds company info</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node completed">
+                            <div class="node-icon">🤖</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">AI Lead Scoring</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Analyzes lead potential</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node completed">
+                            <div class="node-icon">🚀</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Team Routing</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Sends to appropriate team</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node active" onclick="activateNode(this)">
+                            <div class="node-icon">📨</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Send Notifications</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Alerts team members</p>
+                            </div>
+                        </div>
+                        <div class="node-connector"></div>
+                        <div class="workflow-node" onclick="activateNode(this)">
+                            <div class="node-icon">📝</div>
+                            <div class="node-content">
+                                <h5 style="color: var(--light);">Log to CRM</h5>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Records lead details</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <h5 style="color: var(--light); margin-bottom: 1rem;">Workflow Results:</h5>
+                        <div style="background: rgba(15, 23, 42, 0.8); padding: 1.5rem; border-radius: 10px; border: 1px solid rgba(99, 102, 241, 0.2);">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                                <div>
+                                    <h6 style="color: var(--light); margin-bottom: 1rem;">Notifications Sent:</h6>
+                                    <ul style="color: var(--gray); list-style: none;">
+                                        <li style="margin-bottom: 0.5rem;">✓ Slack: #sales-team</li>
+                                        <li style="margin-bottom: 0.5rem;">✓ Email: sales@company.com</li>
+                                        <li>✓ SMS: +1 (555) 123-4567</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h6 style="color: var(--light); margin-bottom: 1rem;">CRM Log:</h6>
+                                    <ul style="color: var(--gray); list-style: none;">
+                                        <li style="margin-bottom: 0.5rem;">✓ Lead created in HubSpot</li>
+                                        <li style="margin-bottom: 0.5rem;">✓ Assigned to: Sarah Johnson</li>
+                                        <li>✓ Follow-up task created</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(99, 102, 241, 0.2);">
+                                <h6 style="color: var(--light); margin-bottom: 0.5rem;">Performance Metrics:</h6>
+                                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center;">
+                                    <div>
+                                        <div style="font-size: 1.5rem; color: var(--success);">2.3s</div>
+                                        <div style="color: var(--gray); font-size: 0.85rem;">Processing Time</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 1.5rem; color: var(--accent);">100%</div>
+                                        <div style="color: var(--gray); font-size: 0.85rem;">Success Rate</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 1.5rem; color: var(--primary);">45min</div>
+                                        <div style="color: var(--gray); font-size: 0.85rem;">Time Saved/Lead</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="demo-controls">
+                <button class="btn btn-secondary" onclick="previousDemoStep()" id="prevDemoBtn" disabled>
+                    <span>←</span> Previous
+                </button>
+                <button class="btn btn-primary" onclick="nextDemoStep()" id="nextDemoBtn">
+                    Next <span>→</span>
+                </button>
+                <button class="btn btn-secondary" onclick="resetDemo()" id="resetDemoBtn" style="display: none;">
+                    <span>🔄</span> Restart Demo
+                </button>
+            </div>
+            
+            <div class="demo-progress">
+                <div class="progress-bar-demo">
+                    <div class="progress-fill" id="demoProgress" style="width: 20%;"></div>
+                </div>
+                <p style="color: var(--gray); font-size: 0.9rem;">Progress: <span id="demoProgressText">1/5</span> steps completed</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 3rem;">
+            <button class="btn btn-primary" onclick="openCalendly()">
+                <span class="icon-calendar"></span> Book a Live Demo
+            </button>
+        </div>
+    </section>
+
+    <!-- NEW: Gamification Section -->
+    <section id="gamification" class="gamification-section">
+        <h2 class="fade-in">Automation Achievement System</h2>
+        <p class="section-subtitle fade-in">Earn rewards as you explore and master workflow automation</p>
+        
+        <div class="gamification-container fade-in">
+            <div class="gamification-header">
+                <div class="gamification-badge">🏆</div>
+                <h3 style="color: var(--light); margin-bottom: 1rem;">Your Automation Journey</h3>
+                <p style="color: var(--gray); max-width: 600px; margin: 0 auto;">Complete challenges, earn points, and unlock exclusive rewards as you learn about n8n automation.</p>
+            </div>
+            
+            <div class="gamification-progress">
+                <div>
+                    <h4 style="color: var(--light); margin-bottom: 0.5rem;">Current Level: <span style="color: var(--accent);" id="userLevel">Explorer</span></h4>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Next level: <span id="nextLevel">Automator</span> (<span id="pointsToNext">150</span> points)</p>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 2rem; font-weight: 700; color: var(--primary);" id="userPoints">75</div>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Total Points</p>
+                </div>
+            </div>
+            
+            <div class="progress-bar-demo" style="margin-bottom: 2rem;">
+                <div class="progress-fill" id="levelProgress" style="width: 30%;"></div>
+            </div>
+            
+            <div class="gamification-stats">
+                <div class="gamification-stat">
+                    <div class="stat-value" id="completedDemos">1</div>
+                    <div style="color: var(--gray);">Demos Completed</div>
+                </div>
+                <div class="gamification-stat">
+                    <div class="stat-value" id="achievementsUnlocked">3</div>
+                    <div style="color: var(--gray);">Achievements</div>
+                </div>
+                <div class="gamification-stat">
+                    <div class="stat-value" id="workflowsBuilt">2</div>
+                    <div style="color: var(--gray);">Workflows Built</div>
+                </div>
+                <div class="gamification-stat">
+                    <div class="stat-value" id="timeSaved">45</div>
+                    <div style="color: var(--gray);">Hours Saved</div>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--light); margin-bottom: 1.5rem; text-align: center;">Your Achievements</h3>
+            <div class="achievements-grid">
+                <div class="achievement-card unlocked">
+                    <div class="achievement-icon">🚀</div>
+                    <h4 style="color: var(--light); margin-bottom: 0.5rem;">First Steps</h4>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Complete your first interactive demo</p>
+                    <div class="achievement-progress">
+                        <div class="achievement-progress-fill"></div>
+                    </div>
+                </div>
+                
+                <div class="achievement-card unlocked">
+                    <div class="achievement-icon">🔗</div>
+                    <h4 style="color: var(--light); margin-bottom: 0.5rem;">API Explorer</h4>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Connect 3 different APIs in a workflow</p>
+                    <div class="achievement-progress">
+                        <div class="achievement-progress-fill" style="width: 66%;"></div>
+                    </div>
+                </div>
+                
+                <div class="achievement-card unlocked">
+                    <div class="achievement-icon">🤖</div>
+                    <h4 style="color: var(--light); margin-bottom: 0.5rem;">AI Integrator</h4>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Use AI in an automation workflow</p>
+                    <div class="achievement-progress">
+                        <div class="achievement-progress-fill"></div>
+                    </div>
+                </div>
+                
+                <div class="achievement-card">
+                    <div class="achievement-icon">⚡</div>
+                    <h4 style="color: var(--light); margin-bottom: 0.5rem;">Workflow Master</h4>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Complete 5 different workflow demos</p>
+                    <div class="achievement-progress">
+                        <div class="achievement-progress-fill" style="width: 20%;"></div>
+                    </div>
+                </div>
+                
+                <div class="achievement-card">
+                    <div class="achievement-icon">📊</div>
+                    <h4 style="color: var(--light); margin-bottom: 0.5rem;">Data Wizard</h4>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Process 100+ data records in demos</p>
+                    <div class="achievement-progress">
+                        <div class="achievement-progress-fill" style="width: 45%;"></div>
+                    </div>
+                </div>
+                
+                <div class="achievement-card">
+                    <div class="achievement-icon">🏆</div>
+                    <h4 style="color: var(--light); margin-bottom: 0.5rem;">Automation Champion</h4>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Reach the highest level in the system</p>
+                    <div class="achievement-progress">
+                        <div class="achievement-progress-fill" style="width: 30%;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <h3 style="color: var(--light); margin-bottom: 1.5rem;">Available Rewards</h3>
+                <div class="gamification-rewards">
+                    <div class="reward-item">
+                        <span>🎁</span>
+                        <span>Free Consultation</span>
+                        <button class="btn btn-secondary" style="padding: 0.3rem 0.8rem; font-size: 0.8rem; margin-left: 0.5rem;" onclick="claimReward('consultation')">Claim</button>
+                    </div>
+                    <div class="reward-item">
+                        <span>📚</span>
+                        <span>Advanced Guide</span>
+                        <button class="btn btn-secondary" style="padding: 0.3rem 0.8rem; font-size: 0.8rem; margin-left: 0.5rem;" onclick="claimReward('guide')">Claim</button>
+                    </div>
+                    <div class="reward-item claimed">
+                        <span>🔧</span>
+                        <span>Workflow Template</span>
+                        <span style="color: var(--success); margin-left: 0.5rem;">Claimed</span>
+                    </div>
+                    <div class="reward-item">
+                        <span>💼</span>
+                        <span>Strategy Session</span>
+                        <button class="btn btn-secondary" style="padding: 0.3rem 0.8rem; font-size: 0.8rem; margin-left: 0.5rem;" onclick="claimReward('strategy')">Claim</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Client Portal Section (unchanged) -->
     <section id="portal" class="portal-section">
         <h2 class="fade-in">Client Portal</h2>
         <p class="section-subtitle fade-in">Secure access to your projects, documents, and support resources</p>
@@ -2379,7 +3346,7 @@
         </div>
     </section>
 
-    <!-- Payment Section -->
+    <!-- Payment Section (unchanged) -->
     <div class="payment-section">
         <div style="max-width: 1200px; margin: 0 auto;">
             <h2 class="fade-in">Secure Payment Options</h2>
@@ -2434,7 +3401,7 @@
         </div>
     </div>
 
-    <!-- Knowledge Base Section -->
+    <!-- Knowledge Base Section (unchanged) -->
     <section id="knowledge" class="knowledge-section">
         <h2 class="fade-in">Knowledge Base</h2>
         <p class="section-subtitle fade-in">Comprehensive resources to help you master workflow automation</p>
@@ -2570,7 +3537,7 @@
     </section>
 
     <!-- The rest of your existing sections (Video, ROI Calculator, Services, Case Studies, Blog, Pricing, Testimonials, FAQ, Contact) remain unchanged -->
-    <!-- Video Demo Section -->
+    <!-- Video Demo Section (unchanged) -->
     <div class="video-section">
         <div style="max-width: 1200px; margin: 0 auto;">
             <h2 class="fade-in">See Automation in Action</h2>
@@ -2584,7 +3551,7 @@
         </div>
     </div>
 
-    <!-- ROI Calculator Section -->
+    <!-- ROI Calculator Section (unchanged) -->
     <section>
         <h2 class="fade-in">Calculate Your Savings</h2>
         <p class="section-subtitle fade-in">See how much time and money automation can save your business</p>
@@ -2638,7 +3605,7 @@
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- Services Section (unchanged) -->
     <section id="services">
         <h2 class="fade-in">Our Services</h2>
         <p class="section-subtitle fade-in">Comprehensive automation solutions tailored to your business needs</p>
@@ -2688,7 +3655,7 @@
         </div>
     </section>
 
-    <!-- Case Studies Section -->
+    <!-- Case Studies Section (unchanged) -->
     <section id="case-studies">
         <h2 class="fade-in">Case Studies</h2>
         <p class="section-subtitle fade-in">Real results from real clients</p>
@@ -2767,7 +3734,7 @@
         </div>
     </section>
 
-    <!-- Blog Section -->
+    <!-- Blog Section (unchanged) -->
     <section id="blog">
         <h2 class="fade-in">Latest from Our Blog</h2>
         <p class="section-subtitle fade-in">Insights, tips, and best practices for workflow automation</p>
@@ -2828,7 +3795,7 @@
         </div>
     </section>
 
-    <!-- Pricing Section -->
+    <!-- Pricing Section (unchanged) -->
     <section id="pricing">
         <h2 class="fade-in">Flexible Pricing</h2>
         <p class="section-subtitle fade-in">Choose the plan that fits your automation needs</p>
@@ -2877,7 +3844,7 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- Testimonials Section (unchanged) -->
     <section id="testimonials">
         <h2 class="fade-in">What Our Clients Say</h2>
         <p class="section-subtitle fade-in">Trusted by businesses worldwide</p>
@@ -2918,7 +3885,7 @@
         </div>
     </section>
 
-    <!-- FAQ Section -->
+    <!-- FAQ Section (unchanged) -->
     <section>
         <h2 class="fade-in">Frequently Asked Questions</h2>
         <div class="faq-container">
@@ -2961,7 +3928,7 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact Section (unchanged) -->
     <section id="contact">
         <h2 class="fade-in">Let's Automate Your Business</h2>
         <p class="section-subtitle fade-in">Get in touch for a free consultation</p>
@@ -3039,7 +4006,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer (unchanged) -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -3075,6 +4042,8 @@
                 <h4>Resources</h4>
                 <ul>
                     <li><a href="#knowledge">Knowledge Base</a></li>
+                    <li><a href="#interactive-demos">Interactive Demos</a></li>
+                    <li><a href="#gamification">Gamification</a></li>
                     <li><a href="#portal">Client Portal</a></li>
                     <li><a href="#">Documentation</a></li>
                 </ul>
@@ -3085,14 +4054,14 @@
         </div>
     </footer>
 
-    <!-- Floating CTA -->
+    <!-- Floating CTA (unchanged) -->
     <div class="floating-cta" id="floatingCTA">
         <a href="#contact" class="btn btn-primary">
             🚀 Start Automating
         </a>
     </div>
 
-    <!-- Chat Widget -->
+    <!-- Chat Widget (unchanged) -->
     <div class="chat-widget">
         <button class="chat-button" onclick="toggleChat()">
             💬
@@ -3139,6 +4108,214 @@
     </div>
 
     <script>
+        // NEW: Interactive Demo Functions
+        let currentDemoStep = 1;
+        const totalDemoSteps = 5;
+        
+        function switchDemoStep(step) {
+            // Hide all step contents
+            document.querySelectorAll('.demo-step-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show selected step content
+            document.getElementById(`demo-step-${step}`).classList.add('active');
+            
+            // Update step indicators
+            document.querySelectorAll('.demo-step').forEach((demoStep, index) => {
+                if (index + 1 < step) {
+                    demoStep.classList.remove('active');
+                    demoStep.classList.add('completed');
+                } else if (index + 1 === step) {
+                    demoStep.classList.add('active');
+                    demoStep.classList.remove('completed');
+                } else {
+                    demoStep.classList.remove('active');
+                    demoStep.classList.remove('completed');
+                }
+            });
+            
+            // Update progress bar
+            const progressPercentage = (step / totalDemoSteps) * 100;
+            document.getElementById('demoProgress').style.width = `${progressPercentage}%`;
+            document.getElementById('demoProgressText').textContent = `${step}/${totalDemoSteps}`;
+            
+            // Update navigation buttons
+            document.getElementById('prevDemoBtn').disabled = step === 1;
+            document.getElementById('nextDemoBtn').textContent = step === totalDemoSteps ? 'Complete Demo' : 'Next →';
+            
+            // Show reset button on last step
+            document.getElementById('resetDemoBtn').style.display = step === totalDemoSteps ? 'inline-flex' : 'none';
+            
+            currentDemoStep = step;
+            
+            // Track demo progress
+            trackEvent('InteractiveDemo', 'step_changed', `Step ${step}`, step);
+        }
+        
+        function nextDemoStep() {
+            if (currentDemoStep < totalDemoSteps) {
+                switchDemoStep(currentDemoStep + 1);
+            } else {
+                completeDemo();
+            }
+        }
+        
+        function previousDemoStep() {
+            if (currentDemoStep > 1) {
+                switchDemoStep(currentDemoStep - 1);
+            }
+        }
+        
+        function resetDemo() {
+            switchDemoStep(1);
+            trackEvent('InteractiveDemo', 'reset', 'Demo Reset', 0);
+        }
+        
+        function activateNode(node) {
+            // Add visual feedback for node interaction
+            node.classList.add('active');
+            setTimeout(() => {
+                node.classList.remove('active');
+            }, 500);
+            
+            // Track node interaction
+            const nodeName = node.querySelector('h5').textContent;
+            trackEvent('InteractiveDemo', 'node_clicked', nodeName, currentDemoStep);
+        }
+        
+        function completeDemo() {
+            // Show completion modal
+            document.getElementById('demoCompletionModal').classList.add('active');
+            
+            // Update gamification stats
+            updateGamificationStats('completedDemos', 1);
+            updateGamificationStats('userPoints', 25);
+            updateGamificationStats('timeSaved', 45);
+            
+            // Unlock achievement if this is the first demo
+            if (parseInt(document.getElementById('completedDemos').textContent) === 1) {
+                showToast('🎉 Achievement Unlocked: First Steps!');
+            }
+            
+            // Track completion
+            trackEvent('InteractiveDemo', 'completed', 'Lead Processing Demo', 25);
+        }
+        
+        function closeDemoCompletion() {
+            document.getElementById('demoCompletionModal').classList.remove('active');
+        }
+        
+        function copyToClipboard(button) {
+            const input = button.previousElementSibling;
+            input.select();
+            document.execCommand('copy');
+            
+            // Visual feedback
+            const originalText = button.textContent;
+            button.textContent = 'Copied!';
+            button.style.background = 'var(--success)';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = '';
+            }, 2000);
+            
+            trackEvent('InteractiveDemo', 'copied_url', 'Webhook URL', currentDemoStep);
+        }
+        
+        // NEW: Gamification Functions
+        function updateGamificationStats(statId, value) {
+            const element = document.getElementById(statId);
+            const currentValue = parseInt(element.textContent);
+            element.textContent = currentValue + value;
+            
+            // Update points and level if needed
+            if (statId === 'userPoints') {
+                updateUserLevel();
+            }
+        }
+        
+        function updateUserLevel() {
+            const points = parseInt(document.getElementById('userPoints').textContent);
+            let level = 'Explorer';
+            let nextLevel = 'Automator';
+            let pointsToNext = 150;
+            let progress = 30;
+            
+            if (points >= 150) {
+                level = 'Automator';
+                nextLevel = 'Expert';
+                pointsToNext = 300;
+                progress = 50;
+            } else if (points >= 300) {
+                level = 'Expert';
+                nextLevel = 'Master';
+                pointsToNext = 500;
+                progress = 60;
+            } else if (points >= 500) {
+                level = 'Master';
+                nextLevel = 'Champion';
+                pointsToNext = 750;
+                progress = 80;
+            } else if (points >= 750) {
+                level = 'Champion';
+                nextLevel = 'Max Level';
+                pointsToNext = 0;
+                progress = 100;
+            } else {
+                progress = (points / 150) * 100;
+            }
+            
+            document.getElementById('userLevel').textContent = level;
+            document.getElementById('nextLevel').textContent = nextLevel;
+            document.getElementById('pointsToNext').textContent = pointsToNext;
+            document.getElementById('levelProgress').style.width = `${progress}%`;
+        }
+        
+        function claimReward(rewardType) {
+            let rewardName = '';
+            let pointsCost = 0;
+            
+            switch(rewardType) {
+                case 'consultation':
+                    rewardName = 'Free Consultation';
+                    pointsCost = 50;
+                    break;
+                case 'guide':
+                    rewardName = 'Advanced Guide';
+                    pointsCost = 75;
+                    break;
+                case 'strategy':
+                    rewardName = 'Strategy Session';
+                    pointsCost = 150;
+                    break;
+            }
+            
+            const currentPoints = parseInt(document.getElementById('userPoints').textContent);
+            
+            if (currentPoints >= pointsCost) {
+                // Deduct points
+                updateGamificationStats('userPoints', -pointsCost);
+                
+                // Show success message
+                showToast(`🎁 Success! You've claimed: ${rewardName}`);
+                
+                // In a real implementation, you would trigger the reward delivery
+                if (rewardType === 'consultation') {
+                    setTimeout(() => {
+                        openCalendly();
+                    }, 1000);
+                }
+                
+                // Track reward claim
+                trackEvent('Gamification', 'reward_claimed', rewardName, pointsCost);
+            } else {
+                showToast(`You need ${pointsCost - currentPoints} more points to claim this reward`);
+            }
+        }
+        
+        // All existing JavaScript functions remain unchanged
         // Stripe Payment Integration
         const stripe = Stripe('pk_test_your_publishable_key_here'); // Replace with your publishable key
         let elements;
@@ -3705,6 +4882,10 @@
                 return "We accept credit cards, bank transfers, and offer payment plans for larger projects. You can view all payment options in the 'Secure Payment Options' section.";
             } else if (lowerMessage.includes('knowledge') || lowerMessage.includes('documentation') || lowerMessage.includes('guide')) {
                 return "Our knowledge base contains comprehensive guides on n8n, AI integration, API connections, and best practices. You can access it through the navigation menu.";
+            } else if (lowerMessage.includes('demo') || lowerMessage.includes('interactive')) {
+                return "We have interactive demos that let you experience n8n automation firsthand. Check out the 'Interactive Demos' section to try building a workflow yourself!";
+            } else if (lowerMessage.includes('gamification') || lowerMessage.includes('achievement') || lowerMessage.includes('reward')) {
+                return "Our gamification system lets you earn points and unlock rewards as you learn about automation. Complete demos and challenges to level up!";
             } else {
                 return "Thanks for your message! A team member will respond shortly. In the meantime, feel free to check out our case studies or schedule a consultation. You can also email us at hello@polashai.com";
             }
